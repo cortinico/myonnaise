@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="graph_line1">#FF3f51b5</color>
+    <color name="graph_line2">#FF9c27b0</color>
+    <color name="graph_line3">#FF009688</color>
+    <color name="graph_line4">#FF8bc34a</color>
+    <color name="graph_line5">#FFffc107</color>
+    <color name="graph_line6">#FF795548</color>
+    <color name="graph_line7">#FFe51c23</color>
+    <color name="graph_line8">#FFcddc39</color>
+    <color name="graph_info">#1976D2</color>
+
+    <color name="ColorWhite">#FFFFFF</color>
+    <color name="ColorBackground">#22B6B6B6</color>
+    <color name="ColorPrimary">#2196F3</color>
+    <color name="ColorPrimaryDark">#1976D2</color>
+    <color name="ColorAccent">#FF5722</color>
+    <color name="ColorAccentHighlight">#ffff0000</color>
+    <color name="ColorPrimaryLight">#BBDEFB</color>
+    <color name="ColorPrimaryText">#212121</color>
+    <color name="ColorSecondaryText">#727272</color>
+    <color name="ColorDividers">#B6B6B6</color>
+
+
+</resources>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/ColorBackground"
+                android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txt_tutorial"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="@dimen/margin_low"
+
+        android:drawableStart="@drawable/ic_arrow_up_bold_grey600_48dp"
+
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/tutorial_menu"
+        android:textSize="20sp"
+        android:textStyle="italic"
+        />
+
+    <TextView
+        android:id="@+id/txt_disclaimer"
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_tutorial"
+        android:layout_marginLeft="@dimen/margin_med"
+        android:layout_marginRight="@dimen/margin_med"
+        android:layout_marginTop="@dimen/margin_med"
+        android:gravity="center_horizontal|center_vertical"
+
+        android:text="@string/disclaimer"
+        android:textSize="20sp"
+        android:textStyle="italic|bold"
+        />
+
+    <TextView
+        android:id="@+id/txt_withthisapp"
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_disclaimer"
+        android:layout_marginLeft="@dimen/margin_med"
+        android:layout_marginRight="@dimen/margin_med"
+        android:layout_marginTop="@dimen/margin_med"
+        android:gravity="center_horizontal|center_vertical"
+
+        android:text="@string/description"
+        android:textSize="20sp"
+        android:textStyle="italic"
+        />
+
+    <TextView
+        android:id="@+id/txt_author"
+        android:layout_below="@id/txt_withthisapp"
+
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_med"
+        android:layout_marginLeft="@dimen/margin_med"
+        android:layout_marginRight="@dimen/margin_med"
+        android:gravity="end|center_vertical"
+
+        android:text="@string/author"
+        android:textSize="20sp"
+        android:textStyle="italic|bold"
+        />
+
+    <Button
+        android:id="@+id/btn_github"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/source_code"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/margin_med"
+        android:padding="@dimen/padding_med"
+
+        />
+
+</RelativeLayout>

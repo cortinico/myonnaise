@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Myo EMG Visualizer</string>
+    <string name="action_pause">Pause</string>
+    <string name="action_play">Play</string>
+    <string name="header_app_firstname">Myo EMG</string>
+    <string name="header_app_secondname">Graphic Visualizer</string>
+    <string name="openDrawer">Open the navigation drawer</string>
+    <string name="closeDrawer">Close the navigation drawer</string>
+    <string name="connect">Connect</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="nothing_to_show">Nothing to show here…</string>
+    <string name="stream_not_enabled">Sensor stream not enabled</string>
+    <string name="connection_started">Connection started…</string>
+    <string name="connection_stopped">Connection stopped</string>
+    <string name="scan_over">Device scan over</string>
+    <string name="no_myo">No Myo found!</string>
+    <string name="you_must_perform_a_scan">You haven\'t already found a Myo, you must first perform a device scan. Do it now?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="tutorial_menu">Press this button to open menu</string>
+    <string name="disclaimer">To use this app you need a Myo</string>
+    <string name="description">You can use this app to visualize raw EMG data from a Myo device. If you find a bug, feel free to report it :)</string>
+    <string name="author">Nicola Corti</string>
+    <string name="source_code">To access the source code press here</string>
+
+</resources>

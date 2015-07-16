@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/myolist_found_list"
+        android:listSelector="@drawable/background_list_selector"
+        />
+
+    <ImageButton
+        android:id="@+id/myolist_scan_button"
+        android:layout_width="@dimen/diameter"
+        android:layout_height="@dimen/diameter"
+        android:layout_gravity="end|bottom"
+        android:layout_marginBottom="@dimen/margin_med"
+        android:layout_marginEnd="@dimen/margin_med"
+        android:src="@drawable/ic_magnify_white_24dp"
+        android:tint="@android:color/white"
+        android:elevation="@dimen/elevation_low"
+        android:background="@drawable/oval_ripple"
+        />
+</FrameLayout>
