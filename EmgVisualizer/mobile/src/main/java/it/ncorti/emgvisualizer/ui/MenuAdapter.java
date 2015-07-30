@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import it.ncorti.emgvisualizer.R;
+import it.ncorti.emgvisualizer.model.EventBusProvider;
 
 /**
  * Adapter for handling menu visualization using a Recyclerview
@@ -75,17 +76,18 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(MenuAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(MenuAdapter.ViewHolder holder, final int position) {
 
         // Binding data from model to holder
         if (holder.Holderid == TYPE_ITEM) {
             holder.txtEntry.setText(menuEntries[position - 1]);
             holder.imgMenuIcon.setImageResource(menuIcons[position - 1]);
-            if (selectedPosition == position) {
-                holder.globalView.setBackgroundColor(Color.parseColor("#FFD5D5D5"));
-            } else {
-                holder.globalView.setBackgroundColor(Color.WHITE);
-            }
+            holder.globalView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    EventBusProvider.postOnMainThread(new PositionEvent(position));
+                }
+            });
         } else if (holder.Holderid == TYPE_SEPARATOR) {
             holder.txtEntry.setText(menuEntries[position - 1]);
         }
@@ -146,6 +148,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                 this.globalView = itemView;
             } else if (ViewType == TYPE_SEPARATOR) {
                 txtEntry = (TextView) itemView.findViewById(R.id.menu_txt_separator);
+                this.globalView = itemView;
             }
             Holderid = ViewType;
         }

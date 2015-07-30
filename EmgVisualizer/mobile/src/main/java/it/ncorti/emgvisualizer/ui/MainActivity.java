@@ -27,10 +27,15 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.squareup.otto.Subscribe;
+
 import it.ncorti.emgvisualizer.R;
+import it.ncorti.emgvisualizer.model.EventBusProvider;
 import it.ncorti.emgvisualizer.ui.fragments.ControlFragment;
 import it.ncorti.emgvisualizer.ui.fragments.GraphFragment;
 import it.ncorti.emgvisualizer.ui.fragments.HomeFragment;
@@ -40,7 +45,7 @@ import it.ncorti.emgvisualizer.ui.fragments.MyoListFragment;
  * Main activity for handling main drawer menu with fragment changes
  * @author Nicola
  */
-public class MainActivity extends AppCompatActivity implements RecyclerView.OnItemTouchListener {
+public class MainActivity extends AppCompatActivity {
 
     /** TAG for debugging purpose */
     private static final String TAG = "MainActivity";
@@ -83,9 +88,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerView.OnIt
     private DrawerLayout mDrawerLayout;
     /** Drawer toogle */
     private ActionBarDrawerToggle mDrawerToggle;
-
-    /** Flag for touch move recognition on Drawer */
-    private boolean flagTouch = false;
+    /** Gesture detector to detecting simple tap up events */
+    private GestureDetector mGestureDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,8 +108,14 @@ public class MainActivity extends AppCompatActivity implements RecyclerView.OnIt
         mRecyclerView.setAdapter(mAdapter);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.addOnItemTouchListener(this);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawer);
+
+        mGestureDetector = new GestureDetector(MainActivity.this, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onSingleTapUp(MotionEvent e) {
+                return true;
+            }
+        });
 
 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer) {
@@ -124,81 +134,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerView.OnIt
         mDrawerToggle.syncState();
 
         changeFragment(new HomeFragment(), POSIT_HOME);
-    }
-
-    @Override
-    public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-        // Nothing to do here...
-    }
-
-    @Override
-    public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-        View child = rv.findChildViewUnder(e.getX(), e.getY());
-
-        // Mask move events
-        if (child != null && e.getAction() == MotionEvent.ACTION_MOVE)
-            flagTouch = false;
-        if (child != null && e.getAction() == MotionEvent.ACTION_DOWN)
-            flagTouch = true;
-
-        if (child != null && e.getAction() == MotionEvent.ACTION_UP && flagTouch) {
-            int position = mRecyclerView.getChildAdapterPosition(child);
-            Fragment fragment = null;
-
-            // Myo alert message if not setted
-            MySensorManager mngr = MySensorManager.getInstance();
-            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setTitle(getString(R.string.no_myo));
-            builder.setMessage(getString(R.string.you_must_perform_a_scan));
-            builder.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    Fragment fragment = new MyoListFragment();
-                    changeFragment(fragment, POSIT_SEARCH);
-                    mDrawerLayout.closeDrawers();
-                    dialogInterface.cancel();
-                }
-            });
-            builder.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    mDrawerLayout.closeDrawers();
-                    dialogInterface.cancel();
-                }
-            });
-            AlertDialog alert = builder.create();
-
-            // Menu selector
-            switch (position) {
-                case POSIT_HOME:
-                    fragment = new HomeFragment();
-                    break;
-                case POSIT_SEARCH:
-                    fragment = new MyoListFragment();
-                    break;
-                case POSIT_CONTROL:
-                    if (!mngr.isMyoFound()) {
-                        fragment = null;
-                        alert.show();
-                    } else {
-                        fragment = new ControlFragment();
-                    }
-                    break;
-                case POSIT_GRAPH:
-                    if (!mngr.isMyoFound()) {
-                        fragment = null;
-                        alert.show();
-                    } else {
-                        fragment = new GraphFragment();
-                    }
-                    break;
-            }
-            if (fragment != null) {
-                changeFragment(fragment, position);
-            }
-            return true;
-        }
-        return false;
+        EventBusProvider.register(this);
     }
 
     /**
@@ -217,6 +153,66 @@ public class MainActivity extends AppCompatActivity implements RecyclerView.OnIt
         mAdapter.updateSelectedItem(position);
         mDrawerLayout.closeDrawers();
     }
+
+    @Subscribe
+    public void changeFragment(PositionEvent evt) {
+
+        int position = evt.getPosition();
+
+        // Myo alert message if not setted
+        MySensorManager mngr = MySensorManager.getInstance();
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle(getString(R.string.no_myo));
+        builder.setMessage(getString(R.string.you_must_perform_a_scan));
+        builder.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Fragment fragment = new MyoListFragment();
+                changeFragment(fragment, POSIT_SEARCH);
+                mDrawerLayout.closeDrawers();
+                dialogInterface.cancel();
+            }
+        });
+        builder.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                mDrawerLayout.closeDrawers();
+                dialogInterface.cancel();
+            }
+        });
+        AlertDialog alert = builder.create();
+
+        Fragment fragment = null;
+        // Menu selector
+        switch (position) {
+            case POSIT_HOME:
+                fragment = new HomeFragment();
+                break;
+            case POSIT_SEARCH:
+                fragment = new MyoListFragment();
+                break;
+            case POSIT_CONTROL:
+                if (!mngr.isMyoFound()) {
+                    fragment = null;
+                    alert.show();
+                } else {
+                    fragment = new ControlFragment();
+                }
+                break;
+            case POSIT_GRAPH:
+                if (!mngr.isMyoFound()) {
+                    fragment = null;
+                    alert.show();
+                } else {
+                    fragment = new GraphFragment();
+                }
+                break;
+        }
+        if (fragment != null) {
+            changeFragment(fragment, position);
+        }
+    }
+
 
     /**
      * Public method for opening Myo control windows
