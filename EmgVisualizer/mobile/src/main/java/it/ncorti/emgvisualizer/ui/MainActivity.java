@@ -88,8 +88,6 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     /** Drawer toogle */
     private ActionBarDrawerToggle mDrawerToggle;
-    /** Gesture detector to detecting simple tap up events */
-    private GestureDetector mGestureDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,15 +107,7 @@ public class MainActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawer);
-
-        mGestureDetector = new GestureDetector(MainActivity.this, new GestureDetector.SimpleOnGestureListener() {
-            @Override
-            public boolean onSingleTapUp(MotionEvent e) {
-                return true;
-            }
-        });
-
-
+        
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer) {
 
             @Override
