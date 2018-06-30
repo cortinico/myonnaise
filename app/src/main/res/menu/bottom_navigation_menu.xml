@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/item_scan"
+        android:icon="@drawable/ic_magnify"
+        android:title="@string/scan" />
+    <item android:id="@+id/item_control"
+        android:icon="@drawable/ic_tune"
+        android:title="@string/control" />
+    <item android:id="@+id/item_graph"
+        android:icon="@drawable/ic_chart_line"
+        android:title="@string/graph" />
+    <item android:id="@+id/item_export"
+        android:icon="@drawable/ic_download"
+        android:title="@string/export" />
+
+</menu>

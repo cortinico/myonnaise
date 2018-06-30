@@ -22,5 +22,16 @@
     <string name="description">You can use this app to visualize raw EMG data from a Myo device. If you find a bug, feel free to report it :)</string>
     <string name="author">Nicola Corti</string>
     <string name="source_code">To access the source code press here</string>
+    <string name="scan">Scan</string>
+    <string name="control">Control</string>
+    <string name="graph">Graph</string>
+    <string name="export">Export</string>
+    <string name="unknown_device">Unknown Device</string>
+    <string name="device_information">Device Information</string>
+    <string name="device_name">Device Name</string>
+    <string name="device_address">Device Address</string>
+    <string name="select">Select</string>
+    <string name="device_status">Device Status</string>
+    <string name="disconnected">Disconnected</string>
 
 </resources>

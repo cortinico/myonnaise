@@ -13,7 +13,7 @@
         android:layout_height="1dp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="2dp"
-        android:background="@color/ColorDividers"/>
+        android:background="@color/colorBackground"/>
 
     <TextView
         android:id="@+id/menu_txt_separator"
@@ -25,6 +25,6 @@
         android:minHeight="?android:attr/listPreferredItemHeightSmall"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
         android:textSize="14sp"
-        android:textColor="@color/ColorSecondaryText"/>
+        android:textColor="@color/secondaryTextColor"/>
 
 </RelativeLayout>

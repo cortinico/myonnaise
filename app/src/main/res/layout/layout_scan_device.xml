@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_device_found"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:itemLayout="@layout/item_device" />
+
+    <!-- TODO Fix margin here -->
+    <ProgressBar
+        android:id="@+id/progress_bar_search"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_marginTop="-6dp"
+        android:layout_marginBottom="-8dp"
+        android:indeterminate="true"
+        android:alpha="0" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_scan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="@dimen/margin_med"
+        android:layout_marginBottom="@dimen/margin_med"
+        android:src="@drawable/ic_magnify"
+        android:tint="@android:color/white"
+        app:fabSize="normal" />
+
+</FrameLayout>
