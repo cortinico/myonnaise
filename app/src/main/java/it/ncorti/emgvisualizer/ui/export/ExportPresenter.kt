@@ -1,6 +1,6 @@
 package it.ncorti.emgvisualizer.ui.export
 
-import it.ncorti.emgvisualizer.DeviceManager
+import it.ncorti.emgvisualizer.dagger.DeviceManager
 import it.ncorti.emgvisualizer.MyoApplication
 import javax.inject.Inject
 

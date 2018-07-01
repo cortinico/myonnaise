@@ -2,7 +2,7 @@ package it.ncorti.emgvisualizer.ui.scan
 
 import it.ncorti.emgvisualizer.BasePresenter
 import it.ncorti.emgvisualizer.BaseView
-import it.ncorti.emgvisualizer.Device
+import it.ncorti.emgvisualizer.ui.model.Device
 
 
 interface ScanDeviceContract {

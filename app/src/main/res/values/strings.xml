@@ -1,13 +1,9 @@
 <resources>
     <string name="app_name">Myo EMG Visualizer</string>
-    <string name="action_pause">Pause</string>
-    <string name="action_play">Play</string>
-    <string name="header_app_firstname">Myo EMG</string>
-    <string name="header_app_secondname">Graphic Visualizer</string>
-    <string name="openDrawer">Open the navigation drawer</string>
-    <string name="closeDrawer">Close the navigation drawer</string>
     <string name="connect">Connect</string>
     <string name="disconnect">Disconnect</string>
+
+    <!-- TODO Cleanup resources here -->
     <string name="nothing_to_show">Nothing to show here…</string>
     <string name="stream_not_enabled">Sensor stream not enabled</string>
     <string name="connection_started">Connection started…</string>

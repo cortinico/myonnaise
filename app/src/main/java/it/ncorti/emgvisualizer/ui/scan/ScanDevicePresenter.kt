@@ -4,9 +4,9 @@ import com.ncorti.myonnaise.Myonnaise
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import it.ncorti.emgvisualizer.Device
-import it.ncorti.emgvisualizer.DeviceManager
 import it.ncorti.emgvisualizer.MyoApplication
+import it.ncorti.emgvisualizer.dagger.DeviceManager
+import it.ncorti.emgvisualizer.ui.model.Device
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 

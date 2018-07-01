@@ -21,10 +21,6 @@ class ExportFragment : Fragment(), ExportContract.View {
         return root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
-
     override fun onStart() {
         super.onStart()
         presenter.start()

@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
-import it.ncorti.emgvisualizer.Device
+import it.ncorti.emgvisualizer.ui.model.Device
 import it.ncorti.emgvisualizer.R
 import it.ncorti.emgvisualizer.ui.MainActivity
 import kotlinx.android.synthetic.main.layout_scan_device.*

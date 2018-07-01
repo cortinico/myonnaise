@@ -3,7 +3,6 @@ package it.ncorti.emgvisualizer.dagger
 import com.ncorti.myonnaise.Myonnaise
 import dagger.Component
 import dagger.android.AndroidInjector
-import it.ncorti.emgvisualizer.DeviceManager
 import it.ncorti.emgvisualizer.MyoApplication
 import it.ncorti.emgvisualizer.ui.control.ControlDevicePresenter
 import it.ncorti.emgvisualizer.ui.export.ExportPresenter
