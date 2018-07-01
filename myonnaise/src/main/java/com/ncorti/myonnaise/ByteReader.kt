@@ -8,71 +8,29 @@ import java.nio.ByteOrder
  * But be carefully to byte array size. There is no limitation of get() method,
  * so there is a possibility of overloading the byte buffer.
  *
- *
- * ByteReader is useful for handling raw data taken from bluetooth connection with Myo
+ * [ByteReader] is useful for handling raw data taken from bluetooth connection with Myo
  */
 class ByteReader {
 
-    /**
-     * Raw byte array
-     */
-    /**
-     * Return reference to byteData
-     *
-     * @return byteData reference
-     */
-    /**
-     * Method for setting byteData into reader
-     *
-     * @param data Raw byteData read
-     */
+    private var byteBuffer: ByteBuffer? = null
+
     var byteData: ByteArray? = null
         set(data) {
             field = data
-            this.bbf = ByteBuffer.wrap(this.byteData)
-            bbf!!.order(ByteOrder.LITTLE_ENDIAN)
+            this.byteBuffer = ByteBuffer.wrap(field)
+            byteBuffer?.order(ByteOrder.nativeOrder())
         }
-    /**
-     * ByteBuffer for reading purpose
-     */
-    private var bbf: ByteBuffer? = null
 
-    /**
-     * Return a short from byteReader
-     * ATTENTION: don't call this method before setByteData
-     * ATTENTION: pay attention to byte array size
-     *
-     * @return Next short read
-     */
     val short: Short
-        get() = this.bbf!!.short
+        get() = this.byteBuffer!!.short
 
-    /**
-     * Return a byte from byteReader
-     * ATTENTION: don't call this method before setByteData
-     * ATTENTION: pay attention to byte array size
-     *
-     * @return Next byte read
-     */
     val byte: Byte
-        get() = this.bbf!!.get()
+        get() = this.byteBuffer!!.get()
 
-    /**
-     * Return a int from byteReader
-     * ATTENTION: don't call this method before setByteData
-     * ATTENTION: pay attention to byte array size
-     *
-     * @return Next int read
-     */
     val int: Int
-        get() = this.bbf!!.int
+        get() = this.byteBuffer!!.int
 
-    /**
-     * Rewind byte reader to begin, for restart reading
-     */
-    fun rewind() {
-        this.bbf!!.rewind()
-    }
+    fun rewind() = this.byteBuffer?.rewind()
 
     /**
      * Method for reading n consecutive floats, returned in a new array
@@ -83,7 +41,7 @@ class ByteReader {
     fun getBytes(size: Int): FloatArray {
         val result = FloatArray(size)
         for (i in 0 until size)
-            result[i] = bbf!!.get().toFloat()
+            result[i] = byteBuffer!!.get().toFloat()
         return result
     }
 }

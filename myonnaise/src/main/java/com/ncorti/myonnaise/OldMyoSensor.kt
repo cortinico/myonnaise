@@ -15,7 +15,7 @@ import java.util.LinkedList
 /**
  * Class that represent the Myo EMG device sensor
  */
-class MyoSensor
+class OldMyoSensor
 /**
  * Public constructor that requires
  *
@@ -24,42 +24,15 @@ class MyoSensor
  * @param context   Application context
  */
 (
-        /**
-         * Myo Device Name
-         */
         private val myoDeviceName: String,
-        /**
-         * Myo Device Name
-         */
         private val myoDeviceAddress: String,
-        /**
-         * Reference to Context
-         */
         private val context: Context) {
 
-    /**
-     * Reference to bluetooth scanner
-     */
     private val mBluetoothScanner: BluetoothLeScanner
-    /**
-     * Bluethoot characteristic
-     */
     private var mBluetoothGatt: BluetoothGatt? = null
-    /**
-     * Reference to GATT callbacks
-     */
     private var mMyoCallback: OldMyoGattCallback? = null
-    /**
-     * Myo available commands
-     */
-    private val commandList: MyoCommandList
-    /**
-     * Handler for thread execution
-     */
+//    private val commandList: CommandList
     private val mHandler: Handler
-    /**
-     * Reference to Scan Callback
-     */
     private val mCallback: ScanMyoListCallback
 
     /**
@@ -150,13 +123,13 @@ class MyoSensor
 
         mCallback = ScanMyoListCallback()
         mHandler = Handler()
-        this.commandList = MyoCommandList()
+//        this.commandList = CommandList()
     }
 
     fun startConnection() {
         mHandler.postDelayed({
             mBluetoothScanner.stopScan(mCallback)
-            //                EventBusProvider.postOnMainThread(new SensorConnectEvent(MyoSensor.this, false));
+            //                EventBusProvider.postOnMainThread(new SensorConnectEvent(OldMyoSensor.this, false));
         }, SCAN_PERIOD)
         mBluetoothScanner.startScan(mCallback)
     }
@@ -165,22 +138,22 @@ class MyoSensor
         closeBLEGatt()
     }
 
-    fun startMeasurement() {
-        if (mBluetoothGatt == null || !mMyoCallback!!.setMyoControlCommand(commandList.sendEmgOnly())) {
-            Log.d(TAG, "Error start measurment")
-        } else {
-            isMeasuring = true
-            mMyoCallback!!.setMyoControlCommand(commandList.sendVibration3())
-        }
-    }
-
-    fun stopMeasurement() {
-        if (mBluetoothGatt == null || !mMyoCallback!!.setMyoControlCommand(commandList.sendUnsetData())) {
-            Log.d(TAG, "Error pause measurment")
-        } else {
-            isMeasuring = false
-        }
-    }
+//    fun startMeasurement() {
+//        if (mBluetoothGatt == null || !mMyoCallback!!.setMyoControlCommand(commandList.sendEmgOnly())) {
+//            Log.d(TAG, "Error start measurment")
+//        } else {
+//            isMeasuring = true
+//            mMyoCallback!!.setMyoControlCommand(commandList.sendVibration3())
+//        }
+//    }
+//
+//    fun stopMeasurement() {
+//        if (mBluetoothGatt == null || !mMyoCallback!!.setMyoControlCommand(commandList.sendUnsetData())) {
+//            Log.d(TAG, "Error pause measurment")
+//        } else {
+//            isMeasuring = false
+//        }
+//    }
 
     protected inner class ScanMyoListCallback : ScanCallback() {
         override fun onScanResult(callbackType: Int, result: ScanResult) {
@@ -189,10 +162,10 @@ class MyoSensor
             if (myoDeviceName == device.name) {
                 mBluetoothScanner.stopScan(mCallback)
                 // Trying to connect GATT
-                mMyoCallback = OldMyoGattCallback(this@MyoSensor)
+                mMyoCallback = OldMyoGattCallback(this@OldMyoSensor)
                 mBluetoothGatt = device.connectGatt(context, false, mMyoCallback)
                 mMyoCallback!!.setBluetoothGatt(mBluetoothGatt)
-                //                EventBusProvider.postOnMainThread(new SensorConnectEvent(MyoSensor.this, true));
+                //                EventBusProvider.postOnMainThread(new SensorConnectEvent(OldMyoSensor.this, true));
             }
         }
     }
@@ -268,7 +241,7 @@ class MyoSensor
         /**
          * TAG for debugging purpose
          */
-        private val TAG = "MyoSensor"
+        private val TAG = "OldMyoSensor"
         /**
          * Accelerometer sensor name
          */

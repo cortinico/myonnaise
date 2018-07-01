@@ -43,7 +43,7 @@ public class MyoSensor extends Sensor {
     /**
      * TAG for debugging purpose
      */
-    private static final String TAG = "MyoSensor";
+    private static final String TAG = "OldMyoSensor";
     /**
      * Accelerometer sensor name
      */

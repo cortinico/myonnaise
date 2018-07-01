@@ -2,20 +2,23 @@ package it.ncorti.emgvisualizer.ui.control
 
 import it.ncorti.emgvisualizer.BasePresenter
 import it.ncorti.emgvisualizer.BaseView
-import it.ncorti.emgvisualizer.Device
 
 
 interface ControlDeviceContract {
 
     interface View : BaseView<Presenter> {
 
-        fun showDeviceInformation(device: Device)
+        fun showDeviceInformation(name: String?, address: String)
 
         fun showConnectionProgress()
 
         fun hideConnectionProgress()
 
-        fun showConnectionSuccess()
+        fun showConnected()
+
+        fun showDisconnected()
+
+        fun showConnecting()
 
         fun showConnectionError()
 
@@ -23,11 +26,22 @@ interface ControlDeviceContract {
 
         fun disableConnectButton()
 
+        fun enableControlPanel()
+
+        fun disableControlPanel()
+
+        fun showStreaming()
+
+        fun showNotStreaming()
     }
 
     interface Presenter : BasePresenter {
 
-        fun onConnectClicked()
+        fun onConnectionToggleClicked()
+
+        fun onStreamingToggleClicked()
+
+        fun onVibrateClicked(duration: Int)
 
     }
 }

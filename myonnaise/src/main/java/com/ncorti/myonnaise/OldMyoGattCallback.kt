@@ -18,7 +18,7 @@ class OldMyoGattCallback
  */
 (
         /** Reference to Myo sensor  */
-        private val concreteSensor: MyoSensor) : BluetoothGattCallback() {
+        private val concreteSensor: OldMyoSensor) : BluetoothGattCallback() {
     /** TAG for debugging purpose  */
     private val TAG = "MyoGatt"
     /** Bytereader for reading from raw data  */
@@ -45,7 +45,7 @@ class OldMyoGattCallback
     //    private BluetoothGattCharacteristic mCharacteristic_emg3;
 
     /** EMG Command List  */
-    private val commandList = MyoCommandList()
+//    private val commandList = CommandList()
 
     init {
         br = ByteReader()
@@ -139,7 +139,7 @@ class OldMyoGattCallback
                 } else {
                     Log.d(TAG, "Find command Characteristic !!")
                     // set Myo [Never Sleep Mode]
-                    setMyoControlCommand(commandList.sendUnSleep())
+//                    setMyoControlCommand(commandList.sendUnSleep())
                 }
             }
         }
@@ -234,7 +234,7 @@ class OldMyoGattCallback
 
             if (systemTime_ms > lastNeverSleepTime + NEVER_SLEEP_SEND_TIME) {
                 // set Myo [Never Sleep Mode]
-                setMyoControlCommand(commandList.sendUnSleep())
+//                setMyoControlCommand(commandList.sendUnSleep())
                 lastNeverSleepTime = systemTime_ms
             }
         }
@@ -271,7 +271,7 @@ class OldMyoGattCallback
      */
     fun stopCallback() {
         // Before the closing GATT, set Myo [Normal Sleep Mode].
-        setMyoControlCommand(commandList.sendNormalSleep())
+//        setMyoControlCommand(commandList.sendNormalSleep())
         Log.d(TAG, "STOP CALLBACK")
 
         writeDescriptorQueue = LinkedList()

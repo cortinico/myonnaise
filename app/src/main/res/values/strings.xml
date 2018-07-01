@@ -33,5 +33,17 @@
     <string name="select">Select</string>
     <string name="device_status">Device Status</string>
     <string name="disconnected">Disconnected</string>
+    <string name="connected">Connected</string>
+    <string name="connecting">Connecting…</string>
+    <string name="device_control">Device Control</string>
+    <string name="not_streaming">Not streaming</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+    <string name="streaming_frequency">Streaming Frequency</string>
+    <string name="trigger_vibration">Trigger Vibration</string>
+    <string name="vibrate_short">Short</string>
+    <string name="vibrate_medium">Medium</string>
+    <string name="vibrate_long">Long</string>
+    <string name="currently_streaming">Currently streaming…</string>
 
 </resources>

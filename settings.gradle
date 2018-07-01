@@ -1,1 +1,1 @@
-include ':app', ':myonnaise'
+include ':app', ':myonnaise', ':sensorgraphview'

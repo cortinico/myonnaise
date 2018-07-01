@@ -1,7 +1,6 @@
 package it.ncorti.emgvisualizer.ui.scan
 
 import com.ncorti.myonnaise.Myonnaise
-import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -28,7 +27,9 @@ class ScanDevicePresenter(val view: ScanDeviceContract.View) : ScanDeviceContrac
 
     override fun start() {
         view.wipeDeviceList()
-        view.populateDeviceList(deviceManager.scannedDeviceList)
+        view.populateDeviceList(deviceManager
+                .scannedDeviceList
+                .map { it -> Device(it.name, it.address) })
     }
 
     override fun stop() {
@@ -46,10 +47,9 @@ class ScanDevicePresenter(val view: ScanDeviceContract.View) : ScanDeviceContrac
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        val foundDevice = Device(it.name, it.address)
-                        if (foundDevice !in deviceManager.scannedDeviceList) {
+                        if (it !in deviceManager.scannedDeviceList) {
                             view.addDeviceToList(Device(it.name, it.address))
-                            deviceManager.scannedDeviceList.add(foundDevice)
+                            deviceManager.scannedDeviceList.add(it)
                         }
                     }, {
                         view.hideScanLoading()
@@ -62,7 +62,7 @@ class ScanDevicePresenter(val view: ScanDeviceContract.View) : ScanDeviceContrac
     }
 
     override fun onDeviceSelected(index: Int) {
-        deviceManager.selectedDevice = deviceManager.scannedDeviceList[index]
+        deviceManager.selectedIndex = index
         view.navigateToControlDevice()
     }
 }

@@ -55,7 +55,7 @@
         app:layout_constraintTop_toBottomOf="@+id/device_address" />
 
     <View
-        android:id="@+id/divider"
+        android:id="@+id/info_divider"
         android:layout_width="wrap_content"
         android:layout_height="2dp"
         android:layout_marginTop="@dimen/default_margin"
@@ -71,28 +71,31 @@
         android:text="@string/device_status"
         android:textColor="@color/primaryColor"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider" />
+        app:layout_constraintTop_toBottomOf="@+id/info_divider" />
 
     <TextView
         android:id="@+id/device_status"
         style="@style/TextAppearance.AppCompat.Body1"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_margin"
-        app:layout_constraintTop_toBottomOf="@+id/device_status_label"
-        android:text="@string/disconnected" />
+        android:text="@string/disconnected"
+        app:layout_constraintEnd_toStartOf="@+id/progress_connect"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/device_status_label" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_connect"
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="wrap_content"
+        android:minWidth="120dp"
         android:layout_height="@dimen/ten_grid_size"
         android:layout_margin="@dimen/default_margin"
+        android:text="@string/connect"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
         app:layout_constraintBottom_toTopOf="@+id/device_status"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/device_status"
-        android:text="@string/connect" />
+        app:layout_constraintTop_toBottomOf="@+id/device_status" />
 
     <ProgressBar
         android:id="@+id/progress_connect"
@@ -103,6 +106,123 @@
         app:layout_constraintBottom_toTopOf="@+id/button_connect"
         app:layout_constraintEnd_toStartOf="@+id/button_connect"
         app:layout_constraintTop_toBottomOf="@+id/button_connect" />
+
+    <View
+        android:id="@+id/status_divider"
+        android:layout_width="wrap_content"
+        android:layout_height="2dp"
+        android:layout_marginTop="@dimen/default_margin"
+        android:background="@color/colorBackground"
+        app:layout_constraintTop_toBottomOf="@id/button_connect" />
+
+    <TextView
+        android:id="@+id/device_control_label"
+        style="@style/TextAppearance.AppCompat.Subhead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
+        android:text="@string/device_control"
+        android:textColor="@color/primaryColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/status_divider" />
+
+    <TextView
+        android:id="@+id/device_streaming_status"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
+        android:text="@string/not_streaming"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/device_control_label" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_start_streaming"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="wrap_content"
+        android:minWidth="120dp"
+        android:layout_height="@dimen/ten_grid_size"
+        android:layout_margin="@dimen/default_margin"
+        android:enabled="false"
+        android:text="@string/start"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+        app:layout_constraintBottom_toTopOf="@+id/device_streaming_status"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/device_streaming_status" />
+
+    <TextView
+        android:id="@+id/device_frequency_label"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
+        android:text="@string/streaming_frequency"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_start_streaming" />
+
+    <SeekBar
+        android:id="@+id/seekbar_frequency"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/base_grid_size"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginRight="@dimen/base_grid_size"
+        android:layout_marginBottom="@dimen/default_margin"
+        android:max="3"
+        app:layout_constraintTop_toBottomOf="@id/device_frequency_label" />
+
+    <TextView
+        android:id="@+id/device_vibrate_label"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
+        android:text="@string/trigger_vibration"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seekbar_frequency" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_vibrate_1"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/ten_grid_size"
+        android:layout_margin="@dimen/default_margin"
+        android:enabled="false"
+        android:text="@string/vibrate_short"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+        app:layout_constraintEnd_toStartOf="@id/button_vibrate_2"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/device_vibrate_label" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_vibrate_2"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/ten_grid_size"
+        android:layout_margin="@dimen/default_margin"
+        android:enabled="false"
+        android:text="@string/vibrate_medium"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+        app:layout_constraintEnd_toStartOf="@id/button_vibrate_3"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toEndOf="@id/button_vibrate_1"
+        app:layout_constraintTop_toBottomOf="@+id/device_vibrate_label" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_vibrate_3"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/ten_grid_size"
+        android:layout_margin="@dimen/default_margin"
+        android:enabled="false"
+        android:text="@string/vibrate_long"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toEndOf="@+id/button_vibrate_2"
+        app:layout_constraintTop_toBottomOf="@+id/device_vibrate_label" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

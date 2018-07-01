@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="graph_line1">#FF3f51b5</color>
-    <color name="graph_line2">#FF9c27b0</color>
-    <color name="graph_line3">#FF009688</color>
-    <color name="graph_line4">#FF8bc34a</color>
-    <color name="graph_line5">#FFffc107</color>
-    <color name="graph_line6">#FF795548</color>
-    <color name="graph_line7">#FFe51c23</color>
-    <color name="graph_line8">#FFcddc39</color>
-    <color name="graph_info">#1976D2</color>
 
     <color name="primaryColor">#2196f3</color>
     <color name="primaryLightColor">#6ec6ff</color>
