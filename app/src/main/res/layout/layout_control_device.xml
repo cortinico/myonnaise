@@ -88,9 +88,9 @@
         android:id="@+id/button_connect"
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="wrap_content"
-        android:minWidth="120dp"
         android:layout_height="@dimen/ten_grid_size"
         android:layout_margin="@dimen/default_margin"
+        android:minWidth="120dp"
         android:text="@string/connect"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
         app:layout_constraintBottom_toTopOf="@+id/device_status"
@@ -140,10 +140,10 @@
         android:id="@+id/button_start_streaming"
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="wrap_content"
-        android:minWidth="120dp"
         android:layout_height="@dimen/ten_grid_size"
         android:layout_margin="@dimen/default_margin"
         android:enabled="false"
+        android:minWidth="120dp"
         android:text="@string/start"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
         app:layout_constraintBottom_toTopOf="@+id/device_streaming_status"
@@ -160,6 +160,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_start_streaming" />
 
+    <TextView
+        android:id="@+id/device_frequency_value"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
+        android:text="@string/_200hz"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_start_streaming" />
+
     <SeekBar
         android:id="@+id/seekbar_frequency"
         style="@style/Widget.AppCompat.SeekBar.Discrete"
@@ -169,7 +179,8 @@
         android:layout_marginTop="@dimen/default_margin"
         android:layout_marginRight="@dimen/base_grid_size"
         android:layout_marginBottom="@dimen/default_margin"
-        android:max="3"
+        android:max="7"
+        android:progress="7"
         app:layout_constraintTop_toBottomOf="@id/device_frequency_label" />
 
     <TextView

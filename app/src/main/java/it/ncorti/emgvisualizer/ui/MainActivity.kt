@@ -8,9 +8,12 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import it.ncorti.emgvisualizer.R
-import it.ncorti.emgvisualizer.old.ui.fragments.GraphFragment
 import it.ncorti.emgvisualizer.ui.control.ControlDeviceFragment
 import it.ncorti.emgvisualizer.ui.control.ControlDevicePresenter
+import it.ncorti.emgvisualizer.ui.export.ExportFragment
+import it.ncorti.emgvisualizer.ui.graph.GraphFragment
+import it.ncorti.emgvisualizer.ui.export.ExportPresenter
+import it.ncorti.emgvisualizer.ui.graph.GraphPresenter
 import it.ncorti.emgvisualizer.ui.scan.ScanDeviceFragment
 import it.ncorti.emgvisualizer.ui.scan.ScanDevicePresenter
 import kotlinx.android.synthetic.main.activity_main.*
@@ -20,6 +23,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var scanDeviceFragment: ScanDeviceFragment
     private lateinit var controlDeviceFragment: ControlDeviceFragment
+    private lateinit var graphFragment: GraphFragment
+    private lateinit var exportFragment: ExportFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,10 +32,11 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.new_toolbar))
 
         createPresenters()
-        val fragmentList = listOf(
+        val fragmentList = listOf<Fragment>(
                 scanDeviceFragment,
                 controlDeviceFragment,
-                GraphFragment()
+                graphFragment,
+                exportFragment
         )
 
         view_pager.adapter = MyAdapter(supportFragmentManager, fragmentList)
@@ -56,6 +62,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.item_scan -> view_pager.currentItem = 0
                 R.id.item_control -> view_pager.currentItem = 1
                 R.id.item_graph -> view_pager.currentItem = 2
+                R.id.item_export -> view_pager.currentItem = 3
             }
             false
         }
@@ -70,6 +77,14 @@ class MainActivity : AppCompatActivity() {
         controlDeviceFragment = ControlDeviceFragment.newInstance()
         val controlPresenter = ControlDevicePresenter(controlDeviceFragment)
         controlDeviceFragment.setPresenter(controlPresenter)
+
+        graphFragment = GraphFragment.newInstance()
+        val graphPresenter = GraphPresenter(graphFragment)
+        graphFragment.setPresenter(graphPresenter)
+
+        exportFragment = ExportFragment.newInstance()
+        val exportPresenter = ExportPresenter(exportFragment)
+        exportFragment.setPresenter(exportPresenter)
     }
 
     fun navigateToPage(pageId: Int) {

@@ -113,4 +113,21 @@ class ControlDevicePresenter(val view: ControlDeviceContract.View) : ControlDevi
         }
     }
 
+    override fun onProgressSelected(progress: Int) {
+        val selectedFrequency = when (progress) {
+            0 -> 1
+            1 -> 2
+            2 -> 5
+            3 -> 10
+            4 -> 25
+            5 -> 50
+            6 -> 100
+            else -> 200
+        }
+        view.showFrequency(selectedFrequency)
+        deviceManager.myo?.apply {
+            this.frequency = selectedFrequency
+        }
+    }
+
 }

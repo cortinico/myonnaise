@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import it.ncorti.emgvisualizer.R
@@ -33,6 +34,14 @@ class ControlDeviceFragment : Fragment(), ControlDeviceContract.View {
         button_vibrate_1.setOnClickListener { presenter.onVibrateClicked(1) }
         button_vibrate_2.setOnClickListener { presenter.onVibrateClicked(2) }
         button_vibrate_3.setOnClickListener { presenter.onVibrateClicked(3) }
+        seekbar_frequency.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                presenter.onProgressSelected(progress)
+            }
+            override fun onStartTrackingTouch(p0: SeekBar?) {}
+            override fun onStopTrackingTouch(p0: SeekBar?) {}
+        })
+        seekbar_frequency.isEnabled = false
     }
 
     override fun setPresenter(presenter: ControlDeviceContract.Presenter) {
@@ -96,6 +105,7 @@ class ControlDeviceFragment : Fragment(), ControlDeviceContract.View {
         button_vibrate_1.isEnabled = false
         button_vibrate_2.isEnabled = false
         button_vibrate_3.isEnabled = false
+        seekbar_frequency.isEnabled = false
     }
 
     override fun enableControlPanel() {
@@ -103,6 +113,7 @@ class ControlDeviceFragment : Fragment(), ControlDeviceContract.View {
         button_vibrate_1.isEnabled = true
         button_vibrate_2.isEnabled = true
         button_vibrate_3.isEnabled = true
+        seekbar_frequency.isEnabled = true
     }
 
     override fun showStreaming() {
@@ -113,5 +124,9 @@ class ControlDeviceFragment : Fragment(), ControlDeviceContract.View {
     override fun showNotStreaming() {
         button_start_streaming.text = getText(R.string.start)
         device_streaming_status.text = getString(R.string.not_streaming)
+    }
+
+    override fun showFrequency(frequency: Int) {
+        device_frequency_value.text = getString(R.string.templated_hz, frequency)
     }
 }

@@ -16,5 +16,4 @@ class DeviceManager {
     var myo: Myo? = null
 
     var connected = myo?.isConnected() ?: false
-
 }

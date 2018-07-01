@@ -5,9 +5,11 @@ import android.content.Context
 import android.util.Log
 import io.reactivex.Flowable
 import io.reactivex.Observable
+import io.reactivex.processors.PublishProcessor
 import io.reactivex.processors.ReplayProcessor
 import io.reactivex.subjects.BehaviorSubject
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 private const val MYO_MIN_VALUE = -120f
 private const val MYO_MAX_VALUE = 120f
@@ -40,6 +42,7 @@ private val CHAR_CLIENT_CONFIG = UUID.fromString("00002902-0000-1000-8000-00805f
 /** Emg Byte Size  */
 private const val EMG_ARRAY_SIZE = 16
 private const val PROCESSOR_BUFFER_SIZE = 120000
+private const val MYO_MAX_FREQUENCY = 200
 
 private const val TAG = "MYO"
 
@@ -53,9 +56,14 @@ enum class MyoControlStatus {
 
 class Myo(private val device: BluetoothDevice) : BluetoothGattCallback() {
 
+    var frequency: Int = 0
+        set(value) {
+            field = if (value >= MYO_MAX_FREQUENCY) 0 else value
+        }
+
     private val connectionStatusSubject: BehaviorSubject<MyoStatus> = BehaviorSubject.createDefault(MyoStatus.DISCONNECTED)
     private val controlStatusSubject: BehaviorSubject<MyoControlStatus> = BehaviorSubject.createDefault(MyoControlStatus.NOT_STREAMING)
-    private val dataProcessor: ReplayProcessor<FloatArray> = ReplayProcessor.createWithSize(PROCESSOR_BUFFER_SIZE)
+    private val dataProcessor: PublishProcessor<FloatArray> = PublishProcessor.create()
 
     private var byteReader = ByteReader()
     private var gatt: BluetoothGatt? = null
@@ -73,7 +81,14 @@ class Myo(private val device: BluetoothDevice) : BluetoothGattCallback() {
 
     fun statusObservable(): Observable<MyoStatus> = connectionStatusSubject
     fun controlObservable(): Observable<MyoControlStatus> = controlStatusSubject
-    fun dataFlowable(): Flowable<FloatArray> = dataProcessor
+
+    fun dataFlowable(): Flowable<FloatArray> {
+        return if (frequency == 0){
+            dataProcessor
+        } else {
+            dataProcessor.sample((1000/frequency).toLong(), TimeUnit.MILLISECONDS)
+        }
+    }
 
     fun connect(context: Context) {
         connectionStatusSubject.onNext(MyoStatus.CONNECTING)
@@ -82,6 +97,7 @@ class Myo(private val device: BluetoothDevice) : BluetoothGattCallback() {
 
     fun disconnect() {
         gatt?.disconnect()
+        controlStatusSubject.onNext(MyoControlStatus.NOT_STREAMING)
         connectionStatusSubject.onNext(MyoStatus.DISCONNECTED)
     }
 
@@ -115,6 +131,7 @@ class Myo(private val device: BluetoothDevice) : BluetoothGattCallback() {
         } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
             // Calling disconnect() here will cause to release the GATT resources.
             disconnect()
+            controlStatusSubject.onNext(MyoControlStatus.NOT_STREAMING)
             connectionStatusSubject.onNext(MyoStatus.DISCONNECTED)
             Log.d(TAG, "Bluetooth Disconnected")
         }

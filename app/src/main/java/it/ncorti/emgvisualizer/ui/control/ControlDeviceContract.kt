@@ -33,6 +33,8 @@ interface ControlDeviceContract {
         fun showStreaming()
 
         fun showNotStreaming()
+
+        fun showFrequency(frequency: Int)
     }
 
     interface Presenter : BasePresenter {
@@ -42,6 +44,8 @@ interface ControlDeviceContract {
         fun onStreamingToggleClicked()
 
         fun onVibrateClicked(duration: Int)
+
+        fun onProgressSelected(progress: Int)
 
     }
 }

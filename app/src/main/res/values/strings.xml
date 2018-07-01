@@ -45,5 +45,14 @@
     <string name="vibrate_medium">Medium</string>
     <string name="vibrate_long">Long</string>
     <string name="currently_streaming">Currently streaming…</string>
+    <string name="_200hz">200Hz</string>
+    <string name="templated_hz">%1$dhz</string>
+    <string name="permission_denied_message">Myo EMG Visualizer can\'t work without Location permission!</string>
+    <string name="onboarding_title_1">Welcome to Myo EMG Visualizer</string>
+    <string name="onboarding_description_1">You can use this app to collect EMG data from your MYO</string>
+    <string name="onboarding_description_2">Search for your Myo form the \'Scan\' page and Select your Myo from the list. In order to perform a scan we need the \'Location\' permission</string>
+    <string name="onboarding_description_3">Select the frequency e start streaming form the \'Control\' page</string>
+    <string name="onboarding_description_4">Visualize your data in the \'Graph\' page</string>
+    <string name="onboarding_description_5">Export the collected data as a CSV in the \'Export page</string>
 
 </resources>
