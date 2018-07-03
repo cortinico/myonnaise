@@ -50,5 +50,14 @@
     <string name="onboarding_description_3">Select the frequency e start streaming form the \'Control\' page</string>
     <string name="onboarding_description_4">Visualize your data in the \'Graph\' page</string>
     <string name="onboarding_description_5">Export the collected data as a CSV in the \'Export page</string>
+    <string name="zero">0</string>
+    <string name="points_to_export">Points to Export</string>
+    <string name="start_collecting">Start Collecting</string>
+    <string name="save_export">Save Export</string>
+    <string name="reset">Reset</string>
+    <string name="share">Share</string>
+    <string name="save">Save</string>
+    <string name="save_info_message">You can export the collected points to a CSV file or use the Share dialog.</string>
+    <string name="export_points">Export Points</string>
 
 </resources>

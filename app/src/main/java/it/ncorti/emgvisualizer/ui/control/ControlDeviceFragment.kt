@@ -57,6 +57,8 @@ class ControlDeviceFragment : Fragment(), ControlDeviceContract.View {
         super.setUserVisibleHint(isVisibleToUser)
         if (isVisibleToUser) {
             presenter.start()
+        } else {
+            presenter.stop()
         }
     }
 
@@ -117,13 +119,13 @@ class ControlDeviceFragment : Fragment(), ControlDeviceContract.View {
     }
 
     override fun showStreaming() {
-        button_start_streaming.text = getText(R.string.stop)
-        device_streaming_status.text = getString(R.string.currently_streaming)
+        button_start_streaming?.text = getText(R.string.stop)
+        device_streaming_status?.text = getString(R.string.currently_streaming)
     }
 
     override fun showNotStreaming() {
-        button_start_streaming.text = getText(R.string.start)
-        device_streaming_status.text = getString(R.string.not_streaming)
+        button_start_streaming?.text = getText(R.string.start)
+        device_streaming_status?.text = getString(R.string.not_streaming)
     }
 
     override fun showFrequency(frequency: Int) {

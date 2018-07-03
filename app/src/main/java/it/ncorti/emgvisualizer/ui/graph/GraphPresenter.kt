@@ -21,6 +21,9 @@ class GraphPresenter(val view: GraphContract.View) : GraphContract.Presenter {
     override fun start() {
         deviceManager.myo?.apply {
             if (this.isStreaming()) {
+                dataSubscription?.apply {
+                    if (!this.isDisposed) this.dispose()
+                }
                 dataSubscription = this.dataFlowable()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
