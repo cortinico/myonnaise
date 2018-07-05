@@ -242,17 +242,9 @@ class Myo(private val device: BluetoothDevice) : BluetoothGattCallback() {
     override fun onCharacteristicChanged(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic) {
         super.onCharacteristicChanged(gatt, characteristic)
 
-        if (characteristic.uuid.toString().contains("d5060105-a904-deb9-4748-2c7f4a124842")) {
-            // TODO!!!!!!!!
-//        if (characteristic.uuid.toString().endsWith(CHAR_EMG_POSTFIX)) {
+        if (characteristic.uuid.toString().endsWith(CHAR_EMG_POSTFIX)) {
             val emgData = characteristic.value
             byteReader.byteData = emgData
-
-            emgData.forEach {
-                print(it)
-                print(",")
-            }
-            println()
 
             dataProcessor.onNext(byteReader.getBytes(EMG_ARRAY_SIZE / 2))
             dataProcessor.onNext(byteReader.getBytes(EMG_ARRAY_SIZE / 2))
