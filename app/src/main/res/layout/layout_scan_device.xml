@@ -4,15 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/text_empty_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        tools:text="@string/first_do_a_scan" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_device_found"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:itemLayout="@layout/item_device" />
+        tools:listitem="@layout/item_device" />
 
-    <!-- TODO Fix margin here -->
+    <!-- Here I'm doing a really bad margin hack to
+         show a progress bar à la Google Chrome. -->
     <ProgressBar
         android:id="@+id/progress_bar_search"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
@@ -21,8 +31,8 @@
         android:layout_gravity="top"
         android:layout_marginTop="-6dp"
         android:layout_marginBottom="-8dp"
-        android:indeterminate="true"
-        android:alpha="0" />
+        android:alpha="0"
+        android:indeterminate="true" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_scan"

@@ -5,12 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.ncorti.myonnaise.MYO_CHANNELS
+import com.ncorti.myonnaise.MYO_MAX_VALUE
+import com.ncorti.myonnaise.MYO_MIN_VALUE
+import com.ncorti.myonnaise.Myo
+import it.ncorti.emgvisualizer.BaseFragment
 import it.ncorti.emgvisualizer.R
+import it.ncorti.emgvisualizer.R.id.sensor_graph_view
 import kotlinx.android.synthetic.main.layout_graph.*
 
-class GraphFragment : Fragment(), GraphContract.View {
-
-    private lateinit var presenter: GraphContract.Presenter
+class GraphFragment : BaseFragment<GraphContract.Presenter>(), GraphContract.View {
 
     companion object {
         fun newInstance() = GraphFragment()
@@ -24,35 +28,26 @@ class GraphFragment : Fragment(), GraphContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // TODO Export me
-        sensor_graph_view.channels = 8
-        sensor_graph_view.maxValue = 128.0f
-        sensor_graph_view.minValue = -128.0f
-    }
-
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        if (isVisibleToUser) {
-            println("GraphFramgnet: Visible")
-            presenter.start()
-            sensor_graph_view?.apply {
-                this.running = true
-            }
-        } else {
-            println("GraphFramgnet: Not Visible")
-            presenter.stop()
-            sensor_graph_view?.apply {
-                this.running = false
-            }
-        }
-    }
-
-    override fun setPresenter(presenter: GraphContract.Presenter) {
-        this.presenter = presenter
+        sensor_graph_view.channels = MYO_CHANNELS
+        sensor_graph_view.maxValue = MYO_MAX_VALUE
+        sensor_graph_view.minValue = MYO_MIN_VALUE
     }
 
     override fun showData(data: FloatArray) {
         sensor_graph_view?.addPoint(data)
     }
 
+    override fun startGraph(running:Boolean) {
+        sensor_graph_view?.apply {
+            this.running = running
+        }
+    }
+
+    override fun showNoStreamingMessage() {
+        text_empty_graph.visibility = View.VISIBLE
+    }
+
+    override fun hideNoStreamingMessage() {
+        text_empty_graph.visibility = View.INVISIBLE
+    }
 }

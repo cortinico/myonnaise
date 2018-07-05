@@ -62,40 +62,43 @@ class IntroActivity : AppIntro() {
         setVibrateIntensity(30)
     }
 
-    override fun onResume() {
-        super.onResume()
-        val prefs = getSharedPreferences(PREFS_GLOBAL, Context.MODE_PRIVATE)
-        if (prefs.getBoolean(KEY_COMPLETED_ONBOARDING, false)) {
-            startMainActivity()
-        }
-    }
-
     override fun onSkipPressed(currentFragment: Fragment) {
         super.onSkipPressed(currentFragment)
+        saveOnBoardingCompleted()
         requestPermission()
     }
 
     override fun onDonePressed(currentFragment: Fragment) {
         super.onDonePressed(currentFragment)
+        saveOnBoardingCompleted()
         requestPermission()
     }
 
+    private fun saveOnBoardingCompleted() {
+        val editor = getSharedPreferences(PREFS_GLOBAL, Context.MODE_PRIVATE).edit()
+        editor.putBoolean(KEY_COMPLETED_ONBOARDING, true)
+        editor.apply()
+    }
+
     private fun requestPermission() {
-        ActivityCompat.requestPermissions(this,
-                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
-                REQUEST_LOCATION_CODE)
+        val hasPermission = (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+        if (hasPermission) {
+            startMainActivity()
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
+                    REQUEST_LOCATION_CODE)
+        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         when (requestCode) {
             REQUEST_LOCATION_CODE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    val editor = getSharedPreferences(PREFS_GLOBAL, Context.MODE_PRIVATE).edit()
-                    editor.putBoolean(KEY_COMPLETED_ONBOARDING, true)
-                    editor.apply()
                     startMainActivity()
                 } else {
-                    Toast.makeText(this, getString(R.string.permission_denied_message), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.location_permission_denied_message), Toast.LENGTH_SHORT).show()
                 }
             }
         }

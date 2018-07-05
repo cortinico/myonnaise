@@ -10,9 +10,12 @@ interface GraphContract {
 
         fun showData(data: FloatArray)
 
+        fun startGraph(running: Boolean)
+
+        fun hideNoStreamingMessage()
+
+        fun showNoStreamingMessage()
     }
 
-    interface Presenter : BasePresenter {
-
-    }
+    interface Presenter : BasePresenter
 }

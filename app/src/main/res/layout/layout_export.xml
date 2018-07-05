@@ -40,8 +40,8 @@
         android:layout_marginLeft="@dimen/default_margin"
         android:layout_marginTop="@dimen/default_margin"
         android:layout_marginRight="@dimen/default_margin"
-        android:text="@string/start_collecting"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Button" />
+        android:enabled="false"
+        android:text="@string/start_collecting" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_reset_collecting"
@@ -51,8 +51,7 @@
         android:layout_marginLeft="@dimen/default_margin"
         android:layout_marginRight="@dimen/default_margin"
         android:enabled="false"
-        android:text="@string/reset"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Button" />
+        android:text="@string/reset" />
 
     <TextView
         android:id="@+id/save_export_title"
@@ -83,7 +82,6 @@
         android:layout_marginTop="@dimen/default_margin"
         android:layout_marginRight="@dimen/default_margin"
         android:text="@string/share"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
         android:visibility="invisible" />
 
     <com.google.android.material.button.MaterialButton
@@ -94,6 +92,5 @@
         android:layout_marginLeft="@dimen/default_margin"
         android:layout_marginRight="@dimen/default_margin"
         android:text="@string/save"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
         android:visibility="invisible" />
 </LinearLayout>

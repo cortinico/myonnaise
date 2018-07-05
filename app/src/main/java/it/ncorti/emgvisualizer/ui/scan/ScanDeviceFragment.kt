@@ -8,20 +8,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
-import it.ncorti.emgvisualizer.ui.model.Device
+import it.ncorti.emgvisualizer.BaseFragment
 import it.ncorti.emgvisualizer.R
 import it.ncorti.emgvisualizer.ui.MainActivity
+import it.ncorti.emgvisualizer.ui.model.Device
 import kotlinx.android.synthetic.main.layout_scan_device.*
 
-class ScanDeviceFragment : Fragment(), ScanDeviceContract.View {
+class ScanDeviceFragment : BaseFragment<ScanDeviceContract.Presenter>(), ScanDeviceContract.View {
 
-    private lateinit var listDeviceAdapter: DeviceAdapter
-    private lateinit var presenter: ScanDeviceContract.Presenter
+    private var listDeviceAdapter: DeviceAdapter? = null
 
     companion object {
         fun newInstance() = ScanDeviceFragment()
@@ -37,11 +36,11 @@ class ScanDeviceFragment : Fragment(), ScanDeviceContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fab_scan.setOnClickListener { presenter.onScanToggleClicked() }
+        fab_scan.setOnClickListener { presenter?.onScanToggleClicked() }
 
-        listDeviceAdapter = DeviceAdapter(object : DeviceSelectedListener{
+        listDeviceAdapter = DeviceAdapter(object : DeviceSelectedListener {
             override fun onDeviceSelected(v: View, position: Int) {
-                presenter.onDeviceSelected(position)
+                presenter?.onDeviceSelected(position)
             }
         })
         list_device_found.layoutManager = LinearLayoutManager(this.context)
@@ -51,27 +50,36 @@ class ScanDeviceFragment : Fragment(), ScanDeviceContract.View {
 
     override fun onStart() {
         super.onStart()
-        presenter.start()
+        presenter?.start()
     }
 
-    override fun onStop() {
-        super.onStop()
-        presenter.stop()
+    override fun showStartMessage() {
+        text_empty_list?.text = getString(R.string.first_do_a_scan)
+        text_empty_list?.visibility = View.VISIBLE
+    }
+
+    override fun showEmptyListMessage() {
+        text_empty_list.text = getString(R.string.no_myo_found)
+        text_empty_list.visibility = View.VISIBLE
+    }
+
+    override fun hideEmptyListMessage() {
+        text_empty_list.visibility = View.INVISIBLE
     }
 
     override fun populateDeviceList(list: List<Device>) {
-        listDeviceAdapter.deviceList = list.toMutableList()
-        listDeviceAdapter.notifyDataSetChanged()
+        listDeviceAdapter?.deviceList = list.toMutableList()
+        listDeviceAdapter?.notifyDataSetChanged()
     }
 
     override fun addDeviceToList(device: Device) {
-        listDeviceAdapter.deviceList.add(device)
-        listDeviceAdapter.notifyItemInserted(listDeviceAdapter.itemCount)
+        listDeviceAdapter?.deviceList?.add(device)
+        listDeviceAdapter?.notifyItemInserted(listDeviceAdapter?.itemCount ?: 0)
     }
 
     override fun wipeDeviceList() {
-        listDeviceAdapter.deviceList = mutableListOf()
-        listDeviceAdapter.notifyItemRangeRemoved(0, listDeviceAdapter.itemCount)
+        listDeviceAdapter?.deviceList = mutableListOf()
+        listDeviceAdapter?.notifyItemRangeRemoved(0, listDeviceAdapter?.itemCount ?: 0)
     }
 
     override fun showScanLoading() {
@@ -80,20 +88,16 @@ class ScanDeviceFragment : Fragment(), ScanDeviceContract.View {
     }
 
     override fun hideScanLoading() {
-        progress_bar_search.animate().alpha(0.0f)
-        fab_scan.setImageDrawable(context?.getDrawable(R.drawable.ic_magnify))
+        progress_bar_search?.animate()?.alpha(0.0f)
+        fab_scan?.setImageDrawable(context?.getDrawable(R.drawable.ic_magnify))
     }
 
     override fun showScanError() {
-        Toast.makeText(this.context, "Scan Failed", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this.context, getString(R.string.scan_failed), Toast.LENGTH_SHORT).show()
     }
 
     override fun showScanCompleted() {
-        Toast.makeText(this.context, "Scan Completed!", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun setPresenter(presenter: ScanDeviceContract.Presenter) {
-        this.presenter = presenter
+        Toast.makeText(this.context, getString(R.string.scan_completed), Toast.LENGTH_SHORT).show()
     }
 
     override fun navigateToControlDevice() {
@@ -155,27 +159,4 @@ class ScanDeviceFragment : Fragment(), ScanDeviceContract.View {
             return false
         }
     }
-
-//
-//    private fun requestPermission() {
-//        if (ContextCompat.checkSelfPermission(context!!, Manifest.permission.ACCESS_FINE_LOCATION)
-//                != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(activity!!,
-//                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-//                    123)
-//        }
-//    }
-//
-//    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-//        when (requestCode) {
-//            123 -> if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                // Permission Granted
-//                Toast.makeText(context!!, "Permission Granted", Toast.LENGTH_SHORT).show()
-//            } else {
-//                // Permission Denied
-//                Toast.makeText(context!!, "Permission Denied", Toast.LENGTH_SHORT).show()
-//            }
-//            else -> super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-//        }
-//    }
 }

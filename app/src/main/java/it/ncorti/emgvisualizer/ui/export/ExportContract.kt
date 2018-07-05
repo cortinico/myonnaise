@@ -7,6 +7,11 @@ import it.ncorti.emgvisualizer.BaseView
 interface ExportContract {
 
     interface View : BaseView<Presenter> {
+        fun enableStartCollectingButton()
+
+        fun disableStartCollectingButton()
+
+        fun showNotStreamingErrorMessage()
 
         fun showCollectionStarted()
 
@@ -22,8 +27,9 @@ interface ExportContract {
 
         fun showSaveArea()
 
-        fun showSavedToCsvMessage()
+        fun saveCsvFile(content: String)
 
+        fun sharePlainText(content: String)
     }
 
     interface Presenter : BasePresenter {

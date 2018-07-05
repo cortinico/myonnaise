@@ -1,23 +1,14 @@
 <resources>
     <string name="app_name">Myo EMG Visualizer</string>
-    <string name="connect">Connect</string>
-    <string name="disconnect">Disconnect</string>
 
-    <!-- TODO Cleanup resources here -->
-    <string name="nothing_to_show">Nothing to show here…</string>
-    <string name="stream_not_enabled">Sensor stream not enabled</string>
-    <string name="connection_started">Connection started…</string>
-    <string name="connection_stopped">Connection stopped</string>
-    <string name="scan_over">Device scan over</string>
-    <string name="no_myo">No Myo found!</string>
-    <string name="you_must_perform_a_scan">You haven\'t already found a Myo, you must first perform a device scan. Do it now?</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
-    <string name="tutorial_menu">Press this button to open menu</string>
-    <string name="disclaimer">To use this app you need a Myo</string>
+    <string name="no_myo_found">No Myo found!</string>
+    <string name="first_do_a_scan">First, you need to find a Myo.\nPress the button to start a scan.</string>
+
+    <!-- TODO About -->
     <string name="description">You can use this app to visualize raw EMG data from a Myo device. If you find a bug, feel free to report it :)</string>
     <string name="author">Nicola Corti</string>
     <string name="source_code">To access the source code press here</string>
+
     <string name="scan">Scan</string>
     <string name="control">Control</string>
     <string name="graph">Graph</string>
@@ -28,6 +19,8 @@
     <string name="device_address">Device Address</string>
     <string name="select">Select</string>
     <string name="device_status">Device Status</string>
+    <string name="connect">Connect</string>
+    <string name="disconnect">Disconnect</string>
     <string name="disconnected">Disconnected</string>
     <string name="connected">Connected</string>
     <string name="connecting">Connecting…</string>
@@ -43,7 +36,8 @@
     <string name="currently_streaming">Currently streaming…</string>
     <string name="_200hz">200Hz</string>
     <string name="templated_hz">%1$dhz</string>
-    <string name="permission_denied_message">Myo EMG Visualizer can\'t work without Location permission!</string>
+    <string name="location_permission_denied_message">Myo EMG Visualizer can\'t work without Location permission!</string>
+    <string name="write_permission_denied_message">Myo EMG Visualizer can\'t save a CSV file without Write permission!</string>
     <string name="onboarding_title_1">Welcome to Myo EMG Visualizer</string>
     <string name="onboarding_description_1">You can use this app to collect EMG data from your MYO</string>
     <string name="onboarding_description_2">Search for your Myo form the \'Scan\' page and Select your Myo from the list. In order to perform a scan we need the \'Location\' permission</string>
@@ -52,12 +46,16 @@
     <string name="onboarding_description_5">Export the collected data as a CSV in the \'Export page</string>
     <string name="zero">0</string>
     <string name="points_to_export">Points to Export</string>
-    <string name="start_collecting">Start Collecting</string>
     <string name="save_export">Save Export</string>
     <string name="reset">Reset</string>
     <string name="share">Share</string>
     <string name="save">Save</string>
     <string name="save_info_message">You can export the collected points to a CSV file or use the Share dialog.</string>
     <string name="export_points">Export Points</string>
+    <string name="stop_collecting">Stop Collecting</string>
+    <string name="start_collecting">Start Collecting</string>
+    <string name="scan_failed">Scan Failed</string>
+    <string name="scan_completed">Scan Completed!</string>
+    <string name="start_a_streaming_nto_populate_the_graph">Start a streaming\nto populate the graph</string>
 
 </resources>

@@ -4,6 +4,7 @@
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
         <item name="colorAccent">@color/secondaryColor</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Caption</item>
+        <item name="textAppearanceButton">@style/TextAppearance.MaterialComponents.Button</item>
         <item name="android:windowBackground">@android:color/white</item>
 
         <item name="android:windowNoTitle">true</item>

@@ -26,10 +26,7 @@ class ControlDevicePresenter(val view: ControlDeviceContract.View) : ControlDevi
         MyoApplication.applicationComponent.inject(this)
     }
 
-    override fun stop() {
-        statusSubscription?.dispose()
-        controlSubscription?.dispose()
-    }
+    override fun create() { }
 
     override fun start() {
         if (deviceManager.selectedIndex == -1) {
@@ -56,11 +53,13 @@ class ControlDevicePresenter(val view: ControlDeviceContract.View) : ControlDevi
                                     MyoStatus.CONNECTED -> {
                                         view.hideConnectionProgress()
                                         view.showConnected()
-                                        view.enableControlPanel()
                                     }
                                     MyoStatus.CONNECTING -> {
                                         view.showConnectionProgress()
                                         view.showConnecting()
+                                    }
+                                    MyoStatus.READY -> {
+                                        view.enableControlPanel()
                                     }
                                     else -> {
                                         view.hideConnectionProgress()
@@ -81,6 +80,11 @@ class ControlDevicePresenter(val view: ControlDeviceContract.View) : ControlDevi
                                 }
                             }
         }
+    }
+
+    override fun stop() {
+        statusSubscription?.dispose()
+        controlSubscription?.dispose()
     }
 
     override fun onConnectionToggleClicked() {

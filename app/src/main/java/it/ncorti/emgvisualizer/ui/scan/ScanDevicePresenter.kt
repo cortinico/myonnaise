@@ -1,6 +1,8 @@
 package it.ncorti.emgvisualizer.ui.scan
 
+import android.bluetooth.BluetoothDevice
 import com.ncorti.myonnaise.Myonnaise
+import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -18,18 +20,26 @@ class ScanDevicePresenter(val view: ScanDeviceContract.View) : ScanDeviceContrac
     @Inject
     lateinit var deviceManager: DeviceManager
 
+    private lateinit var scanFlowable: Flowable<BluetoothDevice>
+    private var scanSubscription: Disposable? = null
+
     init {
         MyoApplication.applicationComponent.inject(this)
     }
 
-    private val scanFlowable = myonnaise.startScan(10, TimeUnit.SECONDS)
-    private var scanSubscription: Disposable? = null
+    override fun create() {
+        scanFlowable = myonnaise.startScan(10, TimeUnit.SECONDS)
+    }
 
     override fun start() {
         view.wipeDeviceList()
-        view.populateDeviceList(deviceManager
-                .scannedDeviceList
-                .map { it -> Device(it.name, it.address) })
+        if (deviceManager.scannedDeviceList.isEmpty()) {
+            view.showStartMessage()
+        } else {
+            view.populateDeviceList(deviceManager
+                    .scannedDeviceList
+                    .map { it -> Device(it.name, it.address) })
+        }
     }
 
     override fun stop() {
@@ -41,7 +51,11 @@ class ScanDevicePresenter(val view: ScanDeviceContract.View) : ScanDeviceContrac
         if (scanSubscription?.isDisposed == false) {
             scanSubscription?.dispose()
             view.hideScanLoading()
+            if (deviceManager.scannedDeviceList.isEmpty()){
+                view.showEmptyListMessage()
+            }
         } else {
+            view.hideEmptyListMessage()
             view.showScanLoading()
             scanSubscription = scanFlowable
                     .subscribeOn(Schedulers.io())
@@ -54,9 +68,15 @@ class ScanDevicePresenter(val view: ScanDeviceContract.View) : ScanDeviceContrac
                     }, {
                         view.hideScanLoading()
                         view.showScanError()
+                        if (deviceManager.scannedDeviceList.isEmpty()){
+                            view.showEmptyListMessage()
+                        }
                     }, {
                         view.hideScanLoading()
                         view.showScanCompleted()
+                        if (deviceManager.scannedDeviceList.isEmpty()){
+                            view.showEmptyListMessage()
+                        }
                     })
         }
     }

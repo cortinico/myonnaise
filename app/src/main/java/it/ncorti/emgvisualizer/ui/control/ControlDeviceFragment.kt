@@ -6,14 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.Toast
-import androidx.fragment.app.Fragment
+import it.ncorti.emgvisualizer.BaseFragment
 import it.ncorti.emgvisualizer.R
 import kotlinx.android.synthetic.main.layout_control_device.*
 
 
-class ControlDeviceFragment : Fragment(), ControlDeviceContract.View {
-
-    private lateinit var presenter: ControlDeviceContract.Presenter
+class ControlDeviceFragment : BaseFragment<ControlDeviceContract.Presenter>(), ControlDeviceContract.View {
 
     companion object {
         fun newInstance() = ControlDeviceFragment()
@@ -29,37 +27,20 @@ class ControlDeviceFragment : Fragment(), ControlDeviceContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        button_connect.setOnClickListener { presenter.onConnectionToggleClicked() }
-        button_start_streaming.setOnClickListener { presenter.onStreamingToggleClicked() }
-        button_vibrate_1.setOnClickListener { presenter.onVibrateClicked(1) }
-        button_vibrate_2.setOnClickListener { presenter.onVibrateClicked(2) }
-        button_vibrate_3.setOnClickListener { presenter.onVibrateClicked(3) }
+        button_connect.setOnClickListener { presenter?.onConnectionToggleClicked() }
+        button_start_streaming.setOnClickListener { presenter?.onStreamingToggleClicked() }
+        button_vibrate_1.setOnClickListener { presenter?.onVibrateClicked(1) }
+        button_vibrate_2.setOnClickListener { presenter?.onVibrateClicked(2) }
+        button_vibrate_3.setOnClickListener { presenter?.onVibrateClicked(3) }
         seekbar_frequency.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                presenter.onProgressSelected(progress)
+                presenter?.onProgressSelected(progress)
             }
+
             override fun onStartTrackingTouch(p0: SeekBar?) {}
             override fun onStopTrackingTouch(p0: SeekBar?) {}
         })
         seekbar_frequency.isEnabled = false
-    }
-
-    override fun setPresenter(presenter: ControlDeviceContract.Presenter) {
-        this.presenter = presenter
-    }
-
-    override fun onStart() {
-        super.onStart()
-        presenter.start()
-    }
-
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        if (isVisibleToUser) {
-            presenter.start()
-        } else {
-            presenter.stop()
-        }
     }
 
     override fun showDeviceInformation(name: String?, address: String) {

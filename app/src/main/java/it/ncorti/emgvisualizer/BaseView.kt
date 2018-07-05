@@ -1,7 +1,7 @@
 package it.ncorti.emgvisualizer
 
-interface BaseView<T> {
+interface BaseView<T : BasePresenter> {
 
-    fun setPresenter(presenter: T)
+    fun attachPresenter(presenter: T)
 
 }

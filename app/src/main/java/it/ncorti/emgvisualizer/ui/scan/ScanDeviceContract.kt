@@ -9,6 +9,12 @@ interface ScanDeviceContract {
 
     interface View : BaseView<Presenter> {
 
+        fun showStartMessage()
+
+        fun showEmptyListMessage()
+
+        fun hideEmptyListMessage()
+
         fun wipeDeviceList()
 
         fun addDeviceToList(device: Device)

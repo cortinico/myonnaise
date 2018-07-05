@@ -6,13 +6,9 @@ import android.util.Log
 import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.processors.PublishProcessor
-import io.reactivex.processors.ReplayProcessor
 import io.reactivex.subjects.BehaviorSubject
 import java.util.*
 import java.util.concurrent.TimeUnit
-
-private const val MYO_MIN_VALUE = -120f
-private const val MYO_MAX_VALUE = 120f
 
 /** Service ID - MYO CONTROL  */
 private val SERVICE_CONTROL_ID = UUID.fromString("d5060001-a904-deb9-4748-2c7f4a124842")
@@ -39,15 +35,17 @@ private const val CHAR_EMG_POSTFIX = "05-a904-deb9-4748-2c7f4a124842"
  */
 private val CHAR_CLIENT_CONFIG = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb")
 
-/** Emg Byte Size  */
 private const val EMG_ARRAY_SIZE = 16
-private const val PROCESSOR_BUFFER_SIZE = 120000
-private const val MYO_MAX_FREQUENCY = 200
+private const val KEEP_ALIVE_INTERVAL_MS = 10000
+const val MYO_MAX_FREQUENCY = 200
+const val MYO_CHANNELS = 8
+const val MYO_MAX_VALUE = 150.0f
+const val MYO_MIN_VALUE = -150.0f
 
 private const val TAG = "MYO"
 
 enum class MyoStatus {
-    CONNECTED, CONNECTING, DISCONNECTED
+    CONNECTED, CONNECTING, READY, DISCONNECTED
 }
 
 enum class MyoControlStatus {
@@ -60,6 +58,9 @@ class Myo(private val device: BluetoothDevice) : BluetoothGattCallback() {
         set(value) {
             field = if (value >= MYO_MAX_FREQUENCY) 0 else value
         }
+
+    var keepAlive = true
+    private var lastKeepAlive = 0L
 
     private val connectionStatusSubject: BehaviorSubject<MyoStatus> = BehaviorSubject.createDefault(MyoStatus.DISCONNECTED)
     private val controlStatusSubject: BehaviorSubject<MyoControlStatus> = BehaviorSubject.createDefault(MyoControlStatus.NOT_STREAMING)
@@ -83,10 +84,10 @@ class Myo(private val device: BluetoothDevice) : BluetoothGattCallback() {
     fun controlObservable(): Observable<MyoControlStatus> = controlStatusSubject
 
     fun dataFlowable(): Flowable<FloatArray> {
-        return if (frequency == 0){
+        return if (frequency == 0) {
             dataProcessor
         } else {
-            dataProcessor.sample((1000/frequency).toLong(), TimeUnit.MILLISECONDS)
+            dataProcessor.sample((1000 / frequency).toLong(), TimeUnit.MILLISECONDS)
         }
     }
 
@@ -96,12 +97,12 @@ class Myo(private val device: BluetoothDevice) : BluetoothGattCallback() {
     }
 
     fun disconnect() {
-        gatt?.disconnect()
+        gatt?.close()
         controlStatusSubject.onNext(MyoControlStatus.NOT_STREAMING)
         connectionStatusSubject.onNext(MyoStatus.DISCONNECTED)
     }
 
-    fun isConnected() = connectionStatusSubject.value == MyoStatus.CONNECTED
+    fun isConnected() = connectionStatusSubject.value == MyoStatus.CONNECTED || connectionStatusSubject.value == MyoStatus.READY
 
     fun isStreaming() = controlStatusSubject.value == MyoControlStatus.STREAMING
 
@@ -131,8 +132,6 @@ class Myo(private val device: BluetoothDevice) : BluetoothGattCallback() {
         } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
             // Calling disconnect() here will cause to release the GATT resources.
             disconnect()
-            controlStatusSubject.onNext(MyoControlStatus.NOT_STREAMING)
-            connectionStatusSubject.onNext(MyoStatus.DISCONNECTED)
             Log.d(TAG, "Bluetooth Disconnected")
         }
     }
@@ -178,7 +177,7 @@ class Myo(private val device: BluetoothDevice) : BluetoothGattCallback() {
             characteristicInfo = this.getCharacteristic(CHAR_INFO_ID)
             characteristicInfo?.apply {
                 // if there is only 1 item in the queue, then read it.  If more than 1, we handle asynchronously in the
-                // callback above. GIVE PRECEDENCE to descriptor writes. They must all finish first.
+                // callback. GIVE PRECEDENCE to descriptor writes. They must all finish first.
                 readQueue.add(this)
                 if (readQueue.size == 1 && writeQueue.size == 0) {
                     gatt.readCharacteristic(this)
@@ -186,7 +185,10 @@ class Myo(private val device: BluetoothDevice) : BluetoothGattCallback() {
             }
             characteristicCommand = this.getCharacteristic(CHAR_COMMAND_ID)
             characteristicCommand?.apply {
+                lastKeepAlive = System.currentTimeMillis()
                 sendCommand(CommandList.unSleep())
+                // We send the ready event as soon as the characteristicCommand is ready.
+                connectionStatusSubject.onNext(MyoStatus.READY)
             }
         }
     }
@@ -239,12 +241,27 @@ class Myo(private val device: BluetoothDevice) : BluetoothGattCallback() {
 
     override fun onCharacteristicChanged(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic) {
         super.onCharacteristicChanged(gatt, characteristic)
-//        Log.d(TAG, "onCharacteristicChanged ${characteristic.uuid}")
-        if (characteristic.uuid.toString().endsWith(CHAR_EMG_POSTFIX)) {
+
+        if (characteristic.uuid.toString().contains("d5060105-a904-deb9-4748-2c7f4a124842")) {
+            // TODO!!!!!!!!
+//        if (characteristic.uuid.toString().endsWith(CHAR_EMG_POSTFIX)) {
             val emgData = characteristic.value
             byteReader.byteData = emgData
-            dataProcessor.onNext(byteReader.getBytes(EMG_ARRAY_SIZE))
+
+            emgData.forEach {
+                print(it)
+                print(",")
+            }
+            println()
+
+            dataProcessor.onNext(byteReader.getBytes(EMG_ARRAY_SIZE / 2))
+            dataProcessor.onNext(byteReader.getBytes(EMG_ARRAY_SIZE / 2))
         }
-//         TODO Check if we need to send unsleep again.
+
+        val currentTimeMillis = System.currentTimeMillis()
+        if (keepAlive && currentTimeMillis > lastKeepAlive + KEEP_ALIVE_INTERVAL_MS) {
+            lastKeepAlive = currentTimeMillis
+            sendCommand(CommandList.unSleep())
+        }
     }
 }
