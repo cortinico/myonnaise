@@ -27,31 +27,31 @@ class IntroActivity : AppIntro() {
         addSlide(AppIntroFragment.newInstance(
                 getString(R.string.onboarding_title_1),
                 getString(R.string.onboarding_description_1),
-                R.mipmap.ic_launcher,
+                R.drawable.onboarding_0,
                 backgroundColor))
 
         addSlide(AppIntroFragment.newInstance(
                 getString(R.string.scan),
                 getString(R.string.onboarding_description_2),
-                R.mipmap.ic_launcher,
+                R.drawable.onboarding_1,
                 backgroundColor))
 
         addSlide(AppIntroFragment.newInstance(
                 getString(R.string.control),
                 getString(R.string.onboarding_description_3),
-                R.mipmap.ic_launcher,
+                R.drawable.onboarding_2,
                 backgroundColor))
 
         addSlide(AppIntroFragment.newInstance(
                 getString(R.string.graph),
                 getString(R.string.onboarding_description_4),
-                R.mipmap.ic_launcher,
+                R.drawable.onboarding_3,
                 backgroundColor))
 
         addSlide(AppIntroFragment.newInstance(
                 getString(R.string.export),
                 getString(R.string.onboarding_description_5),
-                R.mipmap.ic_launcher,
+                R.drawable.onboarding_4,
                 backgroundColor))
 
         setBarColor(ContextCompat.getColor(this, R.color.primaryDarkColor))
