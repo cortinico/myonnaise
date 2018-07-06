@@ -38,6 +38,7 @@ class ExportPresenter(val view: ExportContract.View) : ExportContract.Presenter 
 
     override fun stop() {
         dataSubscription?.dispose()
+        view.showCollectionStopped()
     }
 
     override fun onCollectionTogglePressed() {

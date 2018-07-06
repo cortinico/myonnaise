@@ -57,11 +57,11 @@ class ExportFragment : BaseFragment<ExportContract.Presenter>(), ExportContract.
     }
 
     override fun showCollectionStarted() {
-        button_start_collecting.text = getString(R.string.stop_collecting)
+        button_start_collecting?.text = getString(R.string.stop_collecting)
     }
 
     override fun showCollectionStopped() {
-        button_start_collecting.text = getString(R.string.start_collecting)
+        button_start_collecting?.text = getString(R.string.start_collecting)
     }
 
     override fun showCollectedPoints(totalPoints: Int) {
