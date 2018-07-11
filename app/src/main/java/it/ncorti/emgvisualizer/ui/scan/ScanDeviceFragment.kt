@@ -2,6 +2,7 @@ package it.ncorti.emgvisualizer.ui.scan
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,18 +13,29 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
+import dagger.android.support.AndroidSupportInjection
 import it.ncorti.emgvisualizer.BaseFragment
 import it.ncorti.emgvisualizer.R
 import it.ncorti.emgvisualizer.ui.MainActivity
 import it.ncorti.emgvisualizer.ui.model.Device
 import kotlinx.android.synthetic.main.layout_scan_device.*
+import javax.inject.Inject
 
 class ScanDeviceFragment : BaseFragment<ScanDeviceContract.Presenter>(), ScanDeviceContract.View {
 
-    private var listDeviceAdapter: DeviceAdapter? = null
-
     companion object {
         fun newInstance() = ScanDeviceFragment()
+    }
+
+    private var listDeviceAdapter: DeviceAdapter? = null
+
+    @Inject
+    lateinit var scanDevicePresenter: ScanDevicePresenter
+
+    override fun onAttach(context: Context?) {
+        AndroidSupportInjection.inject(this)
+        attachPresenter(scanDevicePresenter)
+        super.onAttach(context)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -36,21 +48,16 @@ class ScanDeviceFragment : BaseFragment<ScanDeviceContract.Presenter>(), ScanDev
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fab_scan.setOnClickListener { presenter?.onScanToggleClicked() }
+        fab_scan.setOnClickListener { scanDevicePresenter.onScanToggleClicked() }
 
         listDeviceAdapter = DeviceAdapter(object : DeviceSelectedListener {
             override fun onDeviceSelected(v: View, position: Int) {
-                presenter?.onDeviceSelected(position)
+                scanDevicePresenter.onDeviceSelected(position)
             }
         })
         list_device_found.layoutManager = LinearLayoutManager(this.context)
         list_device_found.itemAnimator = FadeInAnimator()
         list_device_found.adapter = listDeviceAdapter
-    }
-
-    override fun onStart() {
-        super.onStart()
-        presenter?.start()
     }
 
     override fun showStartMessage() {

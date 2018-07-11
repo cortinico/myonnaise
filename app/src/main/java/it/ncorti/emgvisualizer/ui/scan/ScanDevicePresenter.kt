@@ -8,24 +8,19 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import it.ncorti.emgvisualizer.MyoApplication
 import it.ncorti.emgvisualizer.dagger.DeviceManager
+import it.ncorti.emgvisualizer.ui.control.ControlDeviceContract
 import it.ncorti.emgvisualizer.ui.model.Device
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class ScanDevicePresenter(val view: ScanDeviceContract.View) : ScanDeviceContract.Presenter {
-
-    @Inject
-    lateinit var myonnaise: Myonnaise
-
-    @Inject
-    lateinit var deviceManager: DeviceManager
+class ScanDevicePresenter(
+        override val view: ScanDeviceContract.View,
+        private val myonnaise: Myonnaise,
+        private val deviceManager: DeviceManager
+) : ScanDeviceContract.Presenter(view) {
 
     private lateinit var scanFlowable: Flowable<BluetoothDevice>
     private var scanSubscription: Disposable? = null
-
-    init {
-        MyoApplication.applicationComponent.inject(this)
-    }
 
     override fun create() {
         scanFlowable = myonnaise.startScan(10, TimeUnit.SECONDS)

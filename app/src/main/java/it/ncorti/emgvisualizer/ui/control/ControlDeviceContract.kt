@@ -6,7 +6,7 @@ import it.ncorti.emgvisualizer.BaseView
 
 interface ControlDeviceContract {
 
-    interface View : BaseView<Presenter> {
+    interface View : BaseView {
 
         fun showDeviceInformation(name: String?, address: String)
 
@@ -37,15 +37,15 @@ interface ControlDeviceContract {
         fun showFrequency(frequency: Int)
     }
 
-    interface Presenter : BasePresenter {
+    abstract class Presenter(override val view: BaseView) : BasePresenter<BaseView>(view) {
 
-        fun onConnectionToggleClicked()
+        abstract fun onConnectionToggleClicked()
 
-        fun onStreamingToggleClicked()
+        abstract fun onStreamingToggleClicked()
 
-        fun onVibrateClicked(duration: Int)
+        abstract fun onVibrateClicked(duration: Int)
 
-        fun onProgressSelected(progress: Int)
+        abstract fun onProgressSelected(progress: Int)
 
     }
 }

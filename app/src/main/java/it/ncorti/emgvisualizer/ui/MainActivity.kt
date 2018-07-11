@@ -9,7 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
+import dagger.android.AndroidInjection
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
 import it.ncorti.emgvisualizer.R
+import it.ncorti.emgvisualizer.R.id.bottom_navigation
 import it.ncorti.emgvisualizer.ui.control.ControlDeviceFragment
 import it.ncorti.emgvisualizer.ui.control.ControlDevicePresenter
 import it.ncorti.emgvisualizer.ui.export.ExportFragment
@@ -19,18 +24,22 @@ import it.ncorti.emgvisualizer.ui.graph.GraphPresenter
 import it.ncorti.emgvisualizer.ui.scan.ScanDeviceFragment
 import it.ncorti.emgvisualizer.ui.scan.ScanDevicePresenter
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
 private const val PREFS_GLOBAL = "global"
 private const val KEY_COMPLETED_ONBOARDING = "completed_onboarding"
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
-    private lateinit var scanDeviceFragment: ScanDeviceFragment
-    private lateinit var controlDeviceFragment: ControlDeviceFragment
-    private lateinit var graphFragment: GraphFragment
-    private lateinit var exportFragment: ExportFragment
+    @Inject
+    lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+
+    override fun supportFragmentInjector(): AndroidInjector<Fragment> {
+        return fragmentDispatchingAndroidInjector
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
 
         // Checking if we should on-board the user the first time.
@@ -43,12 +52,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.new_toolbar))
 
-        createPresenters()
         val fragmentList = listOf<Fragment>(
-                scanDeviceFragment,
-                controlDeviceFragment,
-                graphFragment,
-                exportFragment
+                ScanDeviceFragment.newInstance(),
+                ControlDeviceFragment.newInstance(),
+                GraphFragment.newInstance(),
+                ExportFragment.newInstance()
         )
 
         view_pager.adapter = MyAdapter(supportFragmentManager, fragmentList)
@@ -79,25 +87,6 @@ class MainActivity : AppCompatActivity() {
             }
             false
         }
-
-    }
-
-    private fun createPresenters() {
-        scanDeviceFragment = ScanDeviceFragment.newInstance()
-        val scanPresenter = ScanDevicePresenter(scanDeviceFragment)
-        scanDeviceFragment.attachPresenter(scanPresenter)
-
-        controlDeviceFragment = ControlDeviceFragment.newInstance()
-        val controlPresenter = ControlDevicePresenter(controlDeviceFragment)
-        controlDeviceFragment.attachPresenter(controlPresenter)
-
-        graphFragment = GraphFragment.newInstance()
-        val graphPresenter = GraphPresenter(graphFragment)
-        graphFragment.attachPresenter(graphPresenter)
-
-        exportFragment = ExportFragment.newInstance()
-        val exportPresenter = ExportPresenter(exportFragment)
-        exportFragment.attachPresenter(exportPresenter)
     }
 
     fun navigateToPage(pageId: Int) {

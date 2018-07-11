@@ -6,7 +6,7 @@ import it.ncorti.emgvisualizer.BaseView
 
 interface GraphContract {
 
-    interface View : BaseView<Presenter> {
+    interface View : BaseView {
 
         fun showData(data: FloatArray)
 
@@ -17,5 +17,5 @@ interface GraphContract {
         fun showNoStreamingMessage()
     }
 
-    interface Presenter : BasePresenter
+    abstract class Presenter(override val view: BaseView) : BasePresenter<BaseView>(view)
 }

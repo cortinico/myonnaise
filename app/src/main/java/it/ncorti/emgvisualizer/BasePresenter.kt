@@ -1,11 +1,11 @@
 package it.ncorti.emgvisualizer
 
-interface BasePresenter {
+abstract class BasePresenter<V : BaseView>(open val view: V) {
 
-    fun create()
+    abstract fun create()
 
-    fun start()
+    abstract fun start()
 
-    fun stop()
+    abstract fun stop()
 
 }

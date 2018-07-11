@@ -7,26 +7,19 @@ import com.ncorti.myonnaise.Myonnaise
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import it.ncorti.emgvisualizer.dagger.DeviceManager
 import it.ncorti.emgvisualizer.MyoApplication
-import javax.inject.Inject
+import it.ncorti.emgvisualizer.dagger.DeviceManager
 
-class ControlDevicePresenter(val view: ControlDeviceContract.View) : ControlDeviceContract.Presenter {
-
-    @Inject
-    lateinit var myonnaise: Myonnaise
-
-    @Inject
-    lateinit var deviceManager: DeviceManager
+class ControlDevicePresenter(
+        override val view: ControlDeviceContract.View,
+        private val myonnaise: Myonnaise,
+        private val deviceManager: DeviceManager
+) : ControlDeviceContract.Presenter(view) {
 
     private var statusSubscription: Disposable? = null
     private var controlSubscription: Disposable? = null
 
-    init {
-        MyoApplication.applicationComponent.inject(this)
-    }
-
-    override fun create() { }
+    override fun create() {}
 
     override fun start() {
         if (deviceManager.selectedIndex == -1) {

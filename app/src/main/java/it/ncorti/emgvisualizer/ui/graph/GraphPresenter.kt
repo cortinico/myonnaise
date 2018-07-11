@@ -7,16 +7,12 @@ import it.ncorti.emgvisualizer.MyoApplication
 import it.ncorti.emgvisualizer.dagger.DeviceManager
 import javax.inject.Inject
 
-class GraphPresenter(val view: GraphContract.View) : GraphContract.Presenter {
-
-    @Inject
-    lateinit var deviceManager: DeviceManager
+class GraphPresenter(
+        override val view: GraphContract.View,
+        private val deviceManager: DeviceManager
+) : GraphContract.Presenter(view) {
 
     private var dataSubscription: Disposable? = null
-
-    init {
-        MyoApplication.applicationComponent.inject(this)
-    }
 
     override fun create() { }
 

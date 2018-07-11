@@ -3,11 +3,11 @@ package it.ncorti.emgvisualizer
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 
-open class BaseFragment<T : BasePresenter> : Fragment(), BaseView<T> {
+open class BaseFragment<P: BasePresenter<BaseView>> : Fragment(), BaseView {
 
-    var presenter: T? = null
+    open var presenter: P? = null
 
-    override fun attachPresenter(presenter: T) {
+    fun attachPresenter(presenter: P) {
         this.presenter = presenter
     }
 

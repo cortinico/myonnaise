@@ -6,7 +6,7 @@ import it.ncorti.emgvisualizer.BaseView
 
 interface ExportContract {
 
-    interface View : BaseView<Presenter> {
+    interface View : BaseView {
         fun enableStartCollectingButton()
 
         fun disableStartCollectingButton()
@@ -32,15 +32,15 @@ interface ExportContract {
         fun sharePlainText(content: String)
     }
 
-    interface Presenter : BasePresenter {
+    abstract class Presenter(override val view: BaseView) : BasePresenter<BaseView>(view) {
 
-        fun onCollectionTogglePressed()
+        abstract fun onCollectionTogglePressed()
 
-        fun onResetPressed()
+        abstract fun onResetPressed()
 
-        fun onSavePressed()
+        abstract fun onSavePressed()
 
-        fun onSharePressed()
+        abstract fun onSharePressed()
 
     }
 }

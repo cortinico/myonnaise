@@ -1,20 +1,33 @@
 package it.ncorti.emgvisualizer.ui.control
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.Toast
+import dagger.android.support.AndroidSupportInjection
 import it.ncorti.emgvisualizer.BaseFragment
 import it.ncorti.emgvisualizer.R
+import it.ncorti.emgvisualizer.R.id.*
 import kotlinx.android.synthetic.main.layout_control_device.*
+import javax.inject.Inject
 
 
 class ControlDeviceFragment : BaseFragment<ControlDeviceContract.Presenter>(), ControlDeviceContract.View {
 
     companion object {
         fun newInstance() = ControlDeviceFragment()
+    }
+
+    @Inject
+    lateinit var controlDevicePresenter: ControlDevicePresenter
+
+    override fun onAttach(context: Context?) {
+        AndroidSupportInjection.inject(this)
+        attachPresenter(controlDevicePresenter)
+        super.onAttach(context)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -27,14 +40,14 @@ class ControlDeviceFragment : BaseFragment<ControlDeviceContract.Presenter>(), C
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        button_connect.setOnClickListener { presenter?.onConnectionToggleClicked() }
-        button_start_streaming.setOnClickListener { presenter?.onStreamingToggleClicked() }
-        button_vibrate_1.setOnClickListener { presenter?.onVibrateClicked(1) }
-        button_vibrate_2.setOnClickListener { presenter?.onVibrateClicked(2) }
-        button_vibrate_3.setOnClickListener { presenter?.onVibrateClicked(3) }
+        button_connect.setOnClickListener { controlDevicePresenter.onConnectionToggleClicked() }
+        button_start_streaming.setOnClickListener { controlDevicePresenter.onStreamingToggleClicked() }
+        button_vibrate_1.setOnClickListener { controlDevicePresenter.onVibrateClicked(1) }
+        button_vibrate_2.setOnClickListener { controlDevicePresenter.onVibrateClicked(2) }
+        button_vibrate_3.setOnClickListener { controlDevicePresenter.onVibrateClicked(3) }
         seekbar_frequency.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                presenter?.onProgressSelected(progress)
+                controlDevicePresenter.onProgressSelected(progress)
             }
 
             override fun onStartTrackingTouch(p0: SeekBar?) {}

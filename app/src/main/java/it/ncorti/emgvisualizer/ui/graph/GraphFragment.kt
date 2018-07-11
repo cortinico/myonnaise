@@ -1,24 +1,34 @@
 package it.ncorti.emgvisualizer.ui.graph
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.ncorti.myonnaise.MYO_CHANNELS
 import com.ncorti.myonnaise.MYO_MAX_VALUE
 import com.ncorti.myonnaise.MYO_MIN_VALUE
-import com.ncorti.myonnaise.Myo
+import dagger.android.support.AndroidSupportInjection
 import it.ncorti.emgvisualizer.BaseFragment
 import it.ncorti.emgvisualizer.R
-import it.ncorti.emgvisualizer.R.id.sensor_graph_view
 import kotlinx.android.synthetic.main.layout_graph.*
+import javax.inject.Inject
 
 class GraphFragment : BaseFragment<GraphContract.Presenter>(), GraphContract.View {
 
     companion object {
         fun newInstance() = GraphFragment()
     }
+
+    @Inject
+    lateinit var graphPresenter: GraphPresenter
+
+    override fun onAttach(context: Context?) {
+        AndroidSupportInjection.inject(this)
+        attachPresenter(graphPresenter)
+        super.onAttach(context)
+    }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.layout_graph, container, false)
@@ -37,7 +47,7 @@ class GraphFragment : BaseFragment<GraphContract.Presenter>(), GraphContract.Vie
         sensor_graph_view?.addPoint(data)
     }
 
-    override fun startGraph(running:Boolean) {
+    override fun startGraph(running: Boolean) {
         sensor_graph_view?.apply {
             this.running = running
         }

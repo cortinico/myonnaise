@@ -7,7 +7,7 @@ import it.ncorti.emgvisualizer.ui.model.Device
 
 interface ScanDeviceContract {
 
-    interface View : BaseView<Presenter> {
+    interface View : BaseView {
 
         fun showStartMessage()
 
@@ -32,10 +32,10 @@ interface ScanDeviceContract {
         fun navigateToControlDevice()
     }
 
-    interface Presenter : BasePresenter {
+    abstract class Presenter(override val view: BaseView) : BasePresenter<BaseView>(view) {
 
-        fun onScanToggleClicked()
+        abstract fun onScanToggleClicked()
 
-        fun onDeviceSelected(index: Int)
+        abstract fun onDeviceSelected(index: Int)
     }
 }
