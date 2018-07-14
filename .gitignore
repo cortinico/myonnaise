@@ -1,8 +1,5 @@
 .*
 *.iml
 local.properties
-changes.diff
-gen/
-bin/
 build/
 
