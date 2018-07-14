@@ -23,9 +23,9 @@ jobs:
       - store_artifacts:
           path: app/build/reports
           destination: reports
-      - store_test_results:
+      - store_artifacts:
           path: app/build/test-results
-          destination: app-test-result
+          destination: app-tests
       - store_test_results:
           path: myonnaise/build/test-results
           destination: myonnaise-test-result
