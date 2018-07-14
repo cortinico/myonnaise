@@ -1,5 +1,6 @@
 package it.ncorti.emgvisualizer.ui.export
 
+import androidx.annotation.VisibleForTesting
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -15,7 +16,7 @@ class ExportPresenter(
     private val counter: AtomicInteger = AtomicInteger()
     private val buffer: ArrayList<FloatArray> = arrayListOf()
 
-    private var dataSubscription: Disposable? = null
+    internal var dataSubscription: Disposable? = null
 
     override fun create() {}
 
@@ -72,14 +73,15 @@ class ExportPresenter(
     }
 
     override fun onSavePressed() {
-        view.saveCsvFile(createCsv())
+        view.saveCsvFile(createCsv(buffer))
     }
 
     override fun onSharePressed() {
-        view.sharePlainText(createCsv())
+        view.sharePlainText(createCsv(buffer))
     }
 
-    private fun createCsv(): String {
+    @VisibleForTesting
+    internal fun createCsv(buffer: ArrayList<FloatArray>): String {
         val stringBuilder = StringBuilder()
         buffer.forEach {
             it.forEach {

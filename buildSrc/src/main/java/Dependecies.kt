@@ -6,7 +6,8 @@ object Versions {
     const val junit = "4.12"
     const val kotlin = "1.2.51"
     const val materialcomponents = "1.0.0-alpha3"
-    const val mockito = "2.6.3"
+    const val mockito = "2.19.0"
+    const val mockitoKotlin = "2.0.0-RC1"
     const val rxjava2 = "2.1.15"
     const val rxandroid2 = "2.0.2"
 }
@@ -21,6 +22,7 @@ object Libs {
 
     val junit = "junit:junit:${Versions.junit}"
     val mockitoCore = "org.mockito:mockito-core:${Versions.mockito}"
+    val mockitoKotlin = "com.nhaarman.mockitokotlin2:mockito-kotlin:${Versions.mockitoKotlin}"
 
     val rxjava2 = "io.reactivex.rxjava2:rxjava:${Versions.rxjava2}"
     val rxAndroid2 = "io.reactivex.rxjava2:rxandroid:${Versions.rxandroid2}"

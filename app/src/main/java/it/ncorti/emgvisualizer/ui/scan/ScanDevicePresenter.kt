@@ -19,8 +19,9 @@ class ScanDevicePresenter(
         private val deviceManager: DeviceManager
 ) : ScanDeviceContract.Presenter(view) {
 
-    private lateinit var scanFlowable: Flowable<BluetoothDevice>
-    private var scanSubscription: Disposable? = null
+    internal lateinit var scanFlowable: Flowable<BluetoothDevice>
+
+    internal var scanSubscription: Disposable? = null
 
     override fun create() {
         scanFlowable = myonnaise.startScan(10, TimeUnit.SECONDS)

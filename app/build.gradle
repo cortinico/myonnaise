@@ -38,6 +38,7 @@ dependencies {
 
     testImplementation Libs.junit
     testImplementation Libs.mockitoCore
+    testImplementation Libs.mockitoKotlin
 
     implementation Libs.rxjava2
     implementation Libs.rxAndroid2

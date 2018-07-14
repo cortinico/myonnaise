@@ -1,13 +1,9 @@
 package it.ncorti.emgvisualizer.ui.control
 
-import com.ncorti.myonnaise.CommandList
-import com.ncorti.myonnaise.MyoControlStatus
-import com.ncorti.myonnaise.MyoStatus
-import com.ncorti.myonnaise.Myonnaise
+import com.ncorti.myonnaise.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import it.ncorti.emgvisualizer.MyoApplication
 import it.ncorti.emgvisualizer.dagger.DeviceManager
 
 class ControlDevicePresenter(
@@ -16,8 +12,8 @@ class ControlDevicePresenter(
         private val deviceManager: DeviceManager
 ) : ControlDeviceContract.Presenter(view) {
 
-    private var statusSubscription: Disposable? = null
-    private var controlSubscription: Disposable? = null
+    internal var statusSubscription: Disposable? = null
+    internal var controlSubscription: Disposable? = null
 
     override fun create() {}
 
@@ -119,7 +115,7 @@ class ControlDevicePresenter(
             4 -> 25
             5 -> 50
             6 -> 100
-            else -> 200
+            else -> MYO_MAX_FREQUENCY
         }
         view.showFrequency(selectedFrequency)
         deviceManager.myo?.apply {
