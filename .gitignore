@@ -1,4 +1,5 @@
 .*
+!.circleci
 *.iml
 local.properties
 build/
