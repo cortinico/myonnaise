@@ -19,9 +19,16 @@ jobs:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
           name: Run Tests
-          command: ./gradlew lint test
+          command: ./gradlew lint test jacocoTestReport
       - store_artifacts:
           path: app/build/reports
           destination: reports
       - store_test_results:
           path: app/build/test-results
+          destination: app-test-result
+      - store_test_results:
+          path: myonnaise/build/test-results
+          destination: myonnaise-test-result
+      - run:
+          name: Upload Test Coverage
+          command: bash <(curl -s https://codecov.io/bash)
