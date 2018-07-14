@@ -28,7 +28,6 @@ class Myonnaise(val context: Context) {
             blLowEnergyScanner.startScan(scanCallback)
         }, BackpressureStrategy.BUFFER)
         return scanFlowable.doOnCancel {
-            println("Scan Stopped")
             blLowEnergyScanner.stopScan(scanCallback)
         }
     }
@@ -67,14 +66,11 @@ class Myonnaise(val context: Context) {
     inner class MyonnaiseScanCallback(private val emitter: FlowableEmitter<BluetoothDevice>) : ScanCallback() {
         override fun onScanResult(callbackType: Int, result: ScanResult?) {
             super.onScanResult(callbackType, result)
-            println("On Scan Result ${result?.rssi} ${result?.toString()}")
             result?.device?.apply { emitter.onNext(this) }
         }
 
         override fun onScanFailed(errorCode: Int) {
             super.onScanFailed(errorCode)
-
-            println("On Scan Failed")
             emitter.onError(RuntimeException())
         }
     }

@@ -19,7 +19,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
 }
 
 dependencies {
@@ -31,5 +30,7 @@ dependencies {
     implementation Libs.rxAndroid2
 
     testImplementation Libs.junit
+    testImplementation Libs.mockitoCore
+    testImplementation Libs.mockitoKotlin
 }
 

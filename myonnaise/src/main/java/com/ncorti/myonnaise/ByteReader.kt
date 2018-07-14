@@ -12,7 +12,7 @@ import java.nio.ByteOrder
  */
 class ByteReader {
 
-    private var byteBuffer: ByteBuffer? = null
+    internal var byteBuffer: ByteBuffer? = null
 
     var byteData: ByteArray? = null
         set(data) {

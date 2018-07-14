@@ -75,7 +75,8 @@ object CommandList {
     }
 }
 
-fun Command.isStartStreamingCommand() = this[0] == 0x01.toByte() &&
-        (this[2] != 0x00.toByte() || this[3] != 0x00.toByte() || this[4] != 0x00.toByte())
+fun Command.isStartStreamingCommand() = this.size >= 4
+        && this[0] == 0x01.toByte()
+        && (this[2] != 0x00.toByte() || this[3] != 0x00.toByte() || this[4] != 0x00.toByte())
 
 fun Command.isStopStreamingCommand() = Arrays.equals(this, CommandList.stopStreaming())

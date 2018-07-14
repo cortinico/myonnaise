@@ -10,40 +10,6 @@ import io.reactivex.subjects.BehaviorSubject
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-/** Service ID - MYO CONTROL  */
-private val SERVICE_CONTROL_ID = UUID.fromString("d5060001-a904-deb9-4748-2c7f4a124842")
-/** Service ID - MYO DATA  */
-private val SERVICE_EMG_DATA_ID = UUID.fromString("d5060005-a904-deb9-4748-2c7f4a124842")
-/** Characteristics ID - Myo Information  */
-private val CHAR_INFO_ID = UUID.fromString("d5060101-a904-deb9-4748-2c7f4a124842")
-/** Characteristics ID - Myo Firmware */
-private val CHAR_FIRMWARE_ID = UUID.fromString("d5060201-a904-deb9-4748-2c7f4a124842")
-/** Characteristics ID - Command ID  */
-private val CHAR_COMMAND_ID = UUID.fromString("d5060401-a904-deb9-4748-2c7f4a124842")
-/** Characteristics ID - EMG Sample 0  */
-private val CHAR_EMG_0_ID = UUID.fromString("d5060105-a904-deb9-4748-2c7f4a124842")
-/** Characteristics ID - EMG Sample 1  */
-private val CHAR_EMG_1_ID = UUID.fromString("d5060205-a904-deb9-4748-2c7f4a124842")
-/** Characteristics ID - EMG Sample 2  */
-private val CHAR_EMG_2_ID = UUID.fromString("d5060305-a904-deb9-4748-2c7f4a124842")
-/** Characteristics ID - EMG Sample 3  */
-private val CHAR_EMG_3_ID = UUID.fromString("d5060405-a904-deb9-4748-2c7f4a124842")
-private const val CHAR_EMG_POSTFIX = "05-a904-deb9-4748-2c7f4a124842"
-/**
- * Android Characteristic ID
- * (from Android Samples/BluetoothLeGatt/SampleGattAttributes.CLIENT_CHARACTERISTIC_CONFIG)
- */
-private val CHAR_CLIENT_CONFIG = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb")
-
-private const val EMG_ARRAY_SIZE = 16
-private const val KEEP_ALIVE_INTERVAL_MS = 10000
-const val MYO_MAX_FREQUENCY = 200
-const val MYO_CHANNELS = 8
-const val MYO_MAX_VALUE = 150.0f
-const val MYO_MIN_VALUE = -150.0f
-
-private const val TAG = "MYO"
-
 enum class MyoStatus {
     CONNECTED, CONNECTING, READY, DISCONNECTED
 }
@@ -54,6 +20,12 @@ enum class MyoControlStatus {
 
 class Myo(private val device: BluetoothDevice) : BluetoothGattCallback() {
 
+    val name : String
+        get() = device.name
+
+    val address : String
+        get() = device.address
+
     var frequency: Int = 0
         set(value) {
             field = if (value >= MYO_MAX_FREQUENCY) 0 else value
@@ -62,14 +34,14 @@ class Myo(private val device: BluetoothDevice) : BluetoothGattCallback() {
     var keepAlive = true
     private var lastKeepAlive = 0L
 
-    private val connectionStatusSubject: BehaviorSubject<MyoStatus> = BehaviorSubject.createDefault(MyoStatus.DISCONNECTED)
-    private val controlStatusSubject: BehaviorSubject<MyoControlStatus> = BehaviorSubject.createDefault(MyoControlStatus.NOT_STREAMING)
-    private val dataProcessor: PublishProcessor<FloatArray> = PublishProcessor.create()
+    internal val connectionStatusSubject: BehaviorSubject<MyoStatus> = BehaviorSubject.createDefault(MyoStatus.DISCONNECTED)
+    internal val controlStatusSubject: BehaviorSubject<MyoControlStatus> = BehaviorSubject.createDefault(MyoControlStatus.NOT_STREAMING)
+    internal val dataProcessor: PublishProcessor<FloatArray> = PublishProcessor.create()
 
+    internal var gatt: BluetoothGatt? = null
     private var byteReader = ByteReader()
-    private var gatt: BluetoothGatt? = null
     private var serviceControl: BluetoothGattService? = null
-    private var characteristicCommand: BluetoothGattCharacteristic? = null
+    internal var characteristicCommand: BluetoothGattCharacteristic? = null
     private var characteristicInfo: BluetoothGattCharacteristic? = null
     private var serviceEmg: BluetoothGattService? = null
     private var characteristicEmg0: BluetoothGattCharacteristic? = null
@@ -77,7 +49,7 @@ class Myo(private val device: BluetoothDevice) : BluetoothGattCallback() {
     private var characteristicEmg2: BluetoothGattCharacteristic? = null
     private var characteristicEmg3: BluetoothGattCharacteristic? = null
 
-    private val writeQueue: LinkedList<BluetoothGattDescriptor> = LinkedList()
+    internal val writeQueue: LinkedList<BluetoothGattDescriptor> = LinkedList()
     private val readQueue: LinkedList<BluetoothGattCharacteristic> = LinkedList()
 
     fun statusObservable(): Observable<MyoStatus> = connectionStatusSubject
@@ -193,7 +165,7 @@ class Myo(private val device: BluetoothDevice) : BluetoothGattCallback() {
         }
     }
 
-    private fun writeDescriptor(gatt: BluetoothGatt, descriptor: BluetoothGattDescriptor) {
+    internal fun writeDescriptor(gatt: BluetoothGatt, descriptor: BluetoothGattDescriptor) {
         writeQueue.add(descriptor)
         if (writeQueue.size == 1) {
             gatt.writeDescriptor(descriptor)
