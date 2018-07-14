@@ -1,14 +1,16 @@
 package com.ncorti.myonnaise
 
+import android.bluetooth.BluetoothGattCharacteristic
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
 /**
  * This class help you to read the byte line from Myo.
- * But be carefully to byte array size. There is no limitation of get() method,
- * so there is a possibility of overloading the byte buffer.
+ * Please pay attention that there are no checks for BufferOverFlow or similar problems,
+ * you just receive the amount of data you request (1, 2 or 4 bytes).
  *
- * [ByteReader] is useful for handling raw data taken from bluetooth connection with Myo
+ * [ByteReader] is useful for handling raw data taken from bluetooth connection with Myo.
+ * Use the [ByteReader.getBytes] to get an array of float from a [BluetoothGattCharacteristic].
  */
 class ByteReader {
 
@@ -33,7 +35,7 @@ class ByteReader {
     fun rewind() = this.byteBuffer?.rewind()
 
     /**
-     * Method for reading n consecutive floats, returned in a new array
+     * Method for reading n consecutive floats, returned in a new array.
      *
      * @param size Number of bytes to be read (usually 8 or 16)
      * @return A new array with read bytes

@@ -14,6 +14,14 @@ import io.reactivex.FlowableEmitter
 import io.reactivex.Single
 import java.util.concurrent.TimeUnit
 
+/**
+ * Entry point to the Myonnaise library.
+ * Use this class to do a Bluetooth scan and search for a new [Myo].
+ *
+ * Please note that in order to perform a Bluetooth Scan, the user needs to provide the
+ * [android.permission.ACCESS_COARSE_LOCATION] permission. You must request this permission to
+ * the user otherwise your scan will be empty.
+ */
 class Myonnaise(val context: Context) {
 
     private val blManager = context.getSystemService(Activity.BLUETOOTH_SERVICE) as BluetoothManager
@@ -22,6 +30,24 @@ class Myonnaise(val context: Context) {
 
     private var scanCallback: MyonnaiseScanCallback? = null
 
+    /**
+     * Use this method to perform a scan. This method will return a [Flowable] that will publish
+     * all the found [BluetoothDevice].
+     * The scan will be stopped when you cancel the Flowable.
+     * To set a timeout use the overloaded method
+     *
+     * Usage:
+     * ```
+     * Myonnaise(context).startScan()
+     *                      .subscribeOn(Schedulers.io())
+     *                      .observeOn(AndroidSchedulers.mainThread())
+     *                      .subscribe({
+     *                          // Do something with the found device
+     *                          println(it.address)
+     *                      })
+     * ```
+     * @return A flowable that will publish the found [BluetoothDevice]
+     */
     fun startScan(): Flowable<BluetoothDevice> {
         val scanFlowable: Flowable<BluetoothDevice> = Flowable.create({
             scanCallback = MyonnaiseScanCallback(it)
@@ -32,13 +58,39 @@ class Myonnaise(val context: Context) {
         }
     }
 
+    /**
+     * Use this method to perform a scan. This method will return a [Flowable] that will publish
+     * all the found [BluetoothDevice] and will stop after the timeout.
+     *
+     * Usage:
+     * ```
+     * Myonnaise(context).startScan(5, TimeUnit.MINUTES)
+     *                      .subscribeOn(Schedulers.io())
+     *                      .observeOn(AndroidSchedulers.mainThread())
+     *                      .subscribe({
+     *                          // Do something with the found device.
+     *                          println(it.address)
+     *                      })
+     * ```
+     * @param
+     * @param interval the timeout value.
+     * @param timeUnit time units to use for [interval].
+     */
     fun startScan(interval: Long, timeUnit: TimeUnit): Flowable<BluetoothDevice> =
             startScan().takeUntil(Flowable.timer(interval, timeUnit))
 
+    /**
+     * Returns a [Myo] from a [BluetoothDevice]. Use this method after you discovered a device with
+     * the [startScan] method.
+     */
     fun getMyo(bluetoothDevice: BluetoothDevice): Myo {
         return Myo(bluetoothDevice)
     }
 
+    /**
+     * Returns a [Myo] from a Bluetooth address. Please note that this method will perform another
+     * scan to search for the desired device and return a [Single].
+     */
     fun getMyo(myoAddress: String): Single<Myo> {
         return Single.create {
             val filter = ScanFilter.Builder()

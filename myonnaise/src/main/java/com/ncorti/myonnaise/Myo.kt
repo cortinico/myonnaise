@@ -18,28 +18,43 @@ enum class MyoControlStatus {
     STREAMING, NOT_STREAMING
 }
 
+/**
+ * Class that represents a Myo Armband.
+ * Use this class to connecting to it, send commands, start and stop streaming.
+ *
+ * @param device The [BluetoothDevice] that is backing this Myo.
+ */
 class Myo(private val device: BluetoothDevice) : BluetoothGattCallback() {
 
+    /** The Device Name of this Myo */
     val name : String
         get() = device.name
 
+    /** The Device Address of this Myo */
     val address : String
         get() = device.address
 
+    /** The EMG Streaming frequency. 0 to reset to the [MYO_MAX_FREQUENCY]. Allowed values [0, MYO_MAX_FREQUENCY] */
     var frequency: Int = 0
         set(value) {
             field = if (value >= MYO_MAX_FREQUENCY) 0 else value
         }
 
+    /**
+     * Keep alive flag. If set to true, the library will send a [CommandList.unSleep] command
+     * to the device every [KEEP_ALIVE_INTERVAL_MS] ms.
+     */
     var keepAlive = true
     private var lastKeepAlive = 0L
 
+    // Subjects for publishing outside Connection Status, Control Status and the Data (Float Arrays).
     internal val connectionStatusSubject: BehaviorSubject<MyoStatus> = BehaviorSubject.createDefault(MyoStatus.DISCONNECTED)
     internal val controlStatusSubject: BehaviorSubject<MyoControlStatus> = BehaviorSubject.createDefault(MyoControlStatus.NOT_STREAMING)
     internal val dataProcessor: PublishProcessor<FloatArray> = PublishProcessor.create()
 
     internal var gatt: BluetoothGatt? = null
     private var byteReader = ByteReader()
+
     private var serviceControl: BluetoothGattService? = null
     internal var characteristicCommand: BluetoothGattCharacteristic? = null
     private var characteristicInfo: BluetoothGattCharacteristic? = null
@@ -49,12 +64,57 @@ class Myo(private val device: BluetoothDevice) : BluetoothGattCallback() {
     private var characteristicEmg2: BluetoothGattCharacteristic? = null
     private var characteristicEmg3: BluetoothGattCharacteristic? = null
 
+    // We are using two queues for writing and reading characteristics/descriptors.
+    // Please note that we must always give precedence to the write.
     internal val writeQueue: LinkedList<BluetoothGattDescriptor> = LinkedList()
     private val readQueue: LinkedList<BluetoothGattCharacteristic> = LinkedList()
 
+    /**
+     * Use this method to connect to the device. You need to connect before start streaming
+     * @param context A valid application context.
+     */
+    fun connect(context: Context) {
+        connectionStatusSubject.onNext(MyoStatus.CONNECTING)
+        gatt = device.connectGatt(context, false, this)
+    }
+
+    /**
+     * Use this method to disconnect from the device. This will release all the resources.
+     * Don't forget to disconnect to the device when you're done (you will drain battery otherwise).
+     */
+    fun disconnect() {
+        gatt?.close()
+        controlStatusSubject.onNext(MyoControlStatus.NOT_STREAMING)
+        connectionStatusSubject.onNext(MyoStatus.DISCONNECTED)
+    }
+
+    /**
+     * @return true if this object is connected to a device
+     */
+    fun isConnected() = connectionStatusSubject.value == MyoStatus.CONNECTED || connectionStatusSubject.value == MyoStatus.READY
+
+    /**
+     * @return true if the device is currently streaming
+     */
+    fun isStreaming() = controlStatusSubject.value == MyoControlStatus.STREAMING
+
+    /**
+     * Get an observable where you can check the current device status.
+     * Register to this Observable to be notified when the device is Connected/Disconnected.
+     */
     fun statusObservable(): Observable<MyoStatus> = connectionStatusSubject
+
+    /**
+     * Get an observable where you can check the current streaming status.
+     * Register to this Observable to be notified when the device is Streaming/Not Streaming.
+     */
     fun controlObservable(): Observable<MyoControlStatus> = controlStatusSubject
 
+    /**
+     * Get a [Flowable] where you can receive data from the device.
+     * Data is delivered as a FloatArray of size [MYO_CHANNELS].
+     * If frequency is set (!= 0) then sub-sampling is performed to achieve the desired frequency.
+     */
     fun dataFlowable(): Flowable<FloatArray> {
         return if (frequency == 0) {
             dataProcessor
@@ -63,21 +123,9 @@ class Myo(private val device: BluetoothDevice) : BluetoothGattCallback() {
         }
     }
 
-    fun connect(context: Context) {
-        connectionStatusSubject.onNext(MyoStatus.CONNECTING)
-        gatt = device.connectGatt(context, false, this)
-    }
-
-    fun disconnect() {
-        gatt?.close()
-        controlStatusSubject.onNext(MyoControlStatus.NOT_STREAMING)
-        connectionStatusSubject.onNext(MyoStatus.DISCONNECTED)
-    }
-
-    fun isConnected() = connectionStatusSubject.value == MyoStatus.CONNECTED || connectionStatusSubject.value == MyoStatus.READY
-
-    fun isStreaming() = controlStatusSubject.value == MyoControlStatus.STREAMING
-
+    /**
+     * Send a [Command] to the device. Before calling this please make sure the device is connected.
+     */
     fun sendCommand(command: Command): Boolean {
         characteristicCommand?.apply {
             this.value = command
@@ -115,7 +163,6 @@ class Myo(private val device: BluetoothDevice) : BluetoothGattCallback() {
         if (status != BluetoothGatt.GATT_SUCCESS) {
             return
         }
-
         // Find GATT Service EMG
         serviceEmg = gatt.getService(SERVICE_EMG_DATA_ID)
         serviceEmg?.apply {
@@ -167,6 +214,7 @@ class Myo(private val device: BluetoothDevice) : BluetoothGattCallback() {
 
     internal fun writeDescriptor(gatt: BluetoothGatt, descriptor: BluetoothGattDescriptor) {
         writeQueue.add(descriptor)
+        // When writing, if the queue is empty, write immediately.
         if (writeQueue.size == 1) {
             gatt.writeDescriptor(descriptor)
         }
@@ -195,7 +243,7 @@ class Myo(private val device: BluetoothDevice) : BluetoothGattCallback() {
             if (data != null && data.isNotEmpty()) {
                 val byteReader = ByteReader()
                 byteReader.byteData = data
-                // TODO Show this to the user
+                // TODO We might expose these to the public
                 val callbackMsg = String.format("Serial Number     : %02x:%02x:%02x:%02x:%02x:%02x",
                         byteReader.byte, byteReader.byte, byteReader.byte,
                         byteReader.byte, byteReader.byte, byteReader.byte) +
@@ -218,10 +266,12 @@ class Myo(private val device: BluetoothDevice) : BluetoothGattCallback() {
             val emgData = characteristic.value
             byteReader.byteData = emgData
 
+            // We receive 16 bytes of data. Let's cut them in 2 and deliver both of them.
             dataProcessor.onNext(byteReader.getBytes(EMG_ARRAY_SIZE / 2))
             dataProcessor.onNext(byteReader.getBytes(EMG_ARRAY_SIZE / 2))
         }
 
+        // Finally check if keep alive makes sense.
         val currentTimeMillis = System.currentTimeMillis()
         if (keepAlive && currentTimeMillis > lastKeepAlive + KEEP_ALIVE_INTERVAL_MS) {
             lastKeepAlive = currentTimeMillis
