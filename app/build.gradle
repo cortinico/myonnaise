@@ -19,10 +19,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
-    testOptions.unitTests.all {
-        jacoco.includeNoLocationClasses = true
-    }
 }
 
 repositories {
@@ -30,6 +26,7 @@ repositories {
     jcenter()
     mavenCentral()
 }
+
 dependencies {
     implementation project(':myonnaise')
     implementation project(':sensorgraphview')

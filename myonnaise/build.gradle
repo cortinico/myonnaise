@@ -1,6 +1,15 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
 apply from: '../jacoco.gradle'
+
+def libGroup = "com.ncorti"
+def libId = "myonnaise"
+def libVersion = "1.0.0"
+def siteUrl = "https://github.com/cortinico/myonnaise"
+def gitUrl = "https://github.com/cortinico/myonnaise"
+def libLicenses = ["MIT"]
 
 android {
     compileSdkVersion 28
@@ -20,10 +29,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
-    testOptions.unitTests.all {
-        jacoco.includeNoLocationClasses = true
-    }
 }
 
 dependencies {
@@ -39,3 +44,68 @@ dependencies {
     testImplementation Libs.mockitoKotlin
 }
 
+
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            packaging 'aar'
+            description = 'A RxJava library to access Raw EMG data from your Myo'
+            groupId libGroup
+            artifactId libId
+            version libVersion
+            url siteUrl
+            scm {
+                connection gitUrl
+                developerConnection gitUrl
+                url siteUrl
+            }
+            developers {
+                developer {
+                    id 'cortinico'
+                    name 'Nicola Corti'
+                    email 'corti.nico@gmail.com'
+                }
+            }
+            licenses {
+                license {
+                    name 'MIT License'
+                    url 'https://opensource.org/licenses/MIT'
+                }
+            }
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+artifacts {
+    archives sourcesJar
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+version = libVersion
+group = libGroup
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+
+    configurations = ['archives']
+    pkg {
+        repo = 'maven'
+        name = libId
+        licenses = libLicenses
+        publish = true
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        version {
+            gpg {
+                sign = true
+                passphrase = properties.getProperty("bintray.gpg.password")
+            }
+        }
+    }
+}
