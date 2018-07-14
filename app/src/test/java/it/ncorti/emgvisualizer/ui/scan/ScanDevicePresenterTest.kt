@@ -11,7 +11,7 @@ import io.reactivex.Flowable
 import it.ncorti.emgvisualizer.dagger.DeviceManager
 import it.ncorti.emgvisualizer.ui.model.Device
 import it.ncorti.emgvisualizer.ui.testutil.TestSchedulerRule
-import junit.framework.Assert.assertEquals
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

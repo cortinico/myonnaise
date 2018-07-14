@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.github.paolorotolo.appintro.AppIntro
 import com.github.paolorotolo.appintro.AppIntroFragment
+import com.github.paolorotolo.appintro.model.SliderPage
 import it.ncorti.emgvisualizer.R
 
 private const val PREFS_GLOBAL = "global"
@@ -24,35 +25,40 @@ class IntroActivity : AppIntro() {
         val backgroundColor =
                 ContextCompat.getColor(this, R.color.primaryColor)
 
-        addSlide(AppIntroFragment.newInstance(
-                getString(R.string.onboarding_title_1),
-                getString(R.string.onboarding_description_1),
-                R.drawable.onboarding_0,
-                backgroundColor))
+        val page0 = SliderPage()
+        page0.title = getString(R.string.onboarding_title_0)
+        page0.description = getString(R.string.onboarding_description_0)
+        page0.imageDrawable = R.drawable.onboarding_0
+        page0.bgColor = backgroundColor
+        addSlide(AppIntroFragment.newInstance(page0))
 
-        addSlide(AppIntroFragment.newInstance(
-                getString(R.string.scan),
-                getString(R.string.onboarding_description_2),
-                R.drawable.onboarding_1,
-                backgroundColor))
+        val page1 = SliderPage()
+        page1.title = getString(R.string.scan)
+        page1.description = getString(R.string.onboarding_description_1)
+        page1.imageDrawable = R.drawable.onboarding_1
+        page1.bgColor = backgroundColor
+        addSlide(AppIntroFragment.newInstance(page1))
 
-        addSlide(AppIntroFragment.newInstance(
-                getString(R.string.control),
-                getString(R.string.onboarding_description_3),
-                R.drawable.onboarding_2,
-                backgroundColor))
+        val page2 = SliderPage()
+        page2.title = getString(R.string.control)
+        page2.description = getString(R.string.onboarding_description_2)
+        page2.imageDrawable = R.drawable.onboarding_2
+        page2.bgColor = backgroundColor
+        addSlide(AppIntroFragment.newInstance(page2))
 
-        addSlide(AppIntroFragment.newInstance(
-                getString(R.string.graph),
-                getString(R.string.onboarding_description_4),
-                R.drawable.onboarding_3,
-                backgroundColor))
+        val page3 = SliderPage()
+        page3.title = getString(R.string.graph)
+        page3.description = getString(R.string.onboarding_description_3)
+        page3.imageDrawable = R.drawable.onboarding_3
+        page3.bgColor = backgroundColor
+        addSlide(AppIntroFragment.newInstance(page3))
 
-        addSlide(AppIntroFragment.newInstance(
-                getString(R.string.export),
-                getString(R.string.onboarding_description_5),
-                R.drawable.onboarding_4,
-                backgroundColor))
+        val page4 = SliderPage()
+        page4.title = getString(R.string.export)
+        page4.description = getString(R.string.onboarding_description_4)
+        page4.imageDrawable = R.drawable.onboarding_4
+        page4.bgColor = backgroundColor
+        addSlide(AppIntroFragment.newInstance(page4))
 
         setBarColor(ContextCompat.getColor(this, R.color.primaryDarkColor))
         setSeparatorColor(ContextCompat.getColor(this, R.color.primaryLightColor))
