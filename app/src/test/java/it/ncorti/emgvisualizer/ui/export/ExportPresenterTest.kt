@@ -6,7 +6,6 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Flowable
-import io.reactivex.disposables.Disposable
 import it.ncorti.emgvisualizer.dagger.DeviceManager
 import it.ncorti.emgvisualizer.ui.testutil.TestSchedulerRule
 import org.junit.Assert.assertEquals
@@ -23,10 +22,10 @@ class ExportPresenterTest {
     @get:Rule
     val testSchedulerRule = TestSchedulerRule()
 
-    lateinit var mockedView: ExportContract.View
-    lateinit var mockedDeviceManager: DeviceManager
-    lateinit var mockedMyo: Myo
-    lateinit var testPresenter: ExportPresenter
+    private lateinit var mockedView: ExportContract.View
+    private lateinit var mockedDeviceManager: DeviceManager
+    private lateinit var mockedMyo: Myo
+    private lateinit var testPresenter: ExportPresenter
 
     @Before
     fun setUp() {

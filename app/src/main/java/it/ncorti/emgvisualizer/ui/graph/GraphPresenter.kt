@@ -3,9 +3,7 @@ package it.ncorti.emgvisualizer.ui.graph
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import it.ncorti.emgvisualizer.MyoApplication
 import it.ncorti.emgvisualizer.dagger.DeviceManager
-import javax.inject.Inject
 
 class GraphPresenter(
         override val view: GraphContract.View,

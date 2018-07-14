@@ -6,12 +6,9 @@ import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import it.ncorti.emgvisualizer.MyoApplication
 import it.ncorti.emgvisualizer.dagger.DeviceManager
-import it.ncorti.emgvisualizer.ui.control.ControlDeviceContract
 import it.ncorti.emgvisualizer.ui.model.Device
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 
 class ScanDevicePresenter(
         override val view: ScanDeviceContract.View,
@@ -47,7 +44,7 @@ class ScanDevicePresenter(
         if (scanSubscription?.isDisposed == false) {
             scanSubscription?.dispose()
             view.hideScanLoading()
-            if (deviceManager.scannedDeviceList.isEmpty()){
+            if (deviceManager.scannedDeviceList.isEmpty()) {
                 view.showEmptyListMessage()
             }
         } else {
@@ -64,13 +61,13 @@ class ScanDevicePresenter(
                     }, {
                         view.hideScanLoading()
                         view.showScanError()
-                        if (deviceManager.scannedDeviceList.isEmpty()){
+                        if (deviceManager.scannedDeviceList.isEmpty()) {
                             view.showEmptyListMessage()
                         }
                     }, {
                         view.hideScanLoading()
                         view.showScanCompleted()
-                        if (deviceManager.scannedDeviceList.isEmpty()){
+                        if (deviceManager.scannedDeviceList.isEmpty()) {
                             view.showEmptyListMessage()
                         }
                     })

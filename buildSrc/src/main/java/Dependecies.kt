@@ -13,25 +13,25 @@ object Versions {
 }
 
 object Libs {
-    val kotlinJdk = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
+    const val kotlinJdk = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
 
-    val androidXAppCompat = "com.android.support:appcompat-v7:${Versions.androidx}"
-    val materialComponents = "com.google.android.material:material:${Versions.materialcomponents}"
-    val androidXRecyclerView = "com.android.support:recyclerview-v7:${Versions.androidx}"
-    val androidXConstraintLayout = "com.android.support.constraint:constraint-layout:${Versions.constraintlayout}"
+    const val androidXAppCompat = "com.android.support:appcompat-v7:${Versions.androidx}"
+    const val materialComponents = "com.google.android.material:material:${Versions.materialcomponents}"
+    const val androidXRecyclerView = "com.android.support:recyclerview-v7:${Versions.androidx}"
+    const val androidXConstraintLayout = "com.android.support.constraint:constraint-layout:${Versions.constraintlayout}"
 
-    val junit = "junit:junit:${Versions.junit}"
-    val mockitoCore = "org.mockito:mockito-core:${Versions.mockito}"
-    val mockitoKotlin = "com.nhaarman.mockitokotlin2:mockito-kotlin:${Versions.mockitoKotlin}"
+    const val junit = "junit:junit:${Versions.junit}"
+    const val mockitoCore = "org.mockito:mockito-core:${Versions.mockito}"
+    const val mockitoKotlin = "com.nhaarman.mockitokotlin2:mockito-kotlin:${Versions.mockitoKotlin}"
 
-    val rxjava2 = "io.reactivex.rxjava2:rxjava:${Versions.rxjava2}"
-    val rxAndroid2 = "io.reactivex.rxjava2:rxandroid:${Versions.rxandroid2}"
+    const val rxjava2 = "io.reactivex.rxjava2:rxjava:${Versions.rxjava2}"
+    const val rxAndroid2 = "io.reactivex.rxjava2:rxandroid:${Versions.rxandroid2}"
 
-    val dagger = "com.google.dagger:dagger:${Versions.dagger}"
-    val daggerCompiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
+    const val dagger = "com.google.dagger:dagger:${Versions.dagger}"
+    const val daggerCompiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
 
-    val daggerAndroid = "com.google.dagger:dagger-android-support:${Versions.dagger}"
-    val daggerAndroidProcessor = "com.google.dagger:dagger-android-processor:${Versions.dagger}"
+    const val daggerAndroid = "com.google.dagger:dagger-android-support:${Versions.dagger}"
+    const val daggerAndroidProcessor = "com.google.dagger:dagger-android-processor:${Versions.dagger}"
 
-    val appIntro = "com.github.apl-devs:appintro:${Versions.appintro}"
+    const val appIntro = "com.github.apl-devs:appintro:${Versions.appintro}"
 }

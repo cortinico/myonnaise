@@ -10,7 +10,6 @@ import android.widget.Toast
 import dagger.android.support.AndroidSupportInjection
 import it.ncorti.emgvisualizer.BaseFragment
 import it.ncorti.emgvisualizer.R
-import it.ncorti.emgvisualizer.R.id.*
 import kotlinx.android.synthetic.main.layout_control_device.*
 import javax.inject.Inject
 

@@ -14,15 +14,10 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import it.ncorti.emgvisualizer.R
-import it.ncorti.emgvisualizer.R.id.bottom_navigation
 import it.ncorti.emgvisualizer.ui.control.ControlDeviceFragment
-import it.ncorti.emgvisualizer.ui.control.ControlDevicePresenter
 import it.ncorti.emgvisualizer.ui.export.ExportFragment
 import it.ncorti.emgvisualizer.ui.graph.GraphFragment
-import it.ncorti.emgvisualizer.ui.export.ExportPresenter
-import it.ncorti.emgvisualizer.ui.graph.GraphPresenter
 import it.ncorti.emgvisualizer.ui.scan.ScanDeviceFragment
-import it.ncorti.emgvisualizer.ui.scan.ScanDevicePresenter
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 

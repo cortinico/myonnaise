@@ -1,2 +1,1 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ncorti.myonnaise.sensorgraphview" />
+<manifest package="com.ncorti.myonnaise.sensorgraphview" />

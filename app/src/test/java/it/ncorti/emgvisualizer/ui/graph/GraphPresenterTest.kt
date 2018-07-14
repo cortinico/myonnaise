@@ -17,10 +17,10 @@ class GraphPresenterTest {
     @get:Rule
     val testSchedulerRule = TestSchedulerRule()
 
-    lateinit var mockedView: GraphContract.View
-    lateinit var mockedDeviceManager: DeviceManager
-    lateinit var mockedMyo: Myo
-    lateinit var testPresenter: GraphPresenter
+    private lateinit var mockedView: GraphContract.View
+    private lateinit var mockedDeviceManager: DeviceManager
+    private lateinit var mockedMyo: Myo
+    private lateinit var testPresenter: GraphPresenter
 
     @Before
     fun setUp() {

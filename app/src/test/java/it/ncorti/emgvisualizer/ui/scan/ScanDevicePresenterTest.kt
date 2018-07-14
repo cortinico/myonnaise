@@ -8,7 +8,6 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Flowable
-import io.reactivex.disposables.Disposable
 import it.ncorti.emgvisualizer.dagger.DeviceManager
 import it.ncorti.emgvisualizer.ui.model.Device
 import it.ncorti.emgvisualizer.ui.testutil.TestSchedulerRule
@@ -36,11 +35,11 @@ class ScanDevicePresenterTest {
         mockedMyo = mock {}
         mockedMyonnaise = mock {}
         mockedBluetoothDevice = mock {
-            on (mock.name) doReturn "42"
-            on (mock.address) doReturn "aa:bb:cc:dd:ee:ff"
+            on(mock.name) doReturn "42"
+            on(mock.address) doReturn "aa:bb:cc:dd:ee:ff"
         }
         mockedDeviceManager = mock {
-            on (mock.myo) doReturn mockedMyo
+            on(mock.myo) doReturn mockedMyo
         }
 
         testPresenter = ScanDevicePresenter(mockedView, mockedMyonnaise, mockedDeviceManager)
