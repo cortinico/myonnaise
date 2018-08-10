@@ -4,7 +4,7 @@ object Versions {
     const val androidx = "28.0.0"
     const val appintro = "v5.1.0"
     const val bintrayGradle = "1.8.4"
-    const val dagger = "2.16"
+    const val dagger = "2.17"
     const val constraintlayout = "1.1.2"
     const val junit = "4.12"
     const val kotlin = "1.3.31"
