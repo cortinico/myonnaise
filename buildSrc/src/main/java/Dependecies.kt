@@ -1,5 +1,5 @@
 object Versions {
-    const val androidGradle = "3.2.0-beta02"
+    const val androidGradle = "3.2.0-beta05"
     const val androidMavenGradle = "2.0"
     const val androidx = "28.0.0-rc01"
     const val appintro = "v4.2.3"
@@ -7,12 +7,12 @@ object Versions {
     const val dagger = "2.16"
     const val constraintlayout = "1.1.2"
     const val junit = "4.12"
-    const val kotlin = "1.2.60"
-    const val materialcomponents = "1.0.0-alpha3"
+    const val kotlin = "1.2.61"
+    const val materialcomponents = "1.0.0-rc01"
     const val mockito = "2.21.0"
     const val mockitoKotlin = "2.0.0-RC1"
-    const val rxjava2 = "2.2.0"
-    const val rxandroid2 = "2.0.2"
+    const val rxjava2 = "2.2.1"
+    const val rxandroid2 = "2.1.0"
 }
 
 object Libs {
