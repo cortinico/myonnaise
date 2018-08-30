@@ -1,5 +1,5 @@
 object Versions {
-    const val androidGradle = "3.2.0-beta05"
+    const val androidGradle = "3.2.0-rc01"
     const val androidMavenGradle = "2.0"
     const val androidx = "28.0.0-rc01"
     const val appintro = "v4.2.3"
