@@ -13,6 +13,7 @@ object Versions {
     const val mockitoKotlin = "2.0.0-RC1"
     const val rxjava2 = "2.2.1"
     const val rxandroid2 = "2.1.0"
+    const val versionsUpdate = "0.20.0"
 }
 
 object Libs {
@@ -20,6 +21,7 @@ object Libs {
     const val androidMavenGradlePlugin = "com.github.dcendents:android-maven-gradle-plugin:${Versions.androidMavenGradle}"
     const val bintrayGradlePlugin = "com.jfrog.bintray.gradle:gradle-bintray-plugin:${Versions.bintrayGradle}"
     const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
+    const val versionsGradlePlugin = "com.github.ben-manes:gradle-versions-plugin:${Versions.versionsUpdate}"
 
     const val kotlinJdk = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
 
