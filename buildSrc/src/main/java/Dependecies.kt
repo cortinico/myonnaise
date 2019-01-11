@@ -1,8 +1,8 @@
 object Versions {
-    const val androidGradle = "3.2.0-rc01"
+    const val androidGradle = "3.2.1"
     const val androidMavenGradle = "2.0"
-    const val androidx = "28.0.0-rc02"
-    const val appintro = "v4.2.3"
+    const val androidx = "28.0.0"
+    const val appintro = "v5.1.0"
     const val bintrayGradle = "1.8.4"
     const val dagger = "2.16"
     const val constraintlayout = "1.1.2"
@@ -43,5 +43,5 @@ object Libs {
     const val daggerAndroid = "com.google.dagger:dagger-android-support:${Versions.dagger}"
     const val daggerAndroidProcessor = "com.google.dagger:dagger-android-processor:${Versions.dagger}"
 
-    const val appIntro = "com.github.apl-devs:appintro:${Versions.appintro}"
+    const val appIntro = "com.github.paolorotolo:appintro:${Versions.appintro}"
 }
