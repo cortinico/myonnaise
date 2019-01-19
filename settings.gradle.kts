@@ -1,0 +1,1 @@
+include(":app", ":myonnaise", ":sensorgraphview")
