@@ -7,7 +7,7 @@ object Versions {
     const val dagger = "2.16"
     const val constraintlayout = "1.1.2"
     const val junit = "4.12"
-    const val kotlin = "1.3.21"
+    const val kotlin = "1.3.31"
     const val materialcomponents = "1.0.0"
     const val mockito = "2.23.4"
     const val mockitoKotlin = "2.1.0"
