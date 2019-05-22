@@ -11,8 +11,8 @@ object Versions {
     const val materialcomponents = "1.0.0"
     const val mockito = "2.23.4"
     const val mockitoKotlin = "2.1.0"
-    const val rxjava2 = "2.2.5"
-    const val rxandroid2 = "2.1.0"
+    const val rxjava2 = "2.2.8"
+    const val rxandroid2 = "2.1.1"
     const val versionsUpdate = "0.20.0"
 }
 
