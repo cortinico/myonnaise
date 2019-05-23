@@ -60,6 +60,8 @@
         android:layout_height="2dp"
         android:layout_marginTop="@dimen/default_margin"
         android:background="@color/colorBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/device_address_subtitle" />
 
     <TextView
@@ -113,6 +115,8 @@
         android:layout_height="2dp"
         android:layout_marginTop="@dimen/default_margin"
         android:background="@color/colorBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/button_connect" />
 
     <TextView
