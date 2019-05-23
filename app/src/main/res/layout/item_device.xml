@@ -17,7 +17,9 @@
         android:contentDescription="@null"
         android:scaleType="center"
         android:src="@drawable/ic_bluetooth"
-        android:tint="@android:color/white" />
+        android:tint="@android:color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/text_name"
