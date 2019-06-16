@@ -11,7 +11,7 @@ This repo contains also a **sample app** that showcases the usage of the library
 
 <a href='https://play.google.com/store/apps/details?id=it.ncorti.emgvisualizer&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' width="20%" src='https://play.google.com/intl/en_gb/badges/images/generic/en_badge_web_generic.png'/></a>
 
-**DISCLAIMER: If you don't know what a Myo is, please go here: [www.myo.com](https://www.myo.com/). Please note that you need a Myo in order to use this library/app.**
+**DISCLAIMER: If you don't know what a Myo is, please go here: [support.getmyo.com](https://support.getmyo.com/). Please note that you need a Myo in order to use this library/app.**
 
 * [Getting Started](#getting-started-)
 * [Example](#example-)
