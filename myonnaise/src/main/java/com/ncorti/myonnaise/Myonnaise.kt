@@ -26,7 +26,7 @@ class Myonnaise(val context: Context) {
 
     private val blManager = context.getSystemService(Activity.BLUETOOTH_SERVICE) as BluetoothManager
     private val blAdapter = blManager.adapter
-    private val blLowEnergyScanner = blAdapter.bluetoothLeScanner
+    private val blLowEnergyScanner = blAdapter?.bluetoothLeScanner
 
     private var scanCallback: MyonnaiseScanCallback? = null
 
@@ -51,10 +51,10 @@ class Myonnaise(val context: Context) {
     fun startScan(): Flowable<BluetoothDevice> {
         val scanFlowable: Flowable<BluetoothDevice> = Flowable.create({
             scanCallback = MyonnaiseScanCallback(it)
-            blLowEnergyScanner.startScan(scanCallback)
+            blLowEnergyScanner?.startScan(scanCallback)
         }, BackpressureStrategy.BUFFER)
         return scanFlowable.doOnCancel {
-            blLowEnergyScanner.stopScan(scanCallback)
+            blLowEnergyScanner?.stopScan(scanCallback)
         }
     }
 
@@ -99,7 +99,7 @@ class Myonnaise(val context: Context) {
             val settings = ScanSettings.Builder()
                     .setScanMode(ScanSettings.SCAN_MODE_LOW_POWER)
                     .build()
-            blLowEnergyScanner.startScan(listOf(filter), settings, object : ScanCallback() {
+            blLowEnergyScanner?.startScan(listOf(filter), settings, object : ScanCallback() {
                 override fun onScanResult(callbackType: Int, result: ScanResult?) {
                     super.onScanResult(callbackType, result)
                     result?.device?.apply {
