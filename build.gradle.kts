@@ -2,6 +2,7 @@ buildscript {
     repositories {
         google()
         jcenter()
+        gradlePluginPortal()
     }
     dependencies {
         classpath(Libs.androidGradlePlugin)
@@ -9,6 +10,8 @@ buildscript {
         classpath(Libs.androidMavenGradlePlugin)
         classpath(Libs.bintrayGradlePlugin)
         classpath(Libs.versionsGradlePlugin)
+        classpath(Libs.detektGradlePlugin)
+        classpath(Libs.ktLintGradlePlugin)
     }
 }
 

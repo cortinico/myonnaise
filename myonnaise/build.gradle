@@ -5,7 +5,9 @@ plugins {
     id "com.jfrog.bintray"
     id "com.github.ben-manes.versions"
 }
+
 apply from: "../jacoco.gradle"
+apply from: "../kotlin-static-analysis.gradle"
 
 def libGroup = "com.ncorti"
 def libId = "myonnaise"

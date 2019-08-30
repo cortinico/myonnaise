@@ -4,6 +4,8 @@ plugins {
     id("com.github.ben-manes.versions")
 }
 
+apply(from = "../kotlin-static-analysis.gradle")
+
 android {
     compileSdkVersion(28)
 

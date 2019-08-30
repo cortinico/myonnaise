@@ -6,6 +6,7 @@ plugins {
     id("com.github.ben-manes.versions")
 }
 apply(from = "../jacoco.gradle")
+apply(from = "../kotlin-static-analysis.gradle")
 
 android {
     compileSdkVersion(28)
