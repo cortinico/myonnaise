@@ -12,5 +12,4 @@ class DeviceManagerModule {
     fun provideDeviceManager(): DeviceManager {
         return DeviceManager()
     }
-
 }

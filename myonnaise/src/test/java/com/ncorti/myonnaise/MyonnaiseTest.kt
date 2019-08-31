@@ -11,12 +11,11 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
-import io.reactivex.observers.TestObserver
 import io.reactivex.subscribers.TestSubscriber
+import java.util.concurrent.TimeUnit
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import java.util.concurrent.TimeUnit
 
 class MyonnaiseTest {
 

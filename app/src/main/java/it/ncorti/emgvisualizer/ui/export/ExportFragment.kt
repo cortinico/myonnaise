@@ -16,11 +16,10 @@ import androidx.core.content.ContextCompat
 import dagger.android.support.AndroidSupportInjection
 import it.ncorti.emgvisualizer.BaseFragment
 import it.ncorti.emgvisualizer.R
-import kotlinx.android.synthetic.main.layout_export.*
 import java.io.File
 import java.io.FileOutputStream
 import javax.inject.Inject
-
+import kotlinx.android.synthetic.main.layout_export.*
 
 private const val REQUEST_WRITE_EXTERNAL_CODE = 2
 
@@ -112,21 +111,27 @@ class ExportFragment : BaseFragment<ExportContract.Presenter>(), ExportContract.
 
     override fun saveCsvFile(content: String) {
         context?.apply {
-            val hasPermission = (ContextCompat.checkSelfPermission(this,
-                    WRITE_EXTERNAL_STORAGE) == PERMISSION_GRANTED)
+            val hasPermission = (
+                ContextCompat.checkSelfPermission(
+                    this,
+                    WRITE_EXTERNAL_STORAGE
+                ) == PERMISSION_GRANTED
+                )
             if (hasPermission) {
                 writeToFile(content)
             } else {
                 fileContentToSave = content
-                requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                        REQUEST_WRITE_EXTERNAL_CODE)
+                requestPermissions(
+                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                    REQUEST_WRITE_EXTERNAL_CODE
+                )
             }
         }
     }
 
     private fun writeToFile(content: String) {
         val storageDir =
-                File("${Environment.getExternalStorageDirectory().absolutePath}/myo_emg")
+            File("${Environment.getExternalStorageDirectory().absolutePath}/myo_emg")
         storageDir.mkdir()
         val outfile = File(storageDir, "myo_emg_export_${System.currentTimeMillis()}.csv")
         val fileOutputStream = FileOutputStream(outfile)

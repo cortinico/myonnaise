@@ -23,7 +23,7 @@ class IntroActivity : AppIntro() {
         super.onCreate(savedInstanceState)
 
         val backgroundColor =
-                ContextCompat.getColor(this, R.color.primaryColor)
+            ContextCompat.getColor(this, R.color.primaryColor)
 
         val page0 = SliderPage()
         page0.title = getString(R.string.onboarding_title_0)
@@ -87,14 +87,20 @@ class IntroActivity : AppIntro() {
     }
 
     private fun requestPermission() {
-        val hasPermission = (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+        val hasPermission = (
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+            )
         if (hasPermission) {
             startMainActivity()
         } else {
-            ActivityCompat.requestPermissions(this,
-                    arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
-                    REQUEST_LOCATION_CODE)
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
+                REQUEST_LOCATION_CODE
+            )
         }
     }
 

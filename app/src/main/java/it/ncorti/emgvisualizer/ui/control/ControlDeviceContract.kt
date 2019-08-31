@@ -3,7 +3,6 @@ package it.ncorti.emgvisualizer.ui.control
 import it.ncorti.emgvisualizer.BasePresenter
 import it.ncorti.emgvisualizer.BaseView
 
-
 interface ControlDeviceContract {
 
     interface View : BaseView {
@@ -46,6 +45,5 @@ interface ControlDeviceContract {
         abstract fun onVibrateClicked(duration: Int)
 
         abstract fun onProgressSelected(progress: Int)
-
     }
 }

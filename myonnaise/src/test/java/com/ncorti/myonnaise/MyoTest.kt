@@ -5,8 +5,15 @@ import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattCharacteristic
 import android.bluetooth.BluetoothGattDescriptor
 import android.content.Context
-import com.nhaarman.mockitokotlin2.*
-import org.junit.Assert.*
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.eq
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.never
+import com.nhaarman.mockitokotlin2.verify
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
@@ -45,7 +52,6 @@ class MyoTest {
         myo.frequency = 50
         assertEquals(50, myo.frequency)
     }
-
 
     @Test
     fun updatingFrequencyToNonSupported_ResetToDefault() {
@@ -156,7 +162,6 @@ class MyoTest {
         myo.sendCommand(CommandList.emgFilteredOnly())
         myo.controlObservable().test().assertValue(MyoControlStatus.STREAMING)
     }
-
 
     @Test
     fun sendCommand_withStopStreamingCommand_publishEvent() {

@@ -11,9 +11,9 @@ import it.ncorti.emgvisualizer.ui.model.Device
 import java.util.concurrent.TimeUnit
 
 class ScanDevicePresenter(
-        override val view: ScanDeviceContract.View,
-        private val myonnaise: Myonnaise,
-        private val deviceManager: DeviceManager
+    override val view: ScanDeviceContract.View,
+    private val myonnaise: Myonnaise,
+    private val deviceManager: DeviceManager
 ) : ScanDeviceContract.Presenter(view) {
 
     internal lateinit var scanFlowable: Flowable<BluetoothDevice>
@@ -29,9 +29,11 @@ class ScanDevicePresenter(
         if (deviceManager.scannedDeviceList.isEmpty()) {
             view.showStartMessage()
         } else {
-            view.populateDeviceList(deviceManager
+            view.populateDeviceList(
+                deviceManager
                     .scannedDeviceList
-                    .map { it -> Device(it.name, it.address) })
+                    .map { it -> Device(it.name, it.address) }
+            )
         }
     }
 
@@ -51,26 +53,30 @@ class ScanDevicePresenter(
             view.hideEmptyListMessage()
             view.showScanLoading()
             scanSubscription = scanFlowable
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
                         if (it !in deviceManager.scannedDeviceList) {
                             view.addDeviceToList(Device(it.name, it.address))
                             deviceManager.scannedDeviceList.add(it)
                         }
-                    }, {
+                    },
+                    {
                         view.hideScanLoading()
                         view.showScanError()
                         if (deviceManager.scannedDeviceList.isEmpty()) {
                             view.showEmptyListMessage()
                         }
-                    }, {
+                    },
+                    {
                         view.hideScanLoading()
                         view.showScanCompleted()
                         if (deviceManager.scannedDeviceList.isEmpty()) {
                             view.showEmptyListMessage()
                         }
-                    })
+                    }
+                )
         }
     }
 

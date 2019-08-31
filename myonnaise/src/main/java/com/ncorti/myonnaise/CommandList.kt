@@ -2,7 +2,7 @@
 
 package com.ncorti.myonnaise
 
-import java.util.*
+import java.util.Arrays
 
 typealias Command = ByteArray
 
@@ -87,9 +87,10 @@ object CommandList {
 }
 
 /** Extension function to check the [Command] is a generic "start streaming" command. */
-fun Command.isStartStreamingCommand() = this.size >= 4
-        && this[0] == 0x01.toByte()
-        && (this[2] != 0x00.toByte() || this[3] != 0x00.toByte() || this[4] != 0x00.toByte())
+fun Command.isStartStreamingCommand() =
+    this.size >= 4 &&
+        this[0] == 0x01.toByte() &&
+        (this[2] != 0x00.toByte() || this[3] != 0x00.toByte() || this[4] != 0x00.toByte())
 
 /** Extension function to check the [Command] is a stop streaming command */
 fun Command.isStopStreamingCommand() = Arrays.equals(this, CommandList.stopStreaming())

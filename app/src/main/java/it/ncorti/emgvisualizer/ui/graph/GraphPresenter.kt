@@ -6,8 +6,8 @@ import io.reactivex.schedulers.Schedulers
 import it.ncorti.emgvisualizer.dagger.DeviceManager
 
 class GraphPresenter(
-        override val view: GraphContract.View,
-        private val deviceManager: DeviceManager
+    override val view: GraphContract.View,
+    private val deviceManager: DeviceManager
 ) : GraphContract.Presenter(view) {
 
     private var dataSubscription: Disposable? = null
@@ -22,14 +22,14 @@ class GraphPresenter(
                     if (!this.isDisposed) this.dispose()
                 }
                 dataSubscription = this.dataFlowable()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .doOnSubscribe {
-                            view.startGraph(true)
-                        }
-                        .subscribe {
-                            view.showData(it)
-                        }
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnSubscribe {
+                        view.startGraph(true)
+                    }
+                    .subscribe {
+                        view.showData(it)
+                    }
             } else {
                 view.showNoStreamingMessage()
             }

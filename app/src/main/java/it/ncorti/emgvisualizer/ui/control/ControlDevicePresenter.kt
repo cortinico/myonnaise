@@ -1,15 +1,19 @@
 package it.ncorti.emgvisualizer.ui.control
 
-import com.ncorti.myonnaise.*
+import com.ncorti.myonnaise.CommandList
+import com.ncorti.myonnaise.MYO_MAX_FREQUENCY
+import com.ncorti.myonnaise.MyoControlStatus
+import com.ncorti.myonnaise.MyoStatus
+import com.ncorti.myonnaise.Myonnaise
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import it.ncorti.emgvisualizer.dagger.DeviceManager
 
 class ControlDevicePresenter(
-        override val view: ControlDeviceContract.View,
-        private val myonnaise: Myonnaise,
-        private val deviceManager: DeviceManager
+    override val view: ControlDeviceContract.View,
+    private val myonnaise: Myonnaise,
+    private val deviceManager: DeviceManager
 ) : ControlDeviceContract.Presenter(view) {
 
     internal var statusSubscription: Disposable? = null
@@ -34,40 +38,40 @@ class ControlDevicePresenter(
 
         deviceManager.myo?.apply {
             statusSubscription =
-                    this.statusObservable()
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe {
-                                when (it) {
-                                    MyoStatus.CONNECTED -> {
-                                        view.hideConnectionProgress()
-                                        view.showConnected()
-                                    }
-                                    MyoStatus.CONNECTING -> {
-                                        view.showConnectionProgress()
-                                        view.showConnecting()
-                                    }
-                                    MyoStatus.READY -> {
-                                        view.enableControlPanel()
-                                    }
-                                    else -> {
-                                        view.hideConnectionProgress()
-                                        view.showDisconnected()
-                                        view.disableControlPanel()
-                                    }
-                                }
+                this.statusObservable()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe {
+                        when (it) {
+                            MyoStatus.CONNECTED -> {
+                                view.hideConnectionProgress()
+                                view.showConnected()
                             }
+                            MyoStatus.CONNECTING -> {
+                                view.showConnectionProgress()
+                                view.showConnecting()
+                            }
+                            MyoStatus.READY -> {
+                                view.enableControlPanel()
+                            }
+                            else -> {
+                                view.hideConnectionProgress()
+                                view.showDisconnected()
+                                view.disableControlPanel()
+                            }
+                        }
+                    }
             controlSubscription =
-                    this.controlObservable()
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe {
-                                if (it == MyoControlStatus.STREAMING) {
-                                    view.showStreaming()
-                                } else {
-                                    view.showNotStreaming()
-                                }
-                            }
+                this.controlObservable()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe {
+                        if (it == MyoControlStatus.STREAMING) {
+                            view.showStreaming()
+                        } else {
+                            view.showNotStreaming()
+                        }
+                    }
         }
     }
 
@@ -98,11 +102,13 @@ class ControlDevicePresenter(
 
     override fun onVibrateClicked(duration: Int) {
         deviceManager.myo?.apply {
-            this.sendCommand(when (duration) {
-                1 -> CommandList.vibration1()
-                2 -> CommandList.vibration2()
-                else -> CommandList.vibration3()
-            })
+            this.sendCommand(
+                when (duration) {
+                    1 -> CommandList.vibration1()
+                    2 -> CommandList.vibration2()
+                    else -> CommandList.vibration3()
+                }
+            )
         }
     }
 
@@ -122,5 +128,4 @@ class ControlDevicePresenter(
             this.frequency = selectedFrequency
         }
     }
-
 }

@@ -27,7 +27,7 @@ class GraphPresenterTest {
         mockedView = mock {}
         mockedMyo = mock {}
         mockedDeviceManager = mock {
-            on (mock.myo) doReturn mockedMyo
+            on(mock.myo) doReturn mockedMyo
         }
 
         testPresenter = GraphPresenter(mockedView, mockedDeviceManager)
@@ -52,7 +52,6 @@ class GraphPresenterTest {
         verify(mockedView).hideNoStreamingMessage()
     }
 
-
     @Test
     fun onStart_withDeviceStreaming_startTheGraph() {
         whenever(mockedDeviceManager.myo?.isStreaming()).thenReturn(true)
@@ -63,15 +62,17 @@ class GraphPresenterTest {
         verify(mockedView).startGraph(true)
     }
 
-
     @Test
     fun onStart_withDeviceStreaming_populateTheGraph() {
         whenever(mockedDeviceManager.myo?.isStreaming()).thenReturn(true)
         whenever(mockedDeviceManager.myo?.dataFlowable())
-                .thenReturn(Flowable.just(
-                        floatArrayOf(1.0f),
-                        floatArrayOf(2.0f),
-                        floatArrayOf(3.0f)))
+            .thenReturn(
+                Flowable.just(
+                    floatArrayOf(1.0f),
+                    floatArrayOf(2.0f),
+                    floatArrayOf(3.0f)
+                )
+            )
 
         testPresenter.start()
 

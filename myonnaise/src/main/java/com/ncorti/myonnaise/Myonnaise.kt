@@ -49,10 +49,13 @@ class Myonnaise(val context: Context) {
      * @return A flowable that will publish the found [BluetoothDevice]
      */
     fun startScan(): Flowable<BluetoothDevice> {
-        val scanFlowable: Flowable<BluetoothDevice> = Flowable.create({
-            scanCallback = MyonnaiseScanCallback(it)
-            blLowEnergyScanner?.startScan(scanCallback)
-        }, BackpressureStrategy.BUFFER)
+        val scanFlowable: Flowable<BluetoothDevice> = Flowable.create(
+            {
+                scanCallback = MyonnaiseScanCallback(it)
+                blLowEnergyScanner?.startScan(scanCallback)
+            },
+            BackpressureStrategy.BUFFER
+        )
         return scanFlowable.doOnCancel {
             blLowEnergyScanner?.stopScan(scanCallback)
         }
@@ -77,7 +80,7 @@ class Myonnaise(val context: Context) {
      * @param timeUnit time units to use for [interval].
      */
     fun startScan(interval: Long, timeUnit: TimeUnit): Flowable<BluetoothDevice> =
-            startScan().takeUntil(Flowable.timer(interval, timeUnit))
+        startScan().takeUntil(Flowable.timer(interval, timeUnit))
 
     /**
      * Returns a [Myo] from a [BluetoothDevice]. Use this method after you discovered a device with
@@ -93,25 +96,30 @@ class Myonnaise(val context: Context) {
      */
     fun getMyo(myoAddress: String): Single<Myo> {
         return Single.create {
-            val filter = ScanFilter.Builder()
+            val filter =
+                ScanFilter.Builder()
                     .setDeviceAddress(myoAddress)
                     .build()
-            val settings = ScanSettings.Builder()
+            val settings =
+                ScanSettings.Builder()
                     .setScanMode(ScanSettings.SCAN_MODE_LOW_POWER)
                     .build()
-            blLowEnergyScanner?.startScan(listOf(filter), settings, object : ScanCallback() {
-                override fun onScanResult(callbackType: Int, result: ScanResult?) {
-                    super.onScanResult(callbackType, result)
-                    result?.device?.apply {
-                        it.onSuccess(Myo(this))
+            blLowEnergyScanner?.startScan(
+                listOf(filter), settings,
+                object : ScanCallback() {
+                    override fun onScanResult(callbackType: Int, result: ScanResult?) {
+                        super.onScanResult(callbackType, result)
+                        result?.device?.apply {
+                            it.onSuccess(Myo(this))
+                        }
+                    }
+
+                    override fun onScanFailed(errorCode: Int) {
+                        super.onScanFailed(errorCode)
+                        it.onError(RuntimeException())
                     }
                 }
-
-                override fun onScanFailed(errorCode: Int) {
-                    super.onScanFailed(errorCode)
-                    it.onError(RuntimeException())
-                }
-            })
+            )
         }
     }
 

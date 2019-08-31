@@ -1,13 +1,19 @@
 package com.ncorti.myonnaise
 
-import android.bluetooth.*
+import android.bluetooth.BluetoothDevice
+import android.bluetooth.BluetoothGatt
+import android.bluetooth.BluetoothGattCallback
+import android.bluetooth.BluetoothGattCharacteristic
+import android.bluetooth.BluetoothGattDescriptor
+import android.bluetooth.BluetoothGattService
+import android.bluetooth.BluetoothProfile
 import android.content.Context
 import android.util.Log
 import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.processors.PublishProcessor
 import io.reactivex.subjects.BehaviorSubject
-import java.util.*
+import java.util.LinkedList
 import java.util.concurrent.TimeUnit
 
 enum class MyoStatus {
@@ -27,11 +33,11 @@ enum class MyoControlStatus {
 class Myo(private val device: BluetoothDevice) : BluetoothGattCallback() {
 
     /** The Device Name of this Myo */
-    val name : String
+    val name: String
         get() = device.name
 
     /** The Device Address of this Myo */
-    val address : String
+    val address: String
         get() = device.address
 
     /** The EMG Streaming frequency. 0 to reset to the [MYO_MAX_FREQUENCY]. Allowed values [0, MYO_MAX_FREQUENCY] */
@@ -172,10 +178,11 @@ class Myo(private val device: BluetoothDevice) : BluetoothGattCallback() {
             characteristicEmg3 = serviceEmg?.getCharacteristic(CHAR_EMG_3_ID)
 
             val emgCharacteristics = listOf(
-                    characteristicEmg0,
-                    characteristicEmg1,
-                    characteristicEmg2,
-                    characteristicEmg3)
+                characteristicEmg0,
+                characteristicEmg1,
+                characteristicEmg2,
+                characteristicEmg3
+            )
 
             emgCharacteristics.forEach { emgCharacteristic ->
                 emgCharacteristic?.apply {
@@ -220,12 +227,11 @@ class Myo(private val device: BluetoothDevice) : BluetoothGattCallback() {
         }
     }
 
-
     override fun onDescriptorWrite(gatt: BluetoothGatt, descriptor: BluetoothGattDescriptor, status: Int) {
         super.onDescriptorWrite(gatt, descriptor, status)
         Log.d(TAG, "onDescriptorWrite status: $status")
         writeQueue.remove()
-        //if there is more to write, do it!
+        // if there is more to write, do it!
         if (writeQueue.size > 0)
             gatt.writeDescriptor(writeQueue.element())
         else if (readQueue.size > 0)
@@ -244,12 +250,17 @@ class Myo(private val device: BluetoothDevice) : BluetoothGattCallback() {
                 val byteReader = ByteReader()
                 byteReader.byteData = data
                 // TODO We might expose these to the public
-                val callbackMsg = String.format("Serial Number     : %02x:%02x:%02x:%02x:%02x:%02x",
+                val callbackMsg =
+                    String.format(
+                        "Serial Number     : %02x:%02x:%02x:%02x:%02x:%02x",
                         byteReader.byte, byteReader.byte, byteReader.byte,
-                        byteReader.byte, byteReader.byte, byteReader.byte) +
+                        byteReader.byte, byteReader.byte, byteReader.byte
+                    ) +
                         '\n'.toString() + String.format("Unlock            : %d", byteReader.short) +
-                        '\n'.toString() + String.format("Classifier builtin:%d active:%d (have:%d)",
-                        byteReader.byte, byteReader.byte, byteReader.byte) +
+                        '\n'.toString() + String.format(
+                        "Classifier builtin:%d active:%d (have:%d)",
+                        byteReader.byte, byteReader.byte, byteReader.byte
+                    ) +
                         '\n'.toString() + String.format("Stream Type       : %d", byteReader.byte)
                 Log.d(TAG, "MYO info string: $callbackMsg")
             }

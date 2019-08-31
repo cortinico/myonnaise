@@ -11,8 +11,8 @@ import com.ncorti.myonnaise.MYO_MIN_VALUE
 import dagger.android.support.AndroidSupportInjection
 import it.ncorti.emgvisualizer.BaseFragment
 import it.ncorti.emgvisualizer.R
-import kotlinx.android.synthetic.main.layout_graph.*
 import javax.inject.Inject
+import kotlinx.android.synthetic.main.layout_graph.*
 
 class GraphFragment : BaseFragment<GraphContract.Presenter>(), GraphContract.View {
 
@@ -28,7 +28,6 @@ class GraphFragment : BaseFragment<GraphContract.Presenter>(), GraphContract.Vie
         attachPresenter(graphPresenter)
         super.onAttach(context)
     }
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.layout_graph, container, false)

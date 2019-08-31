@@ -11,11 +11,10 @@ class ScanDeviceModule {
 
     @Provides
     fun provideScanDevicePresenter(
-            scanDeviceView: ScanDeviceContract.View,
-            myonnaise: Myonnaise,
-            deviceManager: DeviceManager
+        scanDeviceView: ScanDeviceContract.View,
+        myonnaise: Myonnaise,
+        deviceManager: DeviceManager
     ): ScanDevicePresenter {
         return ScanDevicePresenter(scanDeviceView, myonnaise, deviceManager)
     }
-
 }

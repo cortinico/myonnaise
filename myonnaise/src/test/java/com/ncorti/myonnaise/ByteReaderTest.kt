@@ -1,9 +1,9 @@
 package com.ncorti.myonnaise
 
-import org.junit.Assert.assertEquals
-import org.junit.Test
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
+import org.junit.Assert.assertEquals
+import org.junit.Test
 
 class ByteReaderTest {
 
@@ -17,7 +17,8 @@ class ByteReaderTest {
 
     @Test
     fun getInt() {
-        val intArray = ByteBuffer
+        val intArray =
+            ByteBuffer
                 .allocate(4)
                 .order(ByteOrder.nativeOrder())
                 .putInt(12345)
@@ -29,10 +30,10 @@ class ByteReaderTest {
         assertEquals(12345, testReader.int)
     }
 
-
     @Test
     fun getShort() {
-        val shortArray = ByteBuffer
+        val shortArray =
+            ByteBuffer
                 .allocate(2)
                 .order(ByteOrder.nativeOrder())
                 .putShort(123.toShort())
@@ -58,14 +59,14 @@ class ByteReaderTest {
     fun getBytes() {
         val testReader = ByteReader()
         testReader.byteData = byteArrayOf(
-                0.toByte(),
-                1.toByte(),
-                2.toByte(),
-                3.toByte(),
-                4.toByte(),
-                5.toByte(),
-                6.toByte(),
-                7.toByte()
+            0.toByte(),
+            1.toByte(),
+            2.toByte(),
+            3.toByte(),
+            4.toByte(),
+            5.toByte(),
+            6.toByte(),
+            7.toByte()
         )
 
         val resultArray = testReader.getBytes(8)

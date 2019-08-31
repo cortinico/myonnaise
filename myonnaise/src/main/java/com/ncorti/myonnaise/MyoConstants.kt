@@ -1,6 +1,6 @@
 package com.ncorti.myonnaise
 
-import java.util.*
+import java.util.UUID
 
 /** Service ID - MYO CONTROL  */
 val SERVICE_CONTROL_ID: UUID = UUID.fromString("d5060001-a904-deb9-4748-2c7f4a124842")

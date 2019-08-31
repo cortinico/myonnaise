@@ -11,11 +11,10 @@ class ControlDeviceModule {
 
     @Provides
     fun provideControlDevicePresenter(
-            controlDeviceView: ControlDeviceContract.View,
-            myonnaise: Myonnaise,
-            deviceManager: DeviceManager
+        controlDeviceView: ControlDeviceContract.View,
+        myonnaise: Myonnaise,
+        deviceManager: DeviceManager
     ): ControlDevicePresenter {
         return ControlDevicePresenter(controlDeviceView, myonnaise, deviceManager)
     }
-
 }

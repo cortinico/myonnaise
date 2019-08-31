@@ -16,7 +16,6 @@ import org.junit.Test
 import org.mockito.ArgumentMatchers
 import org.mockito.ArgumentMatchers.anyInt
 
-
 class ExportPresenterTest {
 
     @get:Rule
@@ -32,7 +31,7 @@ class ExportPresenterTest {
         mockedView = mock {}
         mockedMyo = mock {}
         mockedDeviceManager = mock {
-            on (mock.myo) doReturn mockedMyo
+            on(mock.myo) doReturn mockedMyo
         }
 
         testPresenter = ExportPresenter(mockedView, mockedDeviceManager)
@@ -72,10 +71,13 @@ class ExportPresenterTest {
     fun onCollectionTogglePressed_withStreamingDeviceAndNotSubscribed_showCollectedPoints() {
         whenever(mockedDeviceManager.myo?.isStreaming()).thenReturn(true)
         whenever(mockedDeviceManager.myo?.dataFlowable())
-                .thenReturn(Flowable.just(
-                        floatArrayOf(1.0f),
-                        floatArrayOf(2.0f),
-                        floatArrayOf(3.0f)))
+            .thenReturn(
+                Flowable.just(
+                    floatArrayOf(1.0f),
+                    floatArrayOf(2.0f),
+                    floatArrayOf(3.0f)
+                )
+            )
 
         testPresenter.dataSubscription = null
         testPresenter.onCollectionTogglePressed()
@@ -139,9 +141,9 @@ class ExportPresenterTest {
     @Test
     fun createCsv_withMultipleLine_MultipleLineCsv() {
         val buffer = arrayListOf(
-                floatArrayOf(1f, 2f, 3f),
-                floatArrayOf(4f, 5f, 6f))
+            floatArrayOf(1f, 2f, 3f),
+            floatArrayOf(4f, 5f, 6f)
+        )
         assertEquals("1.0;2.0;3.0;\n4.0;5.0;6.0;\n", testPresenter.createCsv(buffer))
     }
-
 }

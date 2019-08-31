@@ -5,12 +5,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import it.ncorti.emgvisualizer.dagger.DeviceManager
-import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
 
 class ExportPresenter(
-        override val view: ExportContract.View,
-        private val deviceManager: DeviceManager
+    override val view: ExportContract.View,
+    private val deviceManager: DeviceManager
 ) : ExportContract.Presenter(view) {
 
     private val counter: AtomicInteger = AtomicInteger()
@@ -41,16 +40,16 @@ class ExportPresenter(
             if (this.isStreaming()) {
                 if (dataSubscription == null || dataSubscription?.isDisposed == true) {
                     dataSubscription = this.dataFlowable()
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .doOnSubscribe {
-                                view.showCollectionStarted()
-                                view.disableResetButton()
-                            }
-                            .subscribe {
-                                buffer.add(it)
-                                view.showCollectedPoints(counter.incrementAndGet())
-                            }
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnSubscribe {
+                            view.showCollectionStarted()
+                            view.disableResetButton()
+                        }
+                        .subscribe {
+                            buffer.add(it)
+                            view.showCollectedPoints(counter.incrementAndGet())
+                        }
                 } else {
                     dataSubscription?.dispose()
                     view.enableResetButton()

@@ -1,15 +1,24 @@
 package it.ncorti.emgvisualizer.ui.control
 
 import android.bluetooth.BluetoothDevice
-import com.ncorti.myonnaise.*
-import com.nhaarman.mockitokotlin2.*
+import com.ncorti.myonnaise.CommandList
+import com.ncorti.myonnaise.MYO_MAX_FREQUENCY
+import com.ncorti.myonnaise.Myo
+import com.ncorti.myonnaise.MyoControlStatus
+import com.ncorti.myonnaise.MyoStatus
+import com.ncorti.myonnaise.Myonnaise
+import com.nhaarman.mockitokotlin2.anyOrNull
+import com.nhaarman.mockitokotlin2.atLeast
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Observable
 import it.ncorti.emgvisualizer.dagger.DeviceManager
 import it.ncorti.emgvisualizer.ui.testutil.TestSchedulerRule
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-
 
 class ControlDevicePresenterTest {
 

@@ -7,5 +7,4 @@ abstract class BasePresenter<V : BaseView>(open val view: V) {
     abstract fun start()
 
     abstract fun stop()
-
 }

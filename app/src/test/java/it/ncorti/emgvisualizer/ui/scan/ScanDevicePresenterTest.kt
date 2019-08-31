@@ -11,11 +11,11 @@ import io.reactivex.Flowable
 import it.ncorti.emgvisualizer.dagger.DeviceManager
 import it.ncorti.emgvisualizer.ui.model.Device
 import it.ncorti.emgvisualizer.ui.testutil.TestSchedulerRule
+import java.lang.RuntimeException
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import java.lang.RuntimeException
 
 class ScanDevicePresenterTest {
 
@@ -82,7 +82,6 @@ class ScanDevicePresenterTest {
         verify(testPresenter.scanSubscription)?.dispose()
         verify(mockedView).hideScanLoading()
     }
-
 
     @Test
     fun onScanToggleClicked_withAlreadyScanningNoDeviceFound_showEmptyMessage() {
@@ -151,5 +150,4 @@ class ScanDevicePresenterTest {
         assertEquals(0, mockedDeviceManager.selectedIndex)
         verify(mockedView).navigateToControlDevice()
     }
-
 }

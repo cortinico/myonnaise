@@ -18,8 +18,8 @@ import it.ncorti.emgvisualizer.BaseFragment
 import it.ncorti.emgvisualizer.R
 import it.ncorti.emgvisualizer.ui.MainActivity
 import it.ncorti.emgvisualizer.ui.model.Device
-import kotlinx.android.synthetic.main.layout_scan_device.*
 import javax.inject.Inject
+import kotlinx.android.synthetic.main.layout_scan_device.*
 
 class ScanDeviceFragment : BaseFragment<ScanDeviceContract.Presenter>(), ScanDeviceContract.View {
 
@@ -112,13 +112,13 @@ class ScanDeviceFragment : BaseFragment<ScanDeviceContract.Presenter>(), ScanDev
     }
 
     class DeviceAdapter(
-            private val deviceSelectedListener: DeviceSelectedListener
+        private val deviceSelectedListener: DeviceSelectedListener
     ) : RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder>() {
 
         var deviceList = mutableListOf<Device>()
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-                DeviceViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_device, parent, false), deviceSelectedListener)
+            DeviceViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_device, parent, false), deviceSelectedListener)
 
         override fun getItemCount() = deviceList.size
 
@@ -126,14 +126,13 @@ class ScanDeviceFragment : BaseFragment<ScanDeviceContract.Presenter>(), ScanDev
             holder.bind(deviceList[position])
         }
 
-
         class DeviceViewHolder(
-                val item: View,
-                private val listener: DeviceSelectedListener
+            val item: View,
+            private val listener: DeviceSelectedListener
         ) : RecyclerView.ViewHolder(item) {
             fun bind(device: Device) {
                 item.findViewById<TextView>(R.id.text_name).text =
-                        device.name ?: item.context.getString(R.string.unknown_device)
+                    device.name ?: item.context.getString(R.string.unknown_device)
                 item.findViewById<TextView>(R.id.text_address).text = device.address
                 item.findViewById<MaterialButton>(R.id.button_select).setOnClickListener {
                     listener.onDeviceSelected(it, adapterPosition)
@@ -146,22 +145,21 @@ class ScanDeviceFragment : BaseFragment<ScanDeviceContract.Presenter>(), ScanDev
         fun onDeviceSelected(v: View, position: Int)
     }
 
-
     inner class FadeInAnimator : DefaultItemAnimator() {
 
         override fun animateAdd(viewHolder: RecyclerView.ViewHolder): Boolean {
             if (viewHolder is DeviceAdapter.DeviceViewHolder) {
                 viewHolder.item.alpha = 0.0f
                 viewHolder.itemView.animate()
-                        .alpha(1.0f)
-                        .setDuration(1000)
-                        .setListener(object : AnimatorListenerAdapter() {
-                            override fun onAnimationEnd(animation: Animator) {
-                                super.onAnimationEnd(animation)
-                                dispatchAddFinished(viewHolder)
-                            }
-                        })
-                        .start()
+                    .alpha(1.0f)
+                    .setDuration(1000)
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator) {
+                            super.onAnimationEnd(animation)
+                            dispatchAddFinished(viewHolder)
+                        }
+                    })
+                    .start()
             }
             return false
         }

@@ -18,8 +18,8 @@ import it.ncorti.emgvisualizer.ui.control.ControlDeviceFragment
 import it.ncorti.emgvisualizer.ui.export.ExportFragment
 import it.ncorti.emgvisualizer.ui.graph.GraphFragment
 import it.ncorti.emgvisualizer.ui.scan.ScanDeviceFragment
-import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
+import kotlinx.android.synthetic.main.activity_main.*
 
 private const val PREFS_GLOBAL = "global"
 private const val KEY_COMPLETED_ONBOARDING = "completed_onboarding"
@@ -48,10 +48,10 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         setSupportActionBar(findViewById(R.id.new_toolbar))
 
         val fragmentList = listOf<Fragment>(
-                ScanDeviceFragment.newInstance(),
-                ControlDeviceFragment.newInstance(),
-                GraphFragment.newInstance(),
-                ExportFragment.newInstance()
+            ScanDeviceFragment.newInstance(),
+            ControlDeviceFragment.newInstance(),
+            GraphFragment.newInstance(),
+            ExportFragment.newInstance()
         )
 
         view_pager.adapter = MyAdapter(supportFragmentManager, fragmentList)
@@ -71,7 +71,6 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
                 bottom_navigation.menu.getItem(position).isChecked = true
                 prevMenuItem = bottom_navigation.menu.getItem(position)
             }
-
         })
         bottom_navigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -97,5 +96,4 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
             return fragmentList[position]
         }
     }
-
 }

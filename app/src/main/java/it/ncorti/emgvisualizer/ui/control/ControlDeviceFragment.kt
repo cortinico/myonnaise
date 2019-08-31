@@ -10,9 +10,8 @@ import android.widget.Toast
 import dagger.android.support.AndroidSupportInjection
 import it.ncorti.emgvisualizer.BaseFragment
 import it.ncorti.emgvisualizer.R
-import kotlinx.android.synthetic.main.layout_control_device.*
 import javax.inject.Inject
-
+import kotlinx.android.synthetic.main.layout_control_device.*
 
 class ControlDeviceFragment : BaseFragment<ControlDeviceContract.Presenter>(), ControlDeviceContract.View {
 

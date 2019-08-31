@@ -10,10 +10,9 @@ class GraphModule {
 
     @Provides
     fun provideGraphPresenter(
-            graphView: GraphContract.View,
-            deviceManager: DeviceManager
+        graphView: GraphContract.View,
+        deviceManager: DeviceManager
     ): GraphPresenter {
         return GraphPresenter(graphView, deviceManager)
     }
-
 }

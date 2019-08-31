@@ -12,4 +12,3 @@ class ContextModule(private var context: Context) {
         return context.applicationContext
     }
 }
-

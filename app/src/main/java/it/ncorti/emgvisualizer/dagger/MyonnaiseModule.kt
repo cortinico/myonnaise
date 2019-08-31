@@ -14,5 +14,4 @@ class MyonnaiseModule {
     fun provideMyonnaise(context: Context): Myonnaise {
         return Myonnaise(context)
     }
-
 }

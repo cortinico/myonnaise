@@ -4,7 +4,6 @@ import it.ncorti.emgvisualizer.BasePresenter
 import it.ncorti.emgvisualizer.BaseView
 import it.ncorti.emgvisualizer.ui.model.Device
 
-
 interface ScanDeviceContract {
 
     interface View : BaseView {

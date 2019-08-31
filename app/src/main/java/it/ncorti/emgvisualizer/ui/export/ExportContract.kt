@@ -3,7 +3,6 @@ package it.ncorti.emgvisualizer.ui.export
 import it.ncorti.emgvisualizer.BasePresenter
 import it.ncorti.emgvisualizer.BaseView
 
-
 interface ExportContract {
 
     interface View : BaseView {
@@ -41,6 +40,5 @@ interface ExportContract {
         abstract fun onSavePressed()
 
         abstract fun onSharePressed()
-
     }
 }

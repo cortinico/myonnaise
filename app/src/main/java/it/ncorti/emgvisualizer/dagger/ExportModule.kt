@@ -10,10 +10,9 @@ class ExportModule {
 
     @Provides
     fun provideExportPresenter(
-            exportView: ExportContract.View,
-            deviceManager: DeviceManager
+        exportView: ExportContract.View,
+        deviceManager: DeviceManager
     ): ExportPresenter {
         return ExportPresenter(exportView, deviceManager)
     }
-
 }

@@ -59,7 +59,7 @@ class SensorGraphView(context: Context, attrs: AttributeSet) : View(context, att
         infoPaint.color = ContextCompat.getColor(context, R.color.graph_info)
 
         infoPaint.textSize = context.resources
-                .getDimensionPixelSize(R.dimen.text_size).toFloat()
+            .getDimensionPixelSize(R.dimen.text_size).toFloat()
         infoPaint.isAntiAlias = true
     }
 
@@ -86,7 +86,7 @@ class SensorGraphView(context: Context, attrs: AttributeSet) : View(context, att
 
     fun addPoint(points: FloatArray) {
         for (i in 0 until channels) {
-            this.normalizedPoints[i][currentIndex] = (points[i] - minValue)/spread
+            this.normalizedPoints[i][currentIndex] = (points[i] - minValue) / spread
         }
         currentIndex = (currentIndex + 1) % MAX_DATA_SIZE
         invalidate()
@@ -107,7 +107,7 @@ class SensorGraphView(context: Context, attrs: AttributeSet) : View(context, att
         if (!running)
             return
 
-        val pointSpan : Float = width.toFloat() / MAX_DATA_SIZE.toFloat()
+        val pointSpan: Float = width.toFloat() / MAX_DATA_SIZE.toFloat()
         var previousX = -1f
         var previousY = -1f
 

@@ -5,7 +5,6 @@ import dagger.Module
 import it.ncorti.emgvisualizer.ui.export.ExportContract
 import it.ncorti.emgvisualizer.ui.export.ExportFragment
 
-
 @Module
 abstract class ExportViewModule {
 

@@ -8,7 +8,6 @@ import it.ncorti.emgvisualizer.ui.export.ExportFragment
 import it.ncorti.emgvisualizer.ui.graph.GraphFragment
 import it.ncorti.emgvisualizer.ui.scan.ScanDeviceFragment
 
-
 @Module
 abstract class BuildersModule {
 

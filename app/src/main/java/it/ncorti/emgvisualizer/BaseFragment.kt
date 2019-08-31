@@ -3,7 +3,7 @@ package it.ncorti.emgvisualizer
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 
-open class BaseFragment<P: BasePresenter<BaseView>> : Fragment(), BaseView {
+open class BaseFragment<P : BasePresenter<BaseView>> : Fragment(), BaseView {
 
     open var presenter: P? = null
 
@@ -24,5 +24,4 @@ open class BaseFragment<P: BasePresenter<BaseView>> : Fragment(), BaseView {
             presenter?.stop()
         }
     }
-
 }
