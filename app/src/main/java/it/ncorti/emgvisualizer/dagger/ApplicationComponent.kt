@@ -16,4 +16,5 @@ import javax.inject.Singleton
         DeviceManagerModule::class
     ]
 )
+
 interface ApplicationComponent : AndroidInjector<MyoApplication>

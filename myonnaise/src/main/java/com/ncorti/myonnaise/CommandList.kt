@@ -1,4 +1,4 @@
-@file:Suppress("LocalVariableName")
+@file:Suppress("MagicNumber")
 
 package com.ncorti.myonnaise
 

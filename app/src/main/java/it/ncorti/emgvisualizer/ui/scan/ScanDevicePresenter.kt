@@ -10,6 +10,8 @@ import it.ncorti.emgvisualizer.dagger.DeviceManager
 import it.ncorti.emgvisualizer.ui.model.Device
 import java.util.concurrent.TimeUnit
 
+const val SCAN_INTERVAL_SECONDS = 10L
+
 class ScanDevicePresenter(
     override val view: ScanDeviceContract.View,
     private val myonnaise: Myonnaise,
@@ -21,7 +23,7 @@ class ScanDevicePresenter(
     internal var scanSubscription: Disposable? = null
 
     override fun create() {
-        scanFlowable = myonnaise.startScan(10, TimeUnit.SECONDS)
+        scanFlowable = myonnaise.startScan(SCAN_INTERVAL_SECONDS, TimeUnit.SECONDS)
     }
 
     override fun start() {

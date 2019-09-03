@@ -1,3 +1,5 @@
+@file:Suppress("ComplexMethod")
+
 package it.ncorti.emgvisualizer.ui.control
 
 import com.ncorti.myonnaise.CommandList
@@ -112,6 +114,7 @@ class ControlDevicePresenter(
         }
     }
 
+    @Suppress("MagicNumber")
     override fun onProgressSelected(progress: Int) {
         val selectedFrequency = when (progress) {
             0 -> 1

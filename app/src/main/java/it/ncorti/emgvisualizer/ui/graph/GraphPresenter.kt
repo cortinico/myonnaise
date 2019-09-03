@@ -12,7 +12,7 @@ class GraphPresenter(
 
     private var dataSubscription: Disposable? = null
 
-    override fun create() { }
+    override fun create() {}
 
     override fun start() {
         deviceManager.myo?.apply {

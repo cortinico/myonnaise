@@ -17,6 +17,7 @@ import it.ncorti.emgvisualizer.R
 private const val PREFS_GLOBAL = "global"
 private const val KEY_COMPLETED_ONBOARDING = "completed_onboarding"
 private const val REQUEST_LOCATION_CODE = 1
+private const val VIBRATE_INTENSITY = 30
 
 class IntroActivity : AppIntro() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,7 +66,7 @@ class IntroActivity : AppIntro() {
         showSkipButton(false)
         isProgressButtonEnabled = true
         setVibrate(true)
-        setVibrateIntensity(30)
+        setVibrateIntensity(VIBRATE_INTENSITY)
     }
 
     override fun onSkipPressed(currentFragment: Fragment) {
@@ -110,7 +111,8 @@ class IntroActivity : AppIntro() {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     startMainActivity()
                 } else {
-                    Toast.makeText(this, getString(R.string.location_permission_denied_message), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.location_permission_denied_message),
+                            Toast.LENGTH_SHORT).show()
                 }
             }
         }

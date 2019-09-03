@@ -15,6 +15,9 @@ private const val CIRCLE_SIZE_ACTUAL = 20
 /** Graph size  */
 private const val MAX_DATA_SIZE = 150
 
+private const val INITIAL_MAX_VALUE = 10.0f
+private const val INITIAL_MIN_VALUE = -10.0f
+
 class SensorGraphView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     var running = false
@@ -27,8 +30,8 @@ class SensorGraphView(context: Context, attrs: AttributeSet) : View(context, att
             }
         }
 
-    var maxValue = 10.0f
-    var minValue = -10.0f
+    var maxValue = INITIAL_MAX_VALUE
+    var minValue = INITIAL_MIN_VALUE
 
     val spread: Float
         get() = maxValue - minValue

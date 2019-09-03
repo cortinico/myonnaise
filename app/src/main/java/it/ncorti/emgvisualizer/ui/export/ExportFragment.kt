@@ -146,7 +146,8 @@ class ExportFragment : BaseFragment<ExportContract.Presenter>(), ExportContract.
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     fileContentToSave?.apply { writeToFile(this) }
                 } else {
-                    Toast.makeText(activity, getString(R.string.write_permission_denied_message), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, getString(R.string.write_permission_denied_message),
+                            Toast.LENGTH_SHORT).show()
                 }
             }
         }

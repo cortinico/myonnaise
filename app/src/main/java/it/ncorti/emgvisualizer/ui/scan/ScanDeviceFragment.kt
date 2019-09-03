@@ -21,6 +21,8 @@ import it.ncorti.emgvisualizer.ui.model.Device
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.layout_scan_device.*
 
+const val ADD_ITEM_FADE_MS: Long = 1000
+
 class ScanDeviceFragment : BaseFragment<ScanDeviceContract.Presenter>(), ScanDeviceContract.View {
 
     companion object {
@@ -117,8 +119,9 @@ class ScanDeviceFragment : BaseFragment<ScanDeviceContract.Presenter>(), ScanDev
 
         var deviceList = mutableListOf<Device>()
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-            DeviceViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_device, parent, false), deviceSelectedListener)
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = DeviceViewHolder(
+                LayoutInflater.from(parent.context)
+                        .inflate(R.layout.item_device, parent, false), deviceSelectedListener)
 
         override fun getItemCount() = deviceList.size
 
@@ -152,7 +155,7 @@ class ScanDeviceFragment : BaseFragment<ScanDeviceContract.Presenter>(), ScanDev
                 viewHolder.item.alpha = 0.0f
                 viewHolder.itemView.animate()
                     .alpha(1.0f)
-                    .setDuration(1000)
+                    .setDuration(ADD_ITEM_FADE_MS)
                     .setListener(object : AnimatorListenerAdapter() {
                         override fun onAnimationEnd(animation: Animator) {
                             super.onAnimationEnd(animation)

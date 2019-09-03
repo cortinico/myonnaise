@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         return fragmentDispatchingAndroidInjector
     }
 
+    @Suppress("MagicNumber")
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
