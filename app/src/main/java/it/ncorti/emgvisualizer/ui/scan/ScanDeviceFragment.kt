@@ -120,8 +120,10 @@ class ScanDeviceFragment : BaseFragment<ScanDeviceContract.Presenter>(), ScanDev
         var deviceList = mutableListOf<Device>()
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = DeviceViewHolder(
-                LayoutInflater.from(parent.context)
-                        .inflate(R.layout.item_device, parent, false), deviceSelectedListener)
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_device, parent, false),
+            deviceSelectedListener
+        )
 
         override fun getItemCount() = deviceList.size
 

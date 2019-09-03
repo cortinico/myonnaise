@@ -111,8 +111,10 @@ class IntroActivity : AppIntro() {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     startMainActivity()
                 } else {
-                    Toast.makeText(this, getString(R.string.location_permission_denied_message),
-                            Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this, getString(R.string.location_permission_denied_message),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }

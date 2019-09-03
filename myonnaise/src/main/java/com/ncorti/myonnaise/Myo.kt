@@ -57,9 +57,9 @@ class Myo(private val device: BluetoothDevice) : BluetoothGattCallback() {
 
     // Subjects for publishing outside Connection Status, Control Status and the Data (Float Arrays).
     internal val connectionStatusSubject: BehaviorSubject<MyoStatus> =
-            BehaviorSubject.createDefault(MyoStatus.DISCONNECTED)
+        BehaviorSubject.createDefault(MyoStatus.DISCONNECTED)
     internal val controlStatusSubject: BehaviorSubject<MyoControlStatus> =
-            BehaviorSubject.createDefault(MyoControlStatus.NOT_STREAMING)
+        BehaviorSubject.createDefault(MyoControlStatus.NOT_STREAMING)
     internal val dataProcessor: PublishProcessor<FloatArray> = PublishProcessor.create()
 
     internal var gatt: BluetoothGatt? = null
@@ -101,7 +101,8 @@ class Myo(private val device: BluetoothDevice) : BluetoothGattCallback() {
     /**
      * @return true if this object is connected to a device
      */
-    fun isConnected() = connectionStatusSubject.value == MyoStatus.CONNECTED ||
+    fun isConnected() =
+        connectionStatusSubject.value == MyoStatus.CONNECTED ||
             connectionStatusSubject.value == MyoStatus.READY
 
     /**
