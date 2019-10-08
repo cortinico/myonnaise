@@ -5,7 +5,7 @@ object Versions {
     const val appintro = "v5.1.0"
     const val bintrayGradle = "1.8.4"
     const val dagger = "2.16"
-    const val detekt = "1.0.1"
+    const val detekt = "1.1.0"
     const val constraintlayout = "1.1.2"
     const val junit = "4.12"
     const val ktLint = "8.0.0"
