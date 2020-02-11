@@ -19,7 +19,6 @@ ktlint {
 }
 
 detekt {
-    toolVersion = "1.1.1"
+    toolVersion = "1.5.1"
     config = files("../config/detekt/detekt.yml")
-    filters = ".*/resources/.*,.*/build/.*"
 }
