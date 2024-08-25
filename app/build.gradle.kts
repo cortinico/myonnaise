@@ -9,12 +9,13 @@ android {
 
     defaultConfig {
         minSdk = libs.versions.min.sdk.version.get().toInt()
+        targetSdk = libs.versions.target.sdk.version.get().toInt()
         namespace = "it.ncorti.emgvisualizer"
         
         applicationId = "it.ncorti.emgvisualizer"
         
-        versionCode = 3
-        versionName = "2.0"
+        versionCode = 5
+        versionName = "3.0.0-alpha1"
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
