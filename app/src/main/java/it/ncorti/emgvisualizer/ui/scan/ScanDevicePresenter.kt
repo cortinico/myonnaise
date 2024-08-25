@@ -34,7 +34,7 @@ class ScanDevicePresenter(
             view.populateDeviceList(
                 deviceManager
                     .scannedDeviceList
-                    .map { it -> Device(it.name, it.address) }
+                    .map { Device(it.name, it.address) }
             )
         }
     }

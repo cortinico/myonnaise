@@ -1,58 +1,69 @@
 plugins {
     id("com.android.application")
-    id("kotlin-android")
-    id("kotlin-kapt")
-    id("kotlin-android-extensions")
-    id("com.github.ben-manes.versions")
+    kotlin("android")
+    kotlin("kapt")
 }
-apply(from = "../jacoco.gradle")
-apply(from = "../kotlin-static-analysis.gradle")
 
 android {
-    compileSdkVersion(28)
+    compileSdk = libs.versions.compile.sdk.version.get().toInt()
+
     defaultConfig {
+        minSdk = libs.versions.min.sdk.version.get().toInt()
+        namespace = "it.ncorti.emgvisualizer"
+        
         applicationId = "it.ncorti.emgvisualizer"
-        minSdkVersion(21)
-        targetSdkVersion(28)
+        
         versionCode = 3
         versionName = "2.0"
     }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17.toString()
+    }
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            signingConfig = signingConfigs.getByName("debug")
         }
+    }
+    lint {
+        warningsAsErrors = true
+        abortOnError = true
+        disable.addAll(listOf("GradleDependency", "IconDensities"))
+    }
+    buildFeatures {
+        viewBinding = true
     }
 }
 
-repositories {
-    google()
-    jcenter()
-    mavenCentral()
-}
-
 dependencies {
-    implementation(project(":myonnaise"))
-    implementation(project(":sensorgraphview"))
+    implementation(projects.myonnaise)
+    implementation(projects.sensorgraphview)
 
-    implementation(Libs.kotlinJdk)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.recyclerview)
+    
+    implementation(libs.materialcomponents)
 
-    implementation(Libs.androidXAppCompat)
-    implementation(Libs.androidXConstraintLayout)
-    implementation(Libs.androidXRecyclerView)
-    implementation(Libs.materialComponents)
+    implementation(libs.rxjava2)
+    implementation(libs.rxandroid2)
 
-    testImplementation(Libs.junit)
-    testImplementation(Libs.mockitoCore)
-    testImplementation(Libs.mockitoKotlin)
+    implementation(libs.dagger)
+    kapt(libs.dagger.compiler)
+    implementation(libs.dagger.android)
+    kapt(libs.dagger.android.processor)
 
-    implementation(Libs.rxjava2)
-    implementation(Libs.rxAndroid2)
+    implementation(libs.appintro)
 
-    implementation(Libs.dagger)
-    kapt(Libs.daggerCompiler)
-    implementation(Libs.daggerAndroid)
-    kapt(Libs.daggerAndroidProcessor)
-
-    implementation(Libs.appIntro)
+    testImplementation(libs.junit)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.kotlin)
 }

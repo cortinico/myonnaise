@@ -1,7 +1,8 @@
-@file:Suppress("MagicNumber", "TooManyFunctions")
+@file:Suppress("MagicNumber", "TooManyFunctions", "DEPRECATION", "ImplicitDefaultLocale")
 
 package com.ncorti.myonnaise
 
+import android.annotation.SuppressLint
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattCallback
@@ -245,6 +246,7 @@ class Myo(private val device: BluetoothDevice) : BluetoothGattCallback() {
             gatt.readCharacteristic(readQueue.element())
     }
 
+    @SuppressLint("DefaultLocale")
     override fun onCharacteristicRead(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic, status: Int) {
         super.onCharacteristicRead(gatt, characteristic, status)
         readQueue.remove()

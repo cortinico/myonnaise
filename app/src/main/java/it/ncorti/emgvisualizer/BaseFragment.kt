@@ -16,6 +16,7 @@ open class BaseFragment<P : BasePresenter<BaseView>> : Fragment(), BaseView {
         presenter?.create()
     }
 
+    @Deprecated("Deprecated in Java")
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
         if (isVisibleToUser) {

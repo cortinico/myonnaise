@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.ncorti.myonnaise
 
 import android.bluetooth.BluetoothDevice

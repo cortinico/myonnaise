@@ -2,6 +2,7 @@ package it.ncorti.emgvisualizer.ui.scan
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,14 +18,16 @@ import com.google.android.material.button.MaterialButton
 import dagger.android.support.AndroidSupportInjection
 import it.ncorti.emgvisualizer.BaseFragment
 import it.ncorti.emgvisualizer.R
+import it.ncorti.emgvisualizer.databinding.LayoutScanDeviceBinding
 import it.ncorti.emgvisualizer.ui.MainActivity
 import it.ncorti.emgvisualizer.ui.model.Device
 import javax.inject.Inject
-import kotlinx.android.synthetic.main.layout_scan_device.*
 
 const val ADD_ITEM_FADE_MS: Long = 1000
 
 class ScanDeviceFragment : BaseFragment<ScanDeviceContract.Presenter>(), ScanDeviceContract.View {
+
+    private lateinit var binding: LayoutScanDeviceBinding
 
     companion object {
         fun newInstance() = ScanDeviceFragment()
@@ -34,48 +38,49 @@ class ScanDeviceFragment : BaseFragment<ScanDeviceContract.Presenter>(), ScanDev
     @Inject
     lateinit var scanDevicePresenter: ScanDevicePresenter
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
         attachPresenter(scanDevicePresenter)
         super.onAttach(context)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val root = inflater.inflate(R.layout.layout_scan_device, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = LayoutScanDeviceBinding.inflate(inflater, container, false)
 
         setHasOptionsMenu(true)
-        return root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fab_scan.setOnClickListener { scanDevicePresenter.onScanToggleClicked() }
+        binding.fabScan.setOnClickListener { scanDevicePresenter.onScanToggleClicked() }
 
         listDeviceAdapter = DeviceAdapter(object : DeviceSelectedListener {
             override fun onDeviceSelected(v: View, position: Int) {
                 scanDevicePresenter.onDeviceSelected(position)
             }
         })
-        list_device_found.layoutManager = LinearLayoutManager(this.context)
-        list_device_found.itemAnimator = FadeInAnimator()
-        list_device_found.adapter = listDeviceAdapter
+        binding.listDeviceFound.layoutManager = LinearLayoutManager(this.context)
+        binding.listDeviceFound.itemAnimator = FadeInAnimator()
+        binding.listDeviceFound.adapter = listDeviceAdapter
     }
 
     override fun showStartMessage() {
-        text_empty_list?.text = getString(R.string.first_do_a_scan)
-        text_empty_list?.visibility = View.VISIBLE
+        binding.textEmptyList.text = getString(R.string.first_do_a_scan)
+        binding.textEmptyList.visibility = View.VISIBLE
     }
 
     override fun showEmptyListMessage() {
-        text_empty_list.text = getString(R.string.no_myo_found)
-        text_empty_list.visibility = View.VISIBLE
+        binding.textEmptyList.text = getString(R.string.no_myo_found)
+        binding.textEmptyList.visibility = View.VISIBLE
     }
 
     override fun hideEmptyListMessage() {
-        text_empty_list.visibility = View.INVISIBLE
+        binding.textEmptyList.visibility = View.INVISIBLE
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun populateDeviceList(list: List<Device>) {
         listDeviceAdapter?.deviceList = list.toMutableList()
         listDeviceAdapter?.notifyDataSetChanged()
@@ -92,13 +97,13 @@ class ScanDeviceFragment : BaseFragment<ScanDeviceContract.Presenter>(), ScanDev
     }
 
     override fun showScanLoading() {
-        progress_bar_search.animate().alpha(1.0f)
-        fab_scan.setImageDrawable(context?.getDrawable(R.drawable.ic_stop))
+        binding.progressBarSearch.animate().alpha(1.0f)
+        binding.fabScan.setImageDrawable(AppCompatResources.getDrawable(requireContext(), R.drawable.ic_stop))
     }
 
     override fun hideScanLoading() {
-        progress_bar_search?.animate()?.alpha(0.0f)
-        fab_scan?.setImageDrawable(context?.getDrawable(R.drawable.ic_magnify))
+        binding.progressBarSearch.animate()?.alpha(0.0f)
+        binding.fabScan.setImageDrawable(AppCompatResources.getDrawable(requireContext(), R.drawable.ic_magnify))
     }
 
     override fun showScanError() {

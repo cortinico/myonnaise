@@ -116,7 +116,7 @@ class Myonnaise(val context: Context) {
 
                     override fun onScanFailed(errorCode: Int) {
                         super.onScanFailed(errorCode)
-                        it.onError(RuntimeException())
+                        it.onError(RuntimeException("Scan of devices failed"))
                     }
                 }
             )
@@ -131,7 +131,7 @@ class Myonnaise(val context: Context) {
 
         override fun onScanFailed(errorCode: Int) {
             super.onScanFailed(errorCode)
-            emitter.onError(RuntimeException())
+            emitter.onError(RuntimeException("Scan of devices failed"))
         }
     }
 }

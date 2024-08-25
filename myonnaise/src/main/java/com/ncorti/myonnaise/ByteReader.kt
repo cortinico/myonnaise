@@ -14,7 +14,7 @@ import java.nio.ByteOrder
  */
 class ByteReader {
 
-    internal var byteBuffer: ByteBuffer? = null
+    private var byteBuffer: ByteBuffer? = null
 
     var byteData: ByteArray? = null
         set(data) {

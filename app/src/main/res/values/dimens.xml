@@ -1,15 +1,15 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <dimen name="half_grid_size">2dp</dimen>
+    <dimen name="half_grid_size" tools:ignore="UnusedResources">2dp</dimen>
     <dimen name="base_grid_size">4dp</dimen>
-    <dimen name="double_grid_size">8dp</dimen>
-    <dimen name="triple_grid_size">12dp</dimen>
+    <dimen name="double_grid_size" tools:ignore="UnusedResources">8dp</dimen>
+    <dimen name="triple_grid_size" tools:ignore="UnusedResources">12dp</dimen>
     <dimen name="quadruple_grid_size">16dp</dimen>
     <dimen name="ten_grid_size">40dp</dimen>
-    <dimen name="eighteen_grid_size">72dp</dimen>
+    <dimen name="eighteen_grid_size" tools:ignore="UnusedResources">72dp</dimen>
 
     <dimen name="default_margin">@dimen/quadruple_grid_size</dimen>
-    <dimen name="content_keyline">@dimen/eighteen_grid_size</dimen>
-    <dimen name="default_image_size">@dimen/ten_grid_size</dimen>
+    <dimen name="content_keyline" tools:ignore="UnusedResources">@dimen/eighteen_grid_size</dimen>
+    <dimen name="default_image_size" tools:ignore="UnusedResources">@dimen/ten_grid_size</dimen>
 
 </resources>

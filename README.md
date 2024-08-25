@@ -13,24 +13,25 @@ This repo contains also a **sample app** that showcases the usage of the library
 
 **DISCLAIMER: If you don't know what a Myo is, please go here: [support.getmyo.com](https://support.getmyo.com/). Please note that you need a Myo in order to use this library/app.**
 
-* [Getting Started](#getting-started-)
-* [Example](#example-)
-    * [Searching for a Myo](#searching-for-a-myo)
-    * [Connecting to a Myo](#connecting-to-a-myo)
-    * [Sending a Command](#sending-a-command)
-    * [Starting the Streaming](#starting-the-streaming)
-    * [Streaming Frequency](#streaming-frequency)
-    * [Keep Alive](#keep-alive)
-* [Features](#features-)
-* [Test App](#test-app-)
-    * [Videos](#videos) 
-* [Building/Testing](#buildingtesting-)
-    * [CircleCI](#circleci-)
-    * [Codecov](#codecov-)
-    * [Building locally](#building-locally)
-    * [Testing](#testing)
-* [Contributing](#contributing-)
-* [License](#license-)
+- [Myonnaise 🍯](#myonnaise-)
+  - [Getting Started 👣](#getting-started-)
+  - [Example 🚸](#example-)
+    - [Searching for a Myo](#searching-for-a-myo)
+    - [Connecting to a Myo](#connecting-to-a-myo)
+    - [Sending a Command](#sending-a-command)
+    - [Starting the Streaming](#starting-the-streaming)
+    - [Streaming Frequency](#streaming-frequency)
+    - [Keep Alive](#keep-alive)
+  - [Features 🎨](#features-)
+  - [Test App 📲](#test-app-)
+    - [Videos](#videos)
+  - [Building/Testing ⚙️](#buildingtesting-️)
+    - [CircleCI ](#circleci-)
+    - [Codecov ](#codecov-)
+    - [Building locally](#building-locally)
+    - [Testing](#testing)
+  - [Contributing 🤝](#contributing-)
+  - [License 📄](#license-)
 
 ## Getting Started 👣
 
@@ -38,7 +39,7 @@ This repo contains also a **sample app** that showcases the usage of the library
 
 ```groovy
 dependencies {
-   implementation 'com.ncorti:myonnaise:1.0.0'
+   implementation("com.ncorti:myonnaise:1.0.0")
 }
 ```
 

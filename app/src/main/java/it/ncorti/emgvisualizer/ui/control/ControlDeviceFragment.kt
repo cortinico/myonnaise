@@ -10,10 +10,12 @@ import android.widget.Toast
 import dagger.android.support.AndroidSupportInjection
 import it.ncorti.emgvisualizer.BaseFragment
 import it.ncorti.emgvisualizer.R
+import it.ncorti.emgvisualizer.databinding.LayoutControlDeviceBinding
 import javax.inject.Inject
-import kotlinx.android.synthetic.main.layout_control_device.*
 
 class ControlDeviceFragment : BaseFragment<ControlDeviceContract.Presenter>(), ControlDeviceContract.View {
+
+    private lateinit var binding: LayoutControlDeviceBinding
 
     companion object {
         fun newInstance() = ControlDeviceFragment()
@@ -22,29 +24,29 @@ class ControlDeviceFragment : BaseFragment<ControlDeviceContract.Presenter>(), C
     @Inject
     lateinit var controlDevicePresenter: ControlDevicePresenter
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
         attachPresenter(controlDevicePresenter)
         super.onAttach(context)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val root = inflater.inflate(R.layout.layout_control_device, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = LayoutControlDeviceBinding.inflate(inflater, container, false)
 
         setHasOptionsMenu(true)
-        return root
+        return binding.root
     }
 
     @Suppress("MagicNumber")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        button_connect.setOnClickListener { controlDevicePresenter.onConnectionToggleClicked() }
-        button_start_streaming.setOnClickListener { controlDevicePresenter.onStreamingToggleClicked() }
-        button_vibrate_1.setOnClickListener { controlDevicePresenter.onVibrateClicked(1) }
-        button_vibrate_2.setOnClickListener { controlDevicePresenter.onVibrateClicked(2) }
-        button_vibrate_3.setOnClickListener { controlDevicePresenter.onVibrateClicked(3) }
-        seekbar_frequency.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        binding.buttonConnect.setOnClickListener { controlDevicePresenter.onConnectionToggleClicked() }
+        binding.buttonStartStreaming.setOnClickListener { controlDevicePresenter.onStreamingToggleClicked() }
+        binding.buttonVibrate1.setOnClickListener { controlDevicePresenter.onVibrateClicked(1) }
+        binding.buttonVibrate2.setOnClickListener { controlDevicePresenter.onVibrateClicked(2) }
+        binding.buttonVibrate3.setOnClickListener { controlDevicePresenter.onVibrateClicked(3) }
+        binding.seekbarFrequency.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 controlDevicePresenter.onProgressSelected(progress)
             }
@@ -52,76 +54,76 @@ class ControlDeviceFragment : BaseFragment<ControlDeviceContract.Presenter>(), C
             override fun onStartTrackingTouch(p0: SeekBar?) {}
             override fun onStopTrackingTouch(p0: SeekBar?) {}
         })
-        seekbar_frequency.isEnabled = false
+        binding.seekbarFrequency.isEnabled = false
     }
 
     override fun showDeviceInformation(name: String?, address: String) {
-        device_name.text = name ?: getString(R.string.unknown_device)
-        device_address.text = address
+        binding.deviceName.text = name ?: getString(R.string.unknown_device)
+        binding.deviceAddress.text = address
     }
 
     override fun showConnectionProgress() {
-        progress_connect.animate().alpha(1.0f)
+        binding.progressConnect.animate().alpha(1.0f)
     }
 
     override fun hideConnectionProgress() {
-        progress_connect.animate().alpha(0.0f)
+        binding.progressConnect.animate().alpha(0.0f)
     }
 
     override fun showConnecting() {
-        device_status.text = getString(R.string.connecting)
+        binding.deviceStatus.text = getString(R.string.connecting)
     }
 
     override fun showConnected() {
-        device_status.text = getString(R.string.connected)
-        button_connect.text = getString(R.string.disconnect)
+        binding.deviceStatus.text = getString(R.string.connected)
+        binding.buttonConnect.text = getString(R.string.disconnect)
     }
 
     override fun showDisconnected() {
-        device_status.text = getString(R.string.disconnected)
-        button_connect.text = getString(R.string.connect)
+        binding.deviceStatus.text = getString(R.string.disconnected)
+        binding.buttonConnect.text = getString(R.string.connect)
     }
 
     override fun showConnectionError() {
         Toast.makeText(context, "Connection failed", Toast.LENGTH_SHORT).show()
-        button_connect.text = getString(R.string.connect)
+        binding.buttonConnect.text = getString(R.string.connect)
     }
 
     override fun enableConnectButton() {
-        button_connect.isEnabled = true
+        binding.buttonConnect.isEnabled = true
     }
 
     override fun disableConnectButton() {
-        button_connect.isEnabled = false
+        binding.buttonConnect.isEnabled = false
     }
 
     override fun disableControlPanel() {
-        button_start_streaming.isEnabled = false
-        button_vibrate_1.isEnabled = false
-        button_vibrate_2.isEnabled = false
-        button_vibrate_3.isEnabled = false
-        seekbar_frequency.isEnabled = false
+        binding.buttonStartStreaming.isEnabled = false
+        binding.buttonVibrate1.isEnabled = false
+        binding.buttonVibrate2.isEnabled = false
+        binding.buttonVibrate3.isEnabled = false
+        binding.seekbarFrequency.isEnabled = false
     }
 
     override fun enableControlPanel() {
-        button_start_streaming.isEnabled = true
-        button_vibrate_1.isEnabled = true
-        button_vibrate_2.isEnabled = true
-        button_vibrate_3.isEnabled = true
-        seekbar_frequency.isEnabled = true
+        binding.buttonStartStreaming.isEnabled = true
+        binding.buttonVibrate1.isEnabled = true
+        binding.buttonVibrate2.isEnabled = true
+        binding.buttonVibrate3.isEnabled = true
+        binding.seekbarFrequency.isEnabled = true
     }
 
     override fun showStreaming() {
-        button_start_streaming?.text = getText(R.string.stop)
-        device_streaming_status?.text = getString(R.string.currently_streaming)
+        binding.buttonStartStreaming.text = getText(R.string.stop)
+        binding.deviceStreamingStatus.text = getString(R.string.currently_streaming)
     }
 
     override fun showNotStreaming() {
-        button_start_streaming?.text = getText(R.string.start)
-        device_streaming_status?.text = getString(R.string.not_streaming)
+        binding.buttonStartStreaming.text = getText(R.string.start)
+        binding.deviceStreamingStatus.text = getString(R.string.not_streaming)
     }
 
     override fun showFrequency(frequency: Int) {
-        device_frequency_value.text = getString(R.string.templated_hz, frequency)
+        binding.deviceFrequencyValue.text = getString(R.string.templated_hz, frequency)
     }
 }

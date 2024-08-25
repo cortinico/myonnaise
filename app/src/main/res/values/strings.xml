@@ -4,11 +4,6 @@
     <string name="no_myo_found">No Myo found!</string>
     <string name="first_do_a_scan">First, you need to find a Myo.\nPress the button to start a scan.</string>
 
-    <!-- TODO About -->
-    <string name="description">You can use this app to visualize raw EMG data from a Myo device. If you find a bug, feel free to report it :)</string>
-    <string name="author">Nicola Corti</string>
-    <string name="source_code">To access the source code press here</string>
-
     <string name="scan">Scan</string>
     <string name="control">Control</string>
     <string name="graph">Graph</string>

@@ -41,8 +41,9 @@
         android:layout_gravity="end|bottom"
         android:layout_marginEnd="@dimen/default_margin"
         android:layout_marginBottom="@dimen/default_margin"
+        android:contentDescription="@string/scan"
         android:src="@drawable/ic_magnify"
-        android:tint="@android:color/white"
+        app:tint="@android:color/white"
         app:fabSize="normal" />
 
 </FrameLayout>

@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         minSdk = libs.versions.min.sdk.version.get().toInt()
-        namespace = "com.ncorti.myonnaise.sensorgraphview"
+        namespace = "com.ncorti.myonnaise"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -37,5 +37,10 @@ android {
 
 dependencies {
     implementation(libs.androidx.appcompat)
+    implementation(libs.rxjava2)
+    implementation(libs.rxandroid2)
+
     testImplementation(libs.junit)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.kotlin)
 }

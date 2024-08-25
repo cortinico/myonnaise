@@ -16,14 +16,16 @@ import androidx.core.content.ContextCompat
 import dagger.android.support.AndroidSupportInjection
 import it.ncorti.emgvisualizer.BaseFragment
 import it.ncorti.emgvisualizer.R
+import it.ncorti.emgvisualizer.databinding.LayoutExportBinding
 import java.io.File
 import java.io.FileOutputStream
 import javax.inject.Inject
-import kotlinx.android.synthetic.main.layout_export.*
 
 private const val REQUEST_WRITE_EXTERNAL_CODE = 2
 
 class ExportFragment : BaseFragment<ExportContract.Presenter>(), ExportContract.View {
+
+    private lateinit var binding: LayoutExportBinding
 
     companion object {
         fun newInstance() = ExportFragment()
@@ -34,33 +36,33 @@ class ExportFragment : BaseFragment<ExportContract.Presenter>(), ExportContract.
 
     private var fileContentToSave: String? = null
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
         attachPresenter(exportPresenter)
         super.onAttach(context)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val root = inflater.inflate(R.layout.layout_export, container, false)
+        binding = LayoutExportBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
-        return root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        button_start_collecting.setOnClickListener { exportPresenter.onCollectionTogglePressed() }
-        button_reset_collecting.setOnClickListener { exportPresenter.onResetPressed() }
-        button_share.setOnClickListener { exportPresenter.onSharePressed() }
-        button_save.setOnClickListener { exportPresenter.onSavePressed() }
+        binding.buttonStartCollecting.setOnClickListener { exportPresenter.onCollectionTogglePressed() }
+        binding.buttonResetCollecting.setOnClickListener { exportPresenter.onResetPressed() }
+        binding.buttonShare.setOnClickListener { exportPresenter.onSharePressed() }
+        binding.buttonSave.setOnClickListener { exportPresenter.onSavePressed() }
     }
 
     override fun enableStartCollectingButton() {
-        button_start_collecting.isEnabled = true
+        binding.buttonStartCollecting.isEnabled = true
     }
 
     override fun disableStartCollectingButton() {
-        button_start_collecting.isEnabled = false
+        binding.buttonStartCollecting.isEnabled = false
     }
 
     override fun showNotStreamingErrorMessage() {
@@ -68,37 +70,37 @@ class ExportFragment : BaseFragment<ExportContract.Presenter>(), ExportContract.
     }
 
     override fun showCollectionStarted() {
-        button_start_collecting?.text = getString(R.string.stop_collecting)
+        binding.buttonStartCollecting.text = getString(R.string.stop_collecting)
     }
 
     override fun showCollectionStopped() {
-        button_start_collecting?.text = getString(R.string.start_collecting)
+        binding.buttonStartCollecting.text = getString(R.string.start_collecting)
     }
 
     override fun showCollectedPoints(totalPoints: Int) {
-        points_count.text = totalPoints.toString()
+        binding.pointsCount.text = totalPoints.toString()
     }
 
     override fun enableResetButton() {
-        button_reset_collecting.isEnabled = true
+        binding.buttonResetCollecting.isEnabled = true
     }
 
     override fun disableResetButton() {
-        button_reset_collecting.isEnabled = false
+        binding.buttonResetCollecting.isEnabled = false
     }
 
     override fun hideSaveArea() {
-        button_save.visibility = View.INVISIBLE
-        button_share.visibility = View.INVISIBLE
-        save_export_title.visibility = View.INVISIBLE
-        save_export_subtitle.visibility = View.INVISIBLE
+        binding.buttonSave.visibility = View.INVISIBLE
+        binding.buttonShare.visibility = View.INVISIBLE
+        binding.saveExportTitle.visibility = View.INVISIBLE
+        binding.saveExportSubtitle.visibility = View.INVISIBLE
     }
 
     override fun showSaveArea() {
-        button_save.visibility = View.VISIBLE
-        button_share.visibility = View.VISIBLE
-        save_export_title.visibility = View.VISIBLE
-        save_export_subtitle.visibility = View.VISIBLE
+        binding.buttonSave.visibility = View.VISIBLE
+        binding.buttonShare.visibility = View.VISIBLE
+        binding.saveExportTitle.visibility = View.VISIBLE
+        binding.saveExportSubtitle.visibility = View.VISIBLE
     }
 
     override fun sharePlainText(content: String) {

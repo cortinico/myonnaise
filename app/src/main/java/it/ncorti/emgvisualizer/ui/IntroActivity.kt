@@ -106,7 +106,8 @@ class IntroActivity : AppIntro() {
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        when (requestCode) {
+      super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+      when (requestCode) {
             REQUEST_LOCATION_CODE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     startMainActivity()

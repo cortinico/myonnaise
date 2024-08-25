@@ -14,17 +14,19 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import it.ncorti.emgvisualizer.R
+import it.ncorti.emgvisualizer.databinding.ActivityMainBinding
 import it.ncorti.emgvisualizer.ui.control.ControlDeviceFragment
 import it.ncorti.emgvisualizer.ui.export.ExportFragment
 import it.ncorti.emgvisualizer.ui.graph.GraphFragment
 import it.ncorti.emgvisualizer.ui.scan.ScanDeviceFragment
 import javax.inject.Inject
-import kotlinx.android.synthetic.main.activity_main.*
 
 private const val PREFS_GLOBAL = "global"
 private const val KEY_COMPLETED_ONBOARDING = "completed_onboarding"
 
 class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
+
+    private lateinit var binding: ActivityMainBinding
 
     @Inject
     lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
@@ -37,6 +39,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
 
         // Checking if we should on-board the user the first time.
         val prefs = getSharedPreferences(PREFS_GLOBAL, Context.MODE_PRIVATE)
@@ -45,7 +48,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
             startActivity(Intent(this, IntroActivity::class.java))
         }
 
-        setContentView(R.layout.activity_main)
+        setContentView(binding.root)
         setSupportActionBar(findViewById(R.id.new_toolbar))
 
         val fragmentList = listOf<Fragment>(
@@ -55,9 +58,9 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
             ExportFragment.newInstance()
         )
 
-        view_pager.adapter = MyAdapter(supportFragmentManager, fragmentList)
-        view_pager.offscreenPageLimit = 3
-        view_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        binding.viewPager.adapter = MyAdapter(supportFragmentManager, fragmentList)
+        binding.viewPager.offscreenPageLimit = 3
+        binding.viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             var prevMenuItem: MenuItem? = null
             override fun onPageScrollStateChanged(state: Int) {}
 
@@ -67,25 +70,25 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
                 if (prevMenuItem != null) {
                     prevMenuItem?.isChecked = false
                 } else {
-                    bottom_navigation.menu.getItem(0).isChecked = false
+                    binding.bottomNavigation.menu.getItem(0).isChecked = false
                 }
-                bottom_navigation.menu.getItem(position).isChecked = true
-                prevMenuItem = bottom_navigation.menu.getItem(position)
+                binding.bottomNavigation.menu.getItem(position).isChecked = true
+                prevMenuItem = binding.bottomNavigation.menu.getItem(position)
             }
         })
-        bottom_navigation.setOnNavigationItemSelectedListener { item ->
+        binding.bottomNavigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.item_scan -> view_pager.currentItem = 0
-                R.id.item_control -> view_pager.currentItem = 1
-                R.id.item_graph -> view_pager.currentItem = 2
-                R.id.item_export -> view_pager.currentItem = 3
+                R.id.item_scan -> binding.viewPager.currentItem = 0
+                R.id.item_control -> binding.viewPager.currentItem = 1
+                R.id.item_graph -> binding.viewPager.currentItem = 2
+                R.id.item_export -> binding.viewPager.currentItem = 3
             }
             false
         }
     }
 
     fun navigateToPage(pageId: Int) {
-        view_pager.currentItem = pageId
+        binding.viewPager.currentItem = pageId
     }
 
     class MyAdapter(fm: FragmentManager, private val fragmentList: List<Fragment>) : FragmentPagerAdapter(fm) {
