@@ -1,5 +1,5 @@
 .*
-!.circleci
+!.github
 *.iml
 local.properties
 build/
