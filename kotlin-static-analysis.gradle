@@ -19,6 +19,6 @@ ktlint {
 }
 
 detekt {
-    toolVersion = "1.5.1"
+    toolVersion = "1.23.6"
     config = files("../config/detekt/detekt.yml")
 }
