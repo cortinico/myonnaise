@@ -30,9 +30,3 @@ jobs:
 
       - name: Run Gradle
         run: ./gradlew build --continue
-
-      - name: Upload Build Reports
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-reports-results
-          path: myonnaise/build/reports/
