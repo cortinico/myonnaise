@@ -1,7 +1,7 @@
 plugins {
-    id("com.android.application")
-    kotlin("android")
-    kotlin("kapt")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
 }
 
 android {
@@ -11,9 +11,9 @@ android {
         minSdk = libs.versions.min.sdk.version.get().toInt()
         targetSdk = libs.versions.target.sdk.version.get().toInt()
         namespace = "it.ncorti.emgvisualizer"
-        
+
         applicationId = "it.ncorti.emgvisualizer"
-        
+
         versionCode = 5
         versionName = "3.0.0-alpha1"
     }
@@ -23,6 +23,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17.toString()
+        freeCompilerArgs = listOf("-Xstring-concat=inline")
     }
     buildTypes {
         getByName("release") {

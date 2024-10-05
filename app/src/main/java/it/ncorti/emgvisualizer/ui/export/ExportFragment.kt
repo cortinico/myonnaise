@@ -1,11 +1,13 @@
 package it.ncorti.emgvisualizer.ui.export
 
-import android.Manifest
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.PackageManager.PERMISSION_GRANTED
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.view.LayoutInflater
@@ -19,6 +21,7 @@ import it.ncorti.emgvisualizer.R
 import it.ncorti.emgvisualizer.databinding.LayoutExportBinding
 import java.io.File
 import java.io.FileOutputStream
+import java.util.Locale
 import javax.inject.Inject
 
 private const val REQUEST_WRITE_EXTERNAL_CODE = 2
@@ -42,7 +45,11 @@ class ExportFragment : BaseFragment<ExportContract.Presenter>(), ExportContract.
         super.onAttach(context)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = LayoutExportBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
         return binding.root
@@ -66,7 +73,11 @@ class ExportFragment : BaseFragment<ExportContract.Presenter>(), ExportContract.
     }
 
     override fun showNotStreamingErrorMessage() {
-        Toast.makeText(activity, "You can't collect points if Myo is not streaming!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            activity,
+            "You can't collect points if Myo is not streaming!",
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     override fun showCollectionStarted() {
@@ -78,7 +89,7 @@ class ExportFragment : BaseFragment<ExportContract.Presenter>(), ExportContract.
     }
 
     override fun showCollectedPoints(totalPoints: Int) {
-        binding.pointsCount.text = totalPoints.toString()
+        binding.pointsCount.text = String.format(Locale.getDefault(), totalPoints.toString())
     }
 
     override fun enableResetButton() {
@@ -112,41 +123,72 @@ class ExportFragment : BaseFragment<ExportContract.Presenter>(), ExportContract.
     }
 
     override fun saveCsvFile(content: String) {
-        context?.apply {
-            val hasPermission = (
-                ContextCompat.checkSelfPermission(
-                    this,
-                    WRITE_EXTERNAL_STORAGE
-                ) == PERMISSION_GRANTED
+        val fileName = getCsvFilename()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            // Use scoped storage for API level 29 and above
+            val contentResolver = context?.contentResolver
+            val contentValues = ContentValues().apply {
+                put(android.provider.MediaStore.MediaColumns.DISPLAY_NAME, fileName)
+                put(android.provider.MediaStore.MediaColumns.MIME_TYPE, "text/plain")
+                put(
+                    android.provider.MediaStore.MediaColumns.RELATIVE_PATH,
+                    Environment.DIRECTORY_DOCUMENTS
                 )
-            if (hasPermission) {
-                writeToFile(content)
+            }
+            val uri: Uri? = contentResolver?.insert(
+                android.provider.MediaStore.Files.getContentUri("external"),
+                contentValues
+            )
+            if (uri != null) {
+                contentResolver.openOutputStream(uri)?.use { outputStream ->
+                    outputStream.write(content.toByteArray())
+                }
             } else {
-                fileContentToSave = content
-                requestPermissions(
-                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                    REQUEST_WRITE_EXTERNAL_CODE
-                )
+                // Handle failure to create the file
+                error("Failed to create file for scoped storage")
+            }
+        } else {
+            context?.apply {
+                val hasPermission = (
+                    ContextCompat.checkSelfPermission(
+                        this,
+                        WRITE_EXTERNAL_STORAGE
+                    ) == PERMISSION_GRANTED
+                    )
+                if (hasPermission) {
+                    writeToFile(fileName, content)
+                } else {
+                    fileContentToSave = content
+                    requestPermissions(
+                        arrayOf(WRITE_EXTERNAL_STORAGE),
+                        REQUEST_WRITE_EXTERNAL_CODE
+                    )
+                }
             }
         }
     }
 
-    private fun writeToFile(content: String) {
+    private fun writeToFile(fileName: String, content: String) {
         val storageDir =
             File("${Environment.getExternalStorageDirectory().absolutePath}/myo_emg")
         storageDir.mkdir()
-        val outfile = File(storageDir, "myo_emg_export_${System.currentTimeMillis()}.csv")
+        val outfile = File(storageDir, fileName)
         val fileOutputStream = FileOutputStream(outfile)
         fileOutputStream.write(content.toByteArray())
         fileOutputStream.close()
         Toast.makeText(activity, "Saved to: ${outfile.path}", Toast.LENGTH_LONG).show()
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    @Deprecated("Deprecated in Java")
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         when (requestCode) {
             REQUEST_WRITE_EXTERNAL_CODE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    fileContentToSave?.apply { writeToFile(this) }
+                    fileContentToSave?.apply { writeToFile(getCsvFilename(), this) }
                 } else {
                     Toast.makeText(
                         activity, getString(R.string.write_permission_denied_message),
@@ -156,4 +198,6 @@ class ExportFragment : BaseFragment<ExportContract.Presenter>(), ExportContract.
             }
         }
     }
+
+    private fun getCsvFilename() = "myo_emg_export_${System.currentTimeMillis()}.csv"
 }

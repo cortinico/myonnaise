@@ -1,7 +1,8 @@
 plugins {
-    id("com.android.application") apply false version "8.5.1"
-    id("com.android.library") apply false version "8.5.1"
-    kotlin("android") apply false version "1.9.20"
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.kotlin.kapt) apply false
     alias(libs.plugins.detekt)
 }
 
