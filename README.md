@@ -1,5 +1,5 @@
 # Myonnaise 🍯
-[![CircleCI](https://circleci.com/gh/cortinico/myonnaise.svg?style=svg)](https://circleci.com/gh/cortinico/myonnaise) [![codecov](https://codecov.io/gh/cortinico/myonnaise/branch/master/graph/badge.svg)](https://codecov.io/gh/cortinico/myonnaise) [ ![Download](https://api.bintray.com/packages/cortinico/maven/myonnaise/images/download.svg) ](https://bintray.com/cortinico/maven/myonnaise/_latestVersion) ![License](https://img.shields.io/badge/license-MIT%20License-brightgreen.svg) [![Twitter](https://img.shields.io/badge/Twitter-@cortinico-blue.svg?style=flat)](http://twitter.com/cortinico)
+[![Pre Merge Checks](https://github.com/cortinico/myonnaise/actions/workflows/pre-merge.yaml/badge.svg)](https://github.com/cortinico/myonnaise/actions/workflows/pre-merge.yaml) [![codecov](https://codecov.io/gh/cortinico/myonnaise/branch/master/graph/badge.svg)](https://codecov.io/gh/cortinico/myonnaise) [ ![Download](https://api.bintray.com/packages/cortinico/maven/myonnaise/images/download.svg) ](https://bintray.com/cortinico/maven/myonnaise/_latestVersion) ![License](https://img.shields.io/badge/license-MIT%20License-brightgreen.svg) [![Twitter](https://img.shields.io/badge/Twitter-@cortinico-blue.svg?style=flat)](http://twitter.com/cortinico)
 
 <p align="center">
     <img width="30%" src="https://raw.githubusercontent.com/cortinico/myonnaise/master/icon_hires.png" alt="projectlogo">
@@ -26,7 +26,7 @@ This repo contains also a **sample app** that showcases the usage of the library
   - [Test App 📲](#test-app-)
     - [Videos](#videos)
   - [Building/Testing ⚙️](#buildingtesting-️)
-    - [CircleCI ](#circleci-)
+    - [GitHub Actions](#github-actions)
     - [Codecov ](#codecov-)
     - [Building locally](#building-locally)
     - [Testing](#testing)
@@ -223,11 +223,11 @@ Some technical features are:
 
 ## Building/Testing ⚙️
 
-### CircleCI 
+### GitHub Actions 
 
-[![CircleCI](https://circleci.com/gh/cortinico/myonnaise.svg?style=svg)](https://circleci.com/gh/cortinico/myonnaise) 
+[![Pre Merge Checks](https://github.com/cortinico/myonnaise/actions/workflows/pre-merge.yaml/badge.svg)](https://github.com/cortinico/myonnaise/actions/workflows/pre-merge.yaml) 
 
-This projects is built with [**Circle CI 2.0**](https://circleci.com/gh/cortinico/myonnaise/). The CI environment takes care of building the library .AAR, the example app and to run the **JUnit** tests. Test and lint reports are exposes in the **artifacts** section at the end of every build.
+This projects is built with GitHub Actions. The CI environment takes care of building the library .AAR, the example app and to run the **JUnit** tests. Test and lint reports are exposes in the **artifacts** section at the end of every build.
 
 ### Codecov 
 
