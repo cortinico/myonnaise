@@ -2,6 +2,7 @@
 
 package it.ncorti.emgvisualizer.ui.control
 
+import android.annotation.SuppressLint
 import com.ncorti.myonnaise.CommandList
 import com.ncorti.myonnaise.MYO_MAX_FREQUENCY
 import com.ncorti.myonnaise.MyoControlStatus
@@ -12,6 +13,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import it.ncorti.emgvisualizer.dagger.DeviceManager
 
+@SuppressLint("MissingPermission")
 class ControlDevicePresenter(
     override val view: ControlDeviceContract.View,
     private val myonnaise: Myonnaise,
@@ -46,18 +48,15 @@ class ControlDevicePresenter(
                     .subscribe {
                         when (it) {
                             MyoStatus.CONNECTED -> {
-                                view.hideConnectionProgress()
                                 view.showConnected()
                             }
                             MyoStatus.CONNECTING -> {
-                                view.showConnectionProgress()
                                 view.showConnecting()
                             }
                             MyoStatus.READY -> {
                                 view.enableControlPanel()
                             }
                             else -> {
-                                view.hideConnectionProgress()
                                 view.showDisconnected()
                                 view.disableControlPanel()
                             }

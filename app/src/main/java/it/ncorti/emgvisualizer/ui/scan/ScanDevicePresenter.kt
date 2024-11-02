@@ -1,6 +1,8 @@
 package it.ncorti.emgvisualizer.ui.scan
 
+import android.annotation.SuppressLint
 import android.bluetooth.BluetoothDevice
+import android.util.Log
 import com.ncorti.myonnaise.Myonnaise
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -12,6 +14,7 @@ import java.util.concurrent.TimeUnit
 
 const val SCAN_INTERVAL_SECONDS = 10L
 
+@SuppressLint("MissingPermission")
 class ScanDevicePresenter(
     override val view: ScanDeviceContract.View,
     private val myonnaise: Myonnaise,
@@ -64,12 +67,13 @@ class ScanDevicePresenter(
                             deviceManager.scannedDeviceList.add(it)
                         }
                     },
-                    {
+                    { error ->
                         view.hideScanLoading()
                         view.showScanError()
                         if (deviceManager.scannedDeviceList.isEmpty()) {
                             view.showEmptyListMessage()
                         }
+                        Log.e("NCOR", "Error", error)
                     },
                     {
                         view.hideScanLoading()

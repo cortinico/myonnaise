@@ -72,7 +72,7 @@ class ByteReaderTest {
         val resultArray = testReader.getBytes(8)
         assertEquals(8, resultArray.size)
 
-        for (i in 0 until resultArray.size) {
+        for (i in resultArray.indices) {
             assertEquals(i.toFloat(), resultArray[i])
         }
     }

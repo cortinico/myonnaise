@@ -93,4 +93,4 @@ fun Command.isStartStreamingCommand() =
         (this[2] != 0x00.toByte() || this[3] != 0x00.toByte() || this[4] != 0x00.toByte())
 
 /** Extension function to check the [Command] is a stop streaming command */
-fun Command.isStopStreamingCommand() = Arrays.equals(this, CommandList.stopStreaming())
+fun Command.isStopStreamingCommand() = this.contentEquals(CommandList.stopStreaming())

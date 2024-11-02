@@ -33,6 +33,7 @@ enum class MyoControlStatus {
  *
  * @param device The [BluetoothDevice] that is backing this Myo.
  */
+@Suppress("MissingPermission")
 class Myo(private val device: BluetoothDevice) : BluetoothGattCallback() {
 
     /** The Device Name of this Myo */
@@ -53,7 +54,7 @@ class Myo(private val device: BluetoothDevice) : BluetoothGattCallback() {
      * Keep alive flag. If set to true, the library will send a [CommandList.unSleep] command
      * to the device every [KEEP_ALIVE_INTERVAL_MS] ms.
      */
-    var keepAlive = true
+    private var keepAlive = true
     private var lastKeepAlive = 0L
 
     // Subjects for publishing outside Connection Status, Control Status and the Data (Float Arrays).
@@ -61,7 +62,7 @@ class Myo(private val device: BluetoothDevice) : BluetoothGattCallback() {
         BehaviorSubject.createDefault(MyoStatus.DISCONNECTED)
     internal val controlStatusSubject: BehaviorSubject<MyoControlStatus> =
         BehaviorSubject.createDefault(MyoControlStatus.NOT_STREAMING)
-    internal val dataProcessor: PublishProcessor<FloatArray> = PublishProcessor.create()
+    private val dataProcessor: PublishProcessor<FloatArray> = PublishProcessor.create()
 
     internal var gatt: BluetoothGatt? = null
     private var byteReader = ByteReader()
@@ -246,7 +247,8 @@ class Myo(private val device: BluetoothDevice) : BluetoothGattCallback() {
             gatt.readCharacteristic(readQueue.element())
     }
 
-    @SuppressLint("DefaultLocale")
+    @Deprecated("Deprecated in Java")
+    @SuppressLint("DefaultLocale", "MissingPermission")
     override fun onCharacteristicRead(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic, status: Int) {
         super.onCharacteristicRead(gatt, characteristic, status)
         readQueue.remove()
@@ -275,10 +277,12 @@ class Myo(private val device: BluetoothDevice) : BluetoothGattCallback() {
             }
         }
 
-        if (readQueue.size > 0)
+        if (readQueue.size > 0) {
             gatt.readCharacteristic(readQueue.element())
+        }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onCharacteristicChanged(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic) {
         super.onCharacteristicChanged(gatt, characteristic)
 

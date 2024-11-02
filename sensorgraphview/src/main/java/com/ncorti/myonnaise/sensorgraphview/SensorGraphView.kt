@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.ContextCompat
+import kotlin.math.min
 
 /** Default point circle size  */
 private const val CIRCLE_SIZE_DEFAULT = 3
@@ -33,7 +34,7 @@ class SensorGraphView(context: Context, attrs: AttributeSet) : View(context, att
     var maxValue = INITIAL_MAX_VALUE
     var minValue = INITIAL_MIN_VALUE
 
-    val spread: Float
+    private val spread: Float
         get() = maxValue - minValue
 
     private val zeroLine: Float
@@ -52,9 +53,9 @@ class SensorGraphView(context: Context, attrs: AttributeSet) : View(context, att
     init {
 
         val colors = context.resources.getIntArray(R.array.graph_colors)
-        for (i in 0 until colors.size) {
+        for (element in colors) {
             val paint = Paint()
-            paint.color = Color.parseColor("#${Integer.toHexString(colors[i])}")
+            paint.color = Color.parseColor("#${Integer.toHexString(element)}")
             rectPaints += paint
         }
 
@@ -73,14 +74,14 @@ class SensorGraphView(context: Context, attrs: AttributeSet) : View(context, att
         val desiredWidth = suggestedMinimumWidth + paddingLeft + paddingRight
         val width = when (MeasureSpec.getMode(widthMeasureSpec)) {
             MeasureSpec.EXACTLY -> widthSize
-            MeasureSpec.AT_MOST -> Math.min(desiredWidth, widthSize)
+            MeasureSpec.AT_MOST -> min(desiredWidth, widthSize)
             MeasureSpec.UNSPECIFIED -> desiredWidth
             else -> desiredWidth
         }
         val desiredHeight = suggestedMinimumHeight + paddingTop + paddingBottom
         val height = when (MeasureSpec.getMode(heightMeasureSpec)) {
             MeasureSpec.EXACTLY -> heightSize
-            MeasureSpec.AT_MOST -> Math.min(desiredHeight, heightSize)
+            MeasureSpec.AT_MOST -> min(desiredHeight, heightSize)
             MeasureSpec.UNSPECIFIED -> desiredHeight
             else -> desiredHeight
         }

@@ -1,20 +1,16 @@
 package it.ncorti.emgvisualizer.ui.export
 
-import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import dagger.android.support.AndroidSupportInjection
 import it.ncorti.emgvisualizer.BaseFragment
 import it.ncorti.emgvisualizer.R
@@ -46,9 +42,7 @@ class ExportFragment : BaseFragment<ExportContract.Presenter>(), ExportContract.
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = LayoutExportBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
@@ -74,9 +68,7 @@ class ExportFragment : BaseFragment<ExportContract.Presenter>(), ExportContract.
 
     override fun showNotStreamingErrorMessage() {
         Toast.makeText(
-            activity,
-            "You can't collect points if Myo is not streaming!",
-            Toast.LENGTH_SHORT
+            activity, "You can't collect points if Myo is not streaming!", Toast.LENGTH_SHORT
         ).show()
     }
 
@@ -124,53 +116,34 @@ class ExportFragment : BaseFragment<ExportContract.Presenter>(), ExportContract.
 
     override fun saveCsvFile(content: String) {
         val fileName = getCsvFilename()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            // Use scoped storage for API level 29 and above
-            val contentResolver = context?.contentResolver
-            val contentValues = ContentValues().apply {
-                put(android.provider.MediaStore.MediaColumns.DISPLAY_NAME, fileName)
-                put(android.provider.MediaStore.MediaColumns.MIME_TYPE, "text/plain")
-                put(
-                    android.provider.MediaStore.MediaColumns.RELATIVE_PATH,
-                    Environment.DIRECTORY_DOCUMENTS
-                )
-            }
-            val uri: Uri? = contentResolver?.insert(
-                android.provider.MediaStore.Files.getContentUri("external"),
-                contentValues
+        // Use scoped storage for API level 29 and above
+        val contentResolver = context?.contentResolver
+        val contentValues = ContentValues().apply {
+            put(android.provider.MediaStore.MediaColumns.DISPLAY_NAME, fileName)
+            put(android.provider.MediaStore.MediaColumns.MIME_TYPE, "text/plain")
+            put(
+                android.provider.MediaStore.MediaColumns.RELATIVE_PATH,
+                Environment.DIRECTORY_DOCUMENTS
             )
-            if (uri != null) {
-                contentResolver.openOutputStream(uri)?.use { outputStream ->
-                    outputStream.write(content.toByteArray())
-                }
-            } else {
-                // Handle failure to create the file
-                error("Failed to create file for scoped storage")
+        }
+        val uri: Uri? = contentResolver?.insert(
+            android.provider.MediaStore.Files.getContentUri("external"), contentValues
+        )
+        if (uri != null) {
+            contentResolver.openOutputStream(uri)?.use { outputStream ->
+                outputStream.write(content.toByteArray())
             }
+            val userReadablePath = "${Environment.DIRECTORY_DOCUMENTS}/$fileName"
+            Toast.makeText(activity, "Export saved to: $userReadablePath", Toast.LENGTH_LONG).show()
         } else {
-            context?.apply {
-                val hasPermission = (
-                    ContextCompat.checkSelfPermission(
-                        this,
-                        WRITE_EXTERNAL_STORAGE
-                    ) == PERMISSION_GRANTED
-                    )
-                if (hasPermission) {
-                    writeToFile(fileName, content)
-                } else {
-                    fileContentToSave = content
-                    requestPermissions(
-                        arrayOf(WRITE_EXTERNAL_STORAGE),
-                        REQUEST_WRITE_EXTERNAL_CODE
-                    )
-                }
-            }
+            // Handle failure to create the file
+            Toast.makeText(activity, "ERROR: Impossible to save export to file", Toast.LENGTH_LONG)
+                .show()
         }
     }
 
     private fun writeToFile(fileName: String, content: String) {
-        val storageDir =
-            File("${Environment.getExternalStorageDirectory().absolutePath}/myo_emg")
+        val storageDir = File("${Environment.getExternalStorageDirectory().absolutePath}/myo_emg")
         storageDir.mkdir()
         val outfile = File(storageDir, fileName)
         val fileOutputStream = FileOutputStream(outfile)
@@ -181,17 +154,16 @@ class ExportFragment : BaseFragment<ExportContract.Presenter>(), ExportContract.
 
     @Deprecated("Deprecated in Java")
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
         when (requestCode) {
             REQUEST_WRITE_EXTERNAL_CODE -> {
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.isNotEmpty() && grantResults[0] == PERMISSION_GRANTED) {
                     fileContentToSave?.apply { writeToFile(getCsvFilename(), this) }
                 } else {
                     Toast.makeText(
-                        activity, getString(R.string.write_permission_denied_message),
+                        activity,
+                        getString(R.string.write_permission_denied_message),
                         Toast.LENGTH_SHORT
                     ).show()
                 }

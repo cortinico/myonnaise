@@ -1,239 +1,235 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/device_information"
-        style="@style/TextAppearance.AppCompat.Subhead"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin"
-        android:text="@string/device_information"
-        android:textColor="@color/primaryColor"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/device_name"
-        style="@style/TextAppearance.AppCompat.Body1"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin"
-        app:layout_constraintTop_toBottomOf="@+id/device_information"
-        tools:text="Nicola's Myo" />
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/device_name_subtitle"
-        style="@style/TextAppearance.AppCompat.Caption"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_margin"
-        android:layout_marginEnd="@dimen/default_margin"
-        android:text="@string/device_name"
-        app:layout_constraintTop_toBottomOf="@+id/device_name" />
+        <TextView
+            android:id="@+id/device_information"
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:text="@string/device_information"
+            android:textColor="@color/primaryColor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/device_address"
-        style="@style/TextAppearance.AppCompat.Body1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin"
-        app:layout_constraintTop_toBottomOf="@+id/device_name_subtitle"
-        tools:text="11:22:33:44:55:66" />
+        <TextView
+            android:id="@+id/device_name"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            app:layout_constraintTop_toBottomOf="@+id/device_information"
+            tools:text="Nicola's Myo" />
 
-    <TextView
-        android:id="@+id/device_address_subtitle"
-        style="@style/TextAppearance.AppCompat.Caption"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_margin"
-        android:layout_marginEnd="@dimen/default_margin"
-        android:text="@string/device_address"
-        app:layout_constraintTop_toBottomOf="@+id/device_address" />
+        <TextView
+            android:id="@+id/device_name_subtitle"
+            style="@style/TextAppearance.AppCompat.Caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:text="@string/device_name"
+            app:layout_constraintTop_toBottomOf="@+id/device_name" />
 
-    <View
-        android:id="@+id/info_divider"
-        android:layout_width="wrap_content"
-        android:layout_height="2dp"
-        android:layout_marginTop="@dimen/default_margin"
-        android:background="@color/colorBackground"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/device_address_subtitle" />
+        <TextView
+            android:id="@+id/device_address"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            app:layout_constraintTop_toBottomOf="@+id/device_name_subtitle"
+            tools:text="11:22:33:44:55:66" />
 
-    <TextView
-        android:id="@+id/device_status_label"
-        style="@style/TextAppearance.AppCompat.Subhead"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin"
-        android:text="@string/device_status"
-        android:textColor="@color/primaryColor"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/info_divider" />
+        <TextView
+            android:id="@+id/device_address_subtitle"
+            style="@style/TextAppearance.AppCompat.Caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:text="@string/device_address"
+            app:layout_constraintTop_toBottomOf="@+id/device_address" />
 
-    <TextView
-        android:id="@+id/device_status"
-        style="@style/TextAppearance.AppCompat.Body1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin"
-        android:text="@string/disconnected"
-        app:layout_constraintEnd_toStartOf="@+id/progress_connect"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/device_status_label" />
+        <View
+            android:id="@+id/info_divider"
+            android:layout_width="wrap_content"
+            android:layout_height="2dp"
+            android:layout_marginTop="@dimen/default_margin"
+            android:background="@color/colorBackground"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/device_address_subtitle" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_connect"
-        style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/ten_grid_size"
-        android:layout_margin="@dimen/default_margin"
-        android:enabled="false"
-        android:minWidth="120dp"
-        android:text="@string/connect"
-        app:layout_constraintBottom_toTopOf="@+id/device_status"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/device_status" />
+        <TextView
+            android:id="@+id/device_status_label"
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:text="@string/device_status"
+            android:textColor="@color/primaryColor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/info_divider" />
 
-    <ProgressBar
-        android:id="@+id/progress_connect"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/ten_grid_size"
-        android:alpha="0"
-        android:indeterminate="true"
-        app:layout_constraintBottom_toTopOf="@+id/button_connect"
-        app:layout_constraintEnd_toStartOf="@+id/button_connect"
-        app:layout_constraintTop_toBottomOf="@+id/button_connect" />
+        <TextView
+            android:id="@+id/device_status"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:text="@string/disconnected"
+            app:layout_constraintBottom_toBottomOf="@+id/button_connect"
+            app:layout_constraintEnd_toStartOf="@+id/button_connect"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/button_connect" />
 
-    <View
-        android:id="@+id/status_divider"
-        android:layout_width="wrap_content"
-        android:layout_height="2dp"
-        android:layout_marginTop="@dimen/default_margin"
-        android:background="@color/colorBackground"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_connect" />
-
-    <TextView
-        android:id="@+id/device_control_label"
-        style="@style/TextAppearance.AppCompat.Subhead"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin"
-        android:text="@string/device_control"
-        android:textColor="@color/primaryColor"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/status_divider" />
-
-    <TextView
-        android:id="@+id/device_streaming_status"
-        style="@style/TextAppearance.AppCompat.Body1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin"
-        android:text="@string/not_streaming"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/device_control_label" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_start_streaming"
-        style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/ten_grid_size"
-        android:layout_margin="@dimen/default_margin"
-        android:enabled="false"
-        android:minWidth="120dp"
-        android:text="@string/start"
-        app:layout_constraintBottom_toTopOf="@+id/device_streaming_status"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/device_streaming_status" />
-
-    <TextView
-        android:id="@+id/device_frequency_label"
-        style="@style/TextAppearance.AppCompat.Body1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin"
-        android:text="@string/streaming_frequency"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_start_streaming" />
-
-    <TextView
-        android:id="@+id/device_frequency_value"
-        style="@style/TextAppearance.AppCompat.Body1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin"
-        android:text="@string/_200hz"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_start_streaming" />
-
-    <SeekBar
-        android:id="@+id/seekbar_frequency"
-        style="@style/Widget.AppCompat.SeekBar.Discrete"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/base_grid_size"
-        android:layout_marginTop="@dimen/default_margin"
-        android:layout_marginRight="@dimen/base_grid_size"
-        android:layout_marginBottom="@dimen/default_margin"
-        android:max="7"
-        android:progress="7"
-        app:layout_constraintTop_toBottomOf="@id/device_frequency_label" />
-
-    <TextView
-        android:id="@+id/device_vibrate_label"
-        style="@style/TextAppearance.AppCompat.Body1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin"
-        android:text="@string/trigger_vibration"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/seekbar_frequency" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_vibrate_1"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/ten_grid_size"
-        android:layout_margin="@dimen/default_margin"
-        android:enabled="false"
-        android:text="@string/vibrate_short"
-        app:layout_constraintEnd_toStartOf="@id/button_vibrate_2"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/device_vibrate_label" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_vibrate_2"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/ten_grid_size"
-        android:layout_margin="@dimen/default_margin"
-        android:enabled="false"
-        android:text="@string/vibrate_medium"
-        app:layout_constraintEnd_toStartOf="@id/button_vibrate_3"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toEndOf="@id/button_vibrate_1"
-        app:layout_constraintTop_toBottomOf="@+id/device_vibrate_label" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_vibrate_3"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/ten_grid_size"
-        android:layout_margin="@dimen/default_margin"
-        android:enabled="false"
-        android:text="@string/vibrate_long"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toEndOf="@+id/button_vibrate_2"
-        app:layout_constraintTop_toBottomOf="@+id/device_vibrate_label" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_connect"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/touch_target_min_size"
+            android:layout_margin="@dimen/default_margin"
+            android:enabled="false"
+            android:minWidth="120dp"
+            android:text="@string/connect"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/device_status_label" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <View
+            android:id="@+id/status_divider"
+            android:layout_width="wrap_content"
+            android:layout_height="2dp"
+            android:layout_marginTop="@dimen/default_margin"
+            android:background="@color/colorBackground"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_connect" />
+
+        <TextView
+            android:id="@+id/device_control_label"
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:text="@string/device_control"
+            android:textColor="@color/primaryColor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/status_divider" />
+
+        <TextView
+            android:id="@+id/device_streaming_status"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:text="@string/not_streaming"
+            app:layout_constraintBottom_toBottomOf="@+id/button_start_streaming"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/button_start_streaming" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_start_streaming"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/touch_target_min_size"
+            android:layout_margin="@dimen/default_margin"
+            android:enabled="false"
+            android:minWidth="120dp"
+            android:text="@string/start"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/device_control_label" />
+
+        <TextView
+            android:id="@+id/device_frequency_label"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:text="@string/streaming_frequency"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_start_streaming" />
+
+        <TextView
+            android:id="@+id/device_frequency_value"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:text="@string/_200hz"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_start_streaming" />
+
+        <SeekBar
+            android:id="@+id/seekbar_frequency"
+            style="@style/Widget.AppCompat.SeekBar.Discrete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/base_grid_size"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginRight="@dimen/base_grid_size"
+            android:layout_marginBottom="@dimen/default_margin"
+            android:max="7"
+            android:progress="7"
+            app:layout_constraintTop_toBottomOf="@id/device_frequency_label" />
+
+        <TextView
+            android:id="@+id/device_vibrate_label"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:text="@string/trigger_vibration"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/seekbar_frequency" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_vibrate_1"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/touch_target_min_size"
+            android:layout_margin="@dimen/default_margin"
+            android:enabled="false"
+            android:text="@string/vibrate_short"
+            app:layout_constraintEnd_toStartOf="@id/button_vibrate_2"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/device_vibrate_label" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_vibrate_2"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/touch_target_min_size"
+            android:layout_margin="@dimen/default_margin"
+            android:enabled="false"
+            android:text="@string/vibrate_medium"
+            app:layout_constraintEnd_toStartOf="@id/button_vibrate_3"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toEndOf="@id/button_vibrate_1"
+            app:layout_constraintTop_toBottomOf="@+id/device_vibrate_label" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_vibrate_3"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/touch_target_min_size"
+            android:layout_margin="@dimen/default_margin"
+            android:enabled="false"
+            android:text="@string/vibrate_long"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toEndOf="@+id/button_vibrate_2"
+            app:layout_constraintTop_toBottomOf="@+id/device_vibrate_label" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

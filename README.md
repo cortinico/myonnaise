@@ -55,7 +55,7 @@ After setting up the Gradle dependency, you will be able to access two main clas
 
 First, you need to **find a Myo** with a bluetooth scan.
 
-** ⚠️ Please note that you need to request the user the ACCESS_COARSE_LOCATION permission. If not, the scan will be empty ⚠️ **
+** ⚠️ Please note that you need to request the user the ACCESS_FINE_LOCATION permission. If not, the scan will be empty ⚠️ **
 
 To start a bluetooth scan, you can use the `startScan()` method:
 
@@ -109,10 +109,10 @@ myMyo.statusObservable()
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe {
             when (it) {
-                MyoStatus.CONNECTED -> { ... }
-                MyoStatus.CONNECTING -> { ... }
-                MyoStatus.READY -> { ... }
-                else -> { ... } // DISCONNECTED
+                MyoStatus.CONNECTED -> { /* ... */ }
+                MyoStatus.CONNECTING -> { /* ... */ }
+                MyoStatus.READY -> { /* ... */ }
+                else -> { /* ... */ } // DISCONNECTED
             }
         }
 ```
@@ -188,7 +188,7 @@ myMyo.keepAlive = false
 You can find the test app (Myo Emg Visualizer) inside the `app` module. 
 
 <p align="center">
-    <img src="https://i.imgur.com/lcAbyJD.png" width="30%">
+    <img alt="test-app" src="https://i.imgur.com/lcAbyJD.png" width="30%">
 </p>
 
 This app allows you to:
@@ -210,24 +210,28 @@ Some technical features are:
 
 **Searching for a Myo**
 
-<img src="https://i.imgur.com/ShZP4w5.gif" width="30%"/>
+<img alt="searching-for-a-myo" src="https://i.imgur.com/ShZP4w5.gif" width="30%"/>
 
 **Starting the Streaming**
 
-<img src="https://i.imgur.com/iqvkQfr.gif" width="30%"/>
+<img alt="start-streaming" src="https://i.imgur.com/iqvkQfr.gif" width="30%"/>
 
 **Exporting to CSV**
 
-<img src="https://i.imgur.com/4UXIas9.gif" width="30%"/>
+<img alt="exporting-the-csv" src="https://i.imgur.com/4UXIas9.gif" width="30%"/>
 
 
 ## Building/Testing ⚙️
 
-### CircleCI [![CircleCI](https://circleci.com/gh/cortinico/myonnaise.svg?style=svg)](https://circleci.com/gh/cortinico/myonnaise) 
+### CircleCI 
+
+[![CircleCI](https://circleci.com/gh/cortinico/myonnaise.svg?style=svg)](https://circleci.com/gh/cortinico/myonnaise) 
 
 This projects is built with [**Circle CI 2.0**](https://circleci.com/gh/cortinico/myonnaise/). The CI environment takes care of building the library .AAR, the example app and to run the **JUnit** tests. Test and lint reports are exposes in the **artifacts** section at the end of every build.
 
-### Codecov [![codecov](https://codecov.io/gh/cortinico/myonnaise/branch/master/graph/badge.svg)](https://codecov.io/gh/cortinico/myonnaise)
+### Codecov 
+
+[![codecov](https://codecov.io/gh/cortinico/myonnaise/branch/master/graph/badge.svg)](https://codecov.io/gh/cortinico/myonnaise)
 
 Circle CI is responsible of uploading Jacoco reports to [Codecov](https://codecov.io/gh/cortinico/myonnaise). When opening a Pull Request, Codecov will post a report of the diff of the test coverage.
 
@@ -235,19 +239,12 @@ Please **don't ignore it**! PR with new features and **without** are likely to b
 
 ### Building locally
 
-Before building, make sure you have the following **updated components** from the Android SDK:
-
-* tools
-* platform-tools
-* build-tools-28.0.1
-* android-28
-
 Then just clone the repo locally and build the .AAR with the following command:
 
 ```bash
 git clone git@github.com:cortinico/myonnaise.git
 cd myonnaise/
-./gradlew app:assemble
+./gradlew build
 ```
 The assembled .AAR (library) will be inside the **myonnaise/build/outputs/aar** folder.
 The assembled .APK (application) will be inside the **app/build/outputs/apk/debug** folder.
@@ -273,4 +270,4 @@ Make sure your tests are all green ✅ locally before submitting PRs.
 
 ## License 📄
 
-This project is licensed under the MIT License - see the [License](License) file for details
+This project is licensed under the MIT License - see the [License](LICENSE) file for details

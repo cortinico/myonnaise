@@ -37,8 +37,8 @@ class ControlDevicePresenterTest {
 
         mockedView = mock {}
         mockedMyo = mock {
-            on(this.mock.statusObservable()) doReturn Observable.empty<MyoStatus>()
-            on(this.mock.controlObservable()) doReturn Observable.empty<MyoControlStatus>()
+            on(this.mock.statusObservable()) doReturn Observable.empty()
+            on(this.mock.controlObservable()) doReturn Observable.empty()
         }
         mockedMyonnaise = mock {}
         mockedBluetoothDevice = mock {
@@ -77,7 +77,6 @@ class ControlDevicePresenterTest {
 
         testPresenter.start()
         verify(mockedView).showConnecting()
-        verify(mockedView).showConnectionProgress()
     }
 
     @Test
@@ -86,7 +85,6 @@ class ControlDevicePresenterTest {
 
         testPresenter.start()
 
-        verify(mockedView, atLeast(1)).hideConnectionProgress()
         verify(mockedView).showConnected()
     }
 

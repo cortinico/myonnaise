@@ -1,81 +1,81 @@
 package it.ncorti.emgvisualizer.ui
 
-import android.Manifest
+import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.Manifest.permission.BLUETOOTH_ADMIN
+import android.Manifest.permission.BLUETOOTH_CONNECT
+import android.Manifest.permission.BLUETOOTH_SCAN
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
+import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.os.Bundle
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.github.paolorotolo.appintro.AppIntro
-import com.github.paolorotolo.appintro.AppIntroFragment
-import com.github.paolorotolo.appintro.model.SliderPage
+import com.github.appintro.AppIntro
+import com.github.appintro.AppIntroFragment
+import com.github.appintro.model.SliderPage
 import it.ncorti.emgvisualizer.R
 
 private const val PREFS_GLOBAL = "global"
 private const val KEY_COMPLETED_ONBOARDING = "completed_onboarding"
 private const val REQUEST_LOCATION_CODE = 1
-private const val VIBRATE_INTENSITY = 30
+private const val VIBRATE_INTENSITY = 30L
 
 class IntroActivity : AppIntro() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val backgroundColor =
-            ContextCompat.getColor(this, R.color.primaryColor)
+        addSlide(AppIntroFragment.createInstance(SliderPage().apply {
+            title = getString(R.string.onboarding_title_0)
+            description = getString(R.string.onboarding_description_0)
+            imageDrawable = R.drawable.onboarding_0
+            backgroundColorRes = R.color.primaryColor
+        }))
 
-        val page0 = SliderPage()
-        page0.title = getString(R.string.onboarding_title_0)
-        page0.description = getString(R.string.onboarding_description_0)
-        page0.imageDrawable = R.drawable.onboarding_0
-        page0.bgColor = backgroundColor
-        addSlide(AppIntroFragment.newInstance(page0))
+        addSlide(AppIntroFragment.createInstance(SliderPage().apply {
+            title = getString(R.string.scan)
+            description = getString(R.string.onboarding_description_1)
+            imageDrawable = R.drawable.onboarding_1
+            backgroundColorRes = R.color.primaryColor
+        }))
 
-        val page1 = SliderPage()
-        page1.title = getString(R.string.scan)
-        page1.description = getString(R.string.onboarding_description_1)
-        page1.imageDrawable = R.drawable.onboarding_1
-        page1.bgColor = backgroundColor
-        addSlide(AppIntroFragment.newInstance(page1))
+        addSlide(AppIntroFragment.createInstance(SliderPage().apply {
+            title = getString(R.string.control)
+            description = getString(R.string.onboarding_description_2)
+            imageDrawable = R.drawable.onboarding_2
+            backgroundColorRes = R.color.primaryColor
+        }))
 
-        val page2 = SliderPage()
-        page2.title = getString(R.string.control)
-        page2.description = getString(R.string.onboarding_description_2)
-        page2.imageDrawable = R.drawable.onboarding_2
-        page2.bgColor = backgroundColor
-        addSlide(AppIntroFragment.newInstance(page2))
+        addSlide(AppIntroFragment.createInstance(SliderPage().apply {
+            title = getString(R.string.graph)
+            description = getString(R.string.onboarding_description_3)
+            imageDrawable = R.drawable.onboarding_3
+            backgroundColorRes = R.color.primaryColor
+        }))
 
-        val page3 = SliderPage()
-        page3.title = getString(R.string.graph)
-        page3.description = getString(R.string.onboarding_description_3)
-        page3.imageDrawable = R.drawable.onboarding_3
-        page3.bgColor = backgroundColor
-        addSlide(AppIntroFragment.newInstance(page3))
-
-        val page4 = SliderPage()
-        page4.title = getString(R.string.export)
-        page4.description = getString(R.string.onboarding_description_4)
-        page4.imageDrawable = R.drawable.onboarding_4
-        page4.bgColor = backgroundColor
-        addSlide(AppIntroFragment.newInstance(page4))
+        addSlide(AppIntroFragment.createInstance(SliderPage().apply {
+            title = getString(R.string.export)
+            description = getString(R.string.onboarding_description_4)
+            imageDrawable = R.drawable.onboarding_4
+            backgroundColorRes = R.color.primaryColor
+        }))
 
         setBarColor(ContextCompat.getColor(this, R.color.primaryDarkColor))
         setSeparatorColor(ContextCompat.getColor(this, R.color.primaryLightColor))
-        showSkipButton(false)
-        isProgressButtonEnabled = true
-        setVibrate(true)
-        setVibrateIntensity(VIBRATE_INTENSITY)
+        isSkipButtonEnabled = false
+        isVibrate = true
+        vibrateDuration = VIBRATE_INTENSITY
+        isButtonsEnabled = true
     }
 
-    override fun onSkipPressed(currentFragment: Fragment) {
+    override fun onSkipPressed(currentFragment: Fragment?) {
         super.onSkipPressed(currentFragment)
         saveOnBoardingCompleted()
         requestPermission()
     }
 
-    override fun onDonePressed(currentFragment: Fragment) {
+    override fun onDonePressed(currentFragment: Fragment?) {
         super.onDonePressed(currentFragment)
         saveOnBoardingCompleted()
         requestPermission()
@@ -88,28 +88,40 @@ class IntroActivity : AppIntro() {
     }
 
     private fun requestPermission() {
-        val hasPermission = (
-            ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-            )
+        val hasPermission =
+            (ContextCompat.checkSelfPermission(this, ACCESS_FINE_LOCATION) == PERMISSION_GRANTED) &&
+                    (ContextCompat.checkSelfPermission(
+                        this,
+                        BLUETOOTH_SCAN
+                    ) == PERMISSION_GRANTED) &&
+                    (ContextCompat.checkSelfPermission(
+                        this,
+                        BLUETOOTH_ADMIN
+                    ) == PERMISSION_GRANTED) &&
+                    (ContextCompat.checkSelfPermission(
+                        this,
+                        BLUETOOTH_CONNECT
+                    ) == PERMISSION_GRANTED)
         if (hasPermission) {
             startMainActivity()
         } else {
             ActivityCompat.requestPermissions(
                 this,
-                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
+                arrayOf(ACCESS_FINE_LOCATION, BLUETOOTH_SCAN, BLUETOOTH_ADMIN, BLUETOOTH_CONNECT),
                 REQUEST_LOCATION_CODE
             )
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-      super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-      when (requestCode) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
             REQUEST_LOCATION_CODE -> {
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.isNotEmpty() && grantResults[0] == PERMISSION_GRANTED) {
                     startMainActivity()
                 } else {
                     Toast.makeText(

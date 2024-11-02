@@ -62,14 +62,6 @@ class ControlDeviceFragment : BaseFragment<ControlDeviceContract.Presenter>(), C
         binding.deviceAddress.text = address
     }
 
-    override fun showConnectionProgress() {
-        binding.progressConnect.animate().alpha(1.0f)
-    }
-
-    override fun hideConnectionProgress() {
-        binding.progressConnect.animate().alpha(0.0f)
-    }
-
     override fun showConnecting() {
         binding.deviceStatus.text = getString(R.string.connecting)
     }

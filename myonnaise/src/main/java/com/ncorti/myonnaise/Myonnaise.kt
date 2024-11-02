@@ -19,9 +19,10 @@ import java.util.concurrent.TimeUnit
  * Use this class to do a Bluetooth scan and search for a new [Myo].
  *
  * Please note that in order to perform a Bluetooth Scan, the user needs to provide the
- * [android.permission.ACCESS_COARSE_LOCATION] permission. You must request this permission to
+ * `android.permission.ACCESS_FINE_LOCATION` permission. You must request this permission to
  * the user otherwise your scan will be empty.
  */
+@Suppress("MissingPermission")
 class Myonnaise(val context: Context) {
 
     private val blManager = context.getSystemService(Activity.BLUETOOTH_SERVICE) as BluetoothManager

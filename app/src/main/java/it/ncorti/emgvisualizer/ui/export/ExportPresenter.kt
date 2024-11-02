@@ -82,8 +82,8 @@ class ExportPresenter(
     @VisibleForTesting
     internal fun createCsv(buffer: ArrayList<FloatArray>): String {
         val stringBuilder = StringBuilder()
-        buffer.forEach {
-            it.forEach {
+        buffer.forEach { floatArray ->
+            floatArray.forEach {
                 stringBuilder.append(it)
                 stringBuilder.append(";")
             }

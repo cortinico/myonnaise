@@ -6,6 +6,7 @@
     <dimen name="triple_grid_size" tools:ignore="UnusedResources">12dp</dimen>
     <dimen name="quadruple_grid_size">16dp</dimen>
     <dimen name="ten_grid_size">40dp</dimen>
+    <dimen name="touch_target_min_size">48dp</dimen>
     <dimen name="eighteen_grid_size" tools:ignore="UnusedResources">72dp</dimen>
 
     <dimen name="default_margin">@dimen/quadruple_grid_size</dimen>
