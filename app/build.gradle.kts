@@ -14,8 +14,8 @@ android {
 
         applicationId = "it.ncorti.emgvisualizer"
 
-        versionCode = 5
-        versionName = "3.0.0-alpha1"
+        versionCode = 6
+        versionName = "3.0.0"
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
