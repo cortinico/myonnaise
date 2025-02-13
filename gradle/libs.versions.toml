@@ -3,7 +3,7 @@ min_sdk_version = "31"
 target_sdk_version = "35"
 compile_sdk_version = "35"
 
-agp = "8.7.2"
+agp = "8.8.1"
 androidx_recyclerview = "1.3.2"
 appcompat = "1.7.0"
 appintro = "6.3.1"
