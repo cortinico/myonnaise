@@ -271,3 +271,4 @@ Make sure your tests are all green ✅ locally before submitting PRs.
 ## License 📄
 
 This project is licensed under the MIT License - see the [License](LICENSE) file for details
+
