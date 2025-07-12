@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.ContextCompat
 import kotlin.math.min
+import androidx.core.graphics.toColorInt
 
 /** Default point circle size  */
 private const val CIRCLE_SIZE_DEFAULT = 3
@@ -55,7 +56,7 @@ class SensorGraphView(context: Context, attrs: AttributeSet) : View(context, att
         val colors = context.resources.getIntArray(R.array.graph_colors)
         for (element in colors) {
             val paint = Paint()
-            paint.color = Color.parseColor("#${Integer.toHexString(element)}")
+            paint.color = "#${Integer.toHexString(element)}".toColorInt()
             rectPaints += paint
         }
 
