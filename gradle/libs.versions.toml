@@ -5,7 +5,7 @@ compile_sdk_version = "35"
 
 agp = "8.8.2"
 androidx_recyclerview = "1.4.0"
-appcompat = "1.7.0"
+appcompat = "1.7.1"
 appintro = "6.3.1"
 constraintlayout = "2.2.1"
 dagger = "2.16"
