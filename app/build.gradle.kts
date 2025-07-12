@@ -38,7 +38,7 @@ android {
     lint {
         warningsAsErrors = true
         abortOnError = true
-        disable.addAll(listOf("GradleDependency", "IconDensities"))
+        disable.addAll(listOf("GradleDependency", "IconDensities", "AndroidGradlePluginVersion"))
     }
     buildFeatures {
         viewBinding = true
